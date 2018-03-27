@@ -1,0 +1,608 @@
+{
+  "contractName": "HavvenEscrow",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "account",
+          "type": "address"
+        },
+        {
+          "name": "conclusion_time",
+          "type": "uint256"
+        },
+        {
+          "name": "quantity",
+          "type": "uint256"
+        },
+        {
+          "name": "vesting_periods",
+          "type": "uint256"
+        }
+      ],
+      "name": "addRegularVestingSchedule",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "purgeAccount",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "setOwner",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "quantity",
+          "type": "uint256"
+        }
+      ],
+      "name": "withdrawHavvens",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "getNextVestingIndex",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "account",
+          "type": "address"
+        },
+        {
+          "name": "time",
+          "type": "uint256"
+        },
+        {
+          "name": "quantity",
+          "type": "uint256"
+        }
+      ],
+      "name": "appendVestingEntry",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "numVestingEntries",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "totalVestedAccountBalance",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "getNextVestingEntry",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256[2]"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "decimals",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "vest",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "",
+          "type": "address"
+        },
+        {
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "vestingSchedules",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "withdrawFees",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newHavven",
+          "type": "address"
+        }
+      ],
+      "name": "setHavven",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newNomin",
+          "type": "address"
+        }
+      ],
+      "name": "setNomin",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "withdrawFeePool",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "getNextVestingTime",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "remitFees",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "getNextVestingQuantity",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "account",
+          "type": "address"
+        },
+        {
+          "name": "index",
+          "type": "uint256"
+        }
+      ],
+      "name": "getVestingTime",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "havven",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "UNIT",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "totalVestedBalance",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "feePool",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "account",
+          "type": "address"
+        },
+        {
+          "name": "index",
+          "type": "uint256"
+        }
+      ],
+      "name": "getVestingScheduleEntry",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256[2]"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "nomin",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "account",
+          "type": "address"
+        },
+        {
+          "name": "index",
+          "type": "uint256"
+        }
+      ],
+      "name": "getVestingQuantity",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "name": "_owner",
+          "type": "address"
+        },
+        {
+          "name": "_havven",
+          "type": "address"
+        },
+        {
+          "name": "_nomin",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "newHavven",
+          "type": "address"
+        }
+      ],
+      "name": "HavvenUpdated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "newNomin",
+          "type": "address"
+        }
+      ],
+      "name": "NominUpdated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "time",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "name": "value",
+          "type": "uint256"
+        }
+      ],
+      "name": "ContractFeesWithdrawn",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "recipient",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "recipientIndex",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "time",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "name": "value",
+          "type": "uint256"
+        }
+      ],
+      "name": "FeesWithdrawn",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "beneficiary",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "beneficiaryIndex",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "time",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "name": "value",
+          "type": "uint256"
+        }
+      ],
+      "name": "Vested",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldOwner",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnerChanged",
+      "type": "event"
+    }
+  ],
+  "bytecode": "0x6060604052341561000f57600080fd5b6040516060806114b883398101604052808051919060200180519190602001805160008054600160a060020a0319908116600160a060020a0397881617825560018054821696881696909617909555600280549095169190951617909255506114399182915061007f90396000f3006060604052600436106101505763ffffffff60e060020a60003504166309d81a5a8114610155578063135c07011461017f57806313af40351461019e57806319dc831a146101bd57806319e740c0146101d35780631bb47b4414610204578063204b676a14610229578063227d517a146102485780632f5bb66114610267578063313ce567146102be578063458efde3146102d157806345e5441f146102e4578063476343ee146103095780634fa2b0a51461031c5780635c8ea7fe1461033b578063676a20671461035a5780636b3905c41461036d5780638da5cb5b1461038c57806395f64c40146103bb57806397f46527146103ce5780639b217f90146103ed5780639c4de81f1461040f5780639d8e217714610422578063a15d59ce14610435578063ae2e933b14610448578063da7bd3e91461045b578063e59160e31461047d578063ee1d036c14610490575b600080fd5b341561016057600080fd5b61017d600160a060020a03600435166024356044356064356104b2565b005b341561018a57600080fd5b61017d600160a060020a0360043516610563565b34156101a957600080fd5b61017d600160a060020a03600435166105e2565b34156101c857600080fd5b61017d600435610675565b34156101de57600080fd5b6101f2600160a060020a036004351661070d565b60405190815260200160405180910390f35b341561020f57600080fd5b61017d600160a060020a0360043516602435604435610754565b341561023457600080fd5b6101f2600160a060020a0360043516610893565b341561025357600080fd5b6101f2600160a060020a03600435166108ae565b341561027257600080fd5b610286600160a060020a03600435166108c0565b6040518082604080838360005b838110156102ab578082015183820152602001610293565b5050505090500191505060405180910390f35b34156102c957600080fd5b6101f2610913565b34156102dc57600080fd5b61017d610918565b34156102ef57600080fd5b6101f2600160a060020a0360043516602435604435610b01565b341561031457600080fd5b61017d610b41565b341561032757600080fd5b61017d600160a060020a0360043516610d8d565b341561034657600080fd5b61017d600160a060020a0360043516610e10565b341561036557600080fd5b61017d610e93565b341561037857600080fd5b6101f2600160a060020a0360043516610f44565b341561039757600080fd5b61039f610f75565b604051600160a060020a03909116815260200160405180910390f35b34156103c657600080fd5b61017d610f84565b34156103d957600080fd5b6101f2600160a060020a036004351661100a565b34156103f857600080fd5b6101f2600160a060020a036004351660243561103b565b341561041a57600080fd5b61039f611079565b341561042d57600080fd5b6101f2611088565b341561044057600080fd5b6101f2611094565b341561045357600080fd5b6101f261109a565b341561046657600080fd5b610286600160a060020a0360043516602435611115565b341561048857600080fd5b61039f61118b565b341561049b57600080fd5b6101f2600160a060020a036004351660243561119a565b600080548190819081908190819033600160a060020a039081169116146104d857600080fd5b6104e289426111d5565b95506104ee88886111f2565b94506104fd856001890361121c565b935061050986886111f2565b9250600191505b8682101561054357610522828461121c565b90506105388a6105324284611238565b87610754565b600190910190610510565b6105578a8a6105528b886111d5565b610754565b50505050505050505050565b60005433600160a060020a0390811691161461057e57600080fd5b600160a060020a038116600090815260036020526040812061059f916112d9565b600554600160a060020a0382166000908152600460205260409020546105c591906111d5565b600555600160a060020a0316600090815260046020526040812055565b60005433600160a060020a039081169116146105fd57600080fd5b6000805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a0383811691909117918290557fb532073b38c83145e3e5135377a08bf9aab55bc0fd7c1179cd4fb995d2a5159c911682604051600160a060020a039283168152911660208201526040908101905180910390a150565b60005433600160a060020a0390811691161461069057600080fd5b600154600160a060020a031663a9059cbb818360006040516020015260405160e060020a63ffffffff8516028152600160a060020a0390921660048301526024820152604401602060405180830381600087803b15156106ef57600080fd5b6102c65a03f1151561070057600080fd5b5050506040518051505050565b600080600061071b84610893565b9150600090505b8181101561074957610734848261103b565b156107415780925061074d565b600101610722565b8192505b5050919050565b60005433600160a060020a0390811691161461076f57600080fd5b4282901061077c57600080fd5b80151561078857600080fd5b600160a060020a03831660009081526003602052604090205415156107c757600160a060020a0383166000908152600460205260409020819055610824565b816107dd8460016107d787610893565b0361103b565b106107e757600080fd5b600160a060020a03831660009081526004602052604090205461080a9082611238565b600160a060020a0384166000908152600460205260409020555b600160a060020a038316600090815260036020526040902080546001810161084c83826112fa565b91600052602060002090600202016000604080519081016040528581526020810185905261087d929150600261132b565b505061088b60055482611238565b600555505050565b600160a060020a031660009081526003602052604090205490565b60046020526000908152604090205481565b6108c8611369565b60006108d38361070d565b90506108de83610893565b811415610900576040805190810160405260008082526020820152915061090d565b61090a8382611115565b91505b50919050565b601281565b60008080805b61092733610893565b831015610a0757610938338461103b565b91504282111561094757610a07565b610951338461119a565b905080151561095f576109fc565b60408051908101604090815260008083526020808401829052600160a060020a0333168252600390522080548590811061099557fe5b90600052602060002090600202019060026109b192919061138f565b506109bc8482611238565b600160a060020a0333166000908152600460205260409020549094506109e290826111d5565b600160a060020a0333166000908152600460205260409020555b60019092019161091e565b8315610afb57610a19600554856111d5565b600555600154600160a060020a031663a9059cbb338660006040516020015260405160e060020a63ffffffff8516028152600160a060020a0390921660048301526024820152604401602060405180830381600087803b1515610a7b57600080fd5b6102c65a03f11515610a8c57600080fd5b505050604051805190505033600160a060020a03167f6d06f0a463d80b43fe6cd0b79c61bb2790cfe898790e69828f25e6e12886e1783342876040518084600160a060020a0316600160a060020a03168152602001838152602001828152602001935050505060405180910390a25b50505050565b600360205282600052604060002082815481101515610b1c57fe5b906000526020600020906002020181600281101515610b3757fe5b0154925083915050565b600154600090600160a060020a0316636db9dd9330836040516020015260405160e060020a63ffffffff8416028152600160a060020a039091166004820152602401602060405180830381600087803b1515610b9c57600080fd5b6102c65a03f11515610bad57600080fd5b505050604051805190501515610c0757610bc5610e93565b7f7fd6d1afcd03d8d6b25e92ebda1bdeb5471ca1353fc8f6390b3714386c11cac942610bef61109a565b60405191825260208201526040908101905180910390a15b600254600160a060020a0333811660009081526004602052604090205491169063e3f310c790610c4a90610c4290610c3d61109a565b611254565b600554611272565b60006040516020015260405160e060020a63ffffffff84160281526004810191909152602401602060405180830381600087803b1515610c8957600080fd5b6102c65a03f11515610c9a57600080fd5b50505060405180519150508015610d8a57600254600160a060020a031663a9059cbb338360006040516020015260405160e060020a63ffffffff8516028152600160a060020a0390921660048301526024820152604401602060405180830381600087803b1515610d0a57600080fd5b6102c65a03f11515610d1b57600080fd5b505050604051805190505033600160a060020a03167fc7966d68b12e948d7c237e7d9137565fcd716dbc3d168b724fc57c3a92859b2c3342846040518084600160a060020a0316600160a060020a03168152602001838152602001828152602001935050505060405180910390a25b50565b60005433600160a060020a03908116911614610da857600080fd5b6001805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a0383161790557f7d83fa33771af200b7fda80813418ffe7eafdbeb2a93f5267ced74abac654a4e81604051600160a060020a03909116815260200160405180910390a150565b60005433600160a060020a03908116911614610e2b57600080fd5b6002805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a0383161790557f114aa3d8eaf9520841f1c7932e26ac23f2644b0d860be54533e21450cc28c02c81604051600160a060020a03909116815260200160405180910390a150565b60005433600160a060020a03908116911614610eae57600080fd5b600154600160a060020a0316639a0b2db36040518163ffffffff1660e060020a028152600401600060405180830381600087803b1515610eed57600080fd5b6102c65a03f11515610efe57600080fd5b5050507f7fd6d1afcd03d8d6b25e92ebda1bdeb5471ca1353fc8f6390b3714386c11cac942610f2b61109a565b60405191825260208201526040908101905180910390a1565b600080610f508361070d565b9050610f5b83610893565b811415610f6b576000915061090d565b61090a838261103b565b600054600160a060020a031681565b60015460009033600160a060020a03908116911614610fa257600080fd5b610faa61109a565b90508015610d8a57600254600160a060020a03166363ff6125610fcb61109a565b60006040516020015260405160e060020a63ffffffff84160281526004810191909152602401602060405180830381600087803b15156106ef57600080fd5b6000806110168361070d565b905061102183610893565b811415611031576000915061090d565b61090a838261119a565b600160a060020a038216600090815260036020526040812080548390811061105f57fe5b600091825260208220600290910201905b01549392505050565b600154600160a060020a031681565b670de0b6b3a764000081565b60055481565b600254600090600160a060020a03166370a0823130836040516020015260405160e060020a63ffffffff8416028152600160a060020a039091166004820152602401602060405180830381600087803b15156110f557600080fd5b6102c65a03f1151561110657600080fd5b50505060405180519150505b90565b61111d611369565b600160a060020a038316600090815260036020526040902080548390811061114157fe5b90600052602060002090600202016002806020026040519081016040529190828260026020028201915b81548152602001906001019080831161116b575050505050905092915050565b600254600160a060020a031681565b600160a060020a03821660009081526003602052604081208054839081106111be57fe5b600091825260209091206002909102016001611070565b60006111e18383611296565b15156111ec57600080fd5b50900390565b60006111fe838361129b565b151561120957600080fd5b818381151561121457fe5b049392505050565b600061122883836112a2565b151561123357600080fd5b500290565b600061124483836112d1565b151561124f57600080fd5b500190565b6000670de0b6b3a7640000611269848461121c565b81151561121457fe5b600061128f61128984670de0b6b3a764000061121c565b836111f2565b9392505050565b111590565b1515919050565b6000808315156112b557600191506112ca565b508282028284828115156112c557fe5b041491505b5092915050565b908101101590565b5080546000825560020290600052602060002090810190610d8a91906113c2565b8154818355818115116113265760020281600202836000526020600020918201910161132691906113c2565b505050565b8260028101928215611359579160200282015b8281111561135957825182559160200191906001019061133e565b506113659291506113e5565b5090565b604080519081016040526002815b60008152602001906001900390816113775790505090565b8260028101928215611359579160200282015b82811115611359578251829060ff169055916020019190600101906113a2565b61111291905b808211156113655760006113dc82826113ff565b506002016113c8565b61111291905b8082111561136557600081556001016113eb565b5060008155600101600090555600a165627a7a723058202fe53dc77fc41d15f599e6377e53d9ff12d4784c987c2a6890076854035f69a10029",
+  "networks": {
+    "1518483580291": {
+      "events": {},
+      "links": {},
+      "address": "0xf94c9d8ee1e229db580feaf12f12fa267a96f20d"
+    }
+  },
+  "schemaVersion": "1.0.1",
+  "updatedAt": "2018-02-13T04:18:40.757Z"
+}

