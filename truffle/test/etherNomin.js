@@ -24,6 +24,7 @@ assert(days(2) === 172800, 'days() is wrong')
  * Return the timestamp of the current block
  */
 const timestamp = () => new BigNumber(web3.eth.getBlock(web3.eth.blockNumber).timestamp)
+const futureTimestamp = () => web3.eth.getBlock(web3.eth.blockNumber).timestamp + 50
 
 
 /*
@@ -47,7 +48,8 @@ contract('EtherNomin basic functionality', function(accounts) {
 			oracle,
 			beneficiary,
 			targetPrice,
-			owner
+			owner,
+			'0x0'
 		)
 		
 		assert(await c.feeAuthority.call() == havven, 'feeAuthority is not as set')
@@ -55,7 +57,7 @@ contract('EtherNomin basic functionality', function(accounts) {
 		assert(await c.beneficiary.call() == beneficiary, 'beneficiary is not as set') 
 		assert(await c.etherPrice.call() == targetPrice, 'price is not as set')
 		assert(await c.owner.call() == owner, 'owner is not as set')
-  });
+	});
 
 	
 	/*
@@ -69,11 +71,12 @@ contract('EtherNomin basic functionality', function(accounts) {
 			accounts[2],
 			accounts[3],
 			price,
-			accounts[4]
-		) 
+			accounts[4],
+			'0x0'
+		)
 		assert(price.eq(await c.etherPrice.call()), 'price is not as expected')
 		assert(toUnit(4500).eq(await c.fiatValue(toUnit(4.5))), 'fiatValue() did not return as expected')
-  });
+	});
 
 	
 	/*
@@ -89,36 +92,35 @@ contract('EtherNomin basic functionality', function(accounts) {
 			accounts[2],
 			accounts[3],
 			price,
-			owner
+			owner,
+			'0x0'
 		)
 
-		await c.issue(toUnit(1), {from: owner, value})
-
-
+		await c.replenishPool(toUnit(1), {from: owner, value})
 		assert(value.eq(await web3.eth.getBalance(c.address)), 'contract balance is not as expected')
 		assert(toUnit(2000).eq(await c.fiatBalance.call()), 'fiatBalance is not correct')
-  });
+	});
 
-	
+
 	/*
 	 * etherValue()
 	 */
 	it("should return 4.5 from a etherValue(4500) call if etherPrice is 1000", async function() {
 		const price = toUnit(1000)
-		
+
 		const c = await EtherNomin.new(
 			accounts[1],
 			accounts[2],
 			accounts[3],
 			price,
-			accounts[4]
+			accounts[4],
+			'0x0'
 		)
-		
+
 		assert(price.eq(await c.etherPrice.call()), 'price is not as expected')
 		assert(toUnit(4.5).eq(await c.etherValue(toUnit(4500))), 'etherValue() did not return as expected')
-  });
+	});
 
-	
 	/*
 	 * priceIsStale()
 	 *
@@ -126,19 +128,20 @@ contract('EtherNomin basic functionality', function(accounts) {
 	 */
 	it("should return false from priceIsStale() if the price was recently updated", async function() {
 		const price = toUnit(1000)
-		
+
 		const c = await EtherNomin.new(
 			accounts[1],
 			accounts[2],
 			accounts[3],
 			price,
-			accounts[4]
+			accounts[4],
+			'0x0'
 		)
 
-		const time =  web3.eth.getBlock(web3.eth.blockNumber).timestamp;
+		const time = await web3.eth.getBlock(web3.eth.blockNumber).timestamp;
 		assert(await c.lastPriceUpdate.call() <= time + days(2), 'it has been too long since a price update')
 		assert(await c.priceIsStale.call() !== true, 'priceIsStale() returned true when it should be false')
-  });
+	});
 	
 	
 	/*
@@ -154,7 +157,8 @@ contract('EtherNomin basic functionality', function(accounts) {
 			accounts[2],
 			accounts[3],
 			price,
-			accounts[4]
+			accounts[4],
+			'0x0'
 		)
 
 		const before =  web3.eth.getBlock(web3.eth.blockNumber).timestamp;
@@ -177,20 +181,21 @@ contract('EtherNomin basic functionality', function(accounts) {
 		const value = web3.toWei(2, 'ether')
 		const oracle = accounts[2]
 		const owner = accounts[4]
-		
+
 		const c = await EtherNomin.new(
 			accounts[1],
 			oracle,
 			accounts[3],
 			lowPrice,
-			owner
+			owner,
+			'0x0'
 		)
 
-		await c.issue(toUnit(1), {from: owner, value})
-		await c.updatePrice(highPrice, {from: oracle})
+		await c.replenishPool(toUnit(1), {from: owner, value})
+		await c.updatePrice(highPrice, futureTimestamp(), {from: oracle})
 		assert(highPrice.eq(await c.etherPrice.call()), 'the high price was not implemented')
 		assert(toUnit(3000).eq(await c.collateralisationRatio()), 'the collat. ratio was not 3000')
-  });
+	});
 
 
 	/*
@@ -206,7 +211,8 @@ contract('EtherNomin basic functionality', function(accounts) {
 			accounts[2],
 			accounts[3],
 			price,
-			accounts[4]
+			accounts[4],
+			'0x0'
 		)
 		assert(toUnit(0.01).eq(await c.poolFeeIncurred(toUnit(2))), 'fee was not as expected')
   });
@@ -228,7 +234,8 @@ contract('EtherNomin basic functionality', function(accounts) {
 			accounts[2],
 			accounts[3],
 			price,
-			accounts[4]
+			accounts[4],
+			'0x0'
 		)
 
 		assert(toUnit(4.02).eq(await c.purchaseCostFiat(toUnit(4))), 'purchase cost was not as expected')
@@ -251,7 +258,8 @@ contract('EtherNomin basic functionality', function(accounts) {
 			accounts[2],
 			accounts[3],
 			price,
-			accounts[4]
+			accounts[4],
+			'0x0'
 		)
 
 		assert(toUnit(0.15075).eq(await c.purchaseCostEther(toUnit(300))), 'eth purchase cost was not as expected')
@@ -274,7 +282,8 @@ contract('EtherNomin basic functionality', function(accounts) {
 			accounts[2],
 			accounts[3],
 			price,
-			accounts[4]
+			accounts[4],
+			'0x0'
 		)
 
 		assert(toUnit(348.25).eq(await c.saleProceedsFiat(toUnit(350))), 'proceeds were not as expected')
@@ -297,7 +306,8 @@ contract('EtherNomin basic functionality', function(accounts) {
 			accounts[2],
 			accounts[3],
 			price,
-			accounts[4]
+			accounts[4],
+			'0x0'
 		)
 
 		assert(toUnit(70.39625).eq(await c.saleProceedsEther(toUnit(283))), 'eth proceeds were not as expected')
@@ -317,7 +327,8 @@ contract('EtherNomin basic functionality', function(accounts) {
 			accounts[2],
 			accounts[3],
 			price,
-			accounts[4]
+			accounts[4],
+			'0x0'
 		)
 
 		const time =  new BigNumber(web3.eth.getBlock(web3.eth.blockNumber).timestamp)
@@ -344,21 +355,22 @@ contract('EtherNomin basic functionality', function(accounts) {
 			oracle,
 			accounts[3],
 			highPrice,
-			owner
+			owner,
+			'0x0'
 		)
 
 		// issue two nomins
-		await c.issue(toUnit(2), {from: owner, value: issueValue})
+		await c.replenishPool(toUnit(2), {from: owner, value: issueValue})
 		// buy one nomin, removing it from the pool 
 		const purchaseCost = await c.purchaseCostEther(toUnit(1))
 		await c.buy(toUnit(1), {value: purchaseCost})
 		assert(toUnit(1).equals(await c.balanceOf(accounts[0])), 'accounts[0] should have a nomin')
 		// drop the price so the collat ration is < 1 and we start liquidating
-		await c.updatePrice(lowPrice, {from: oracle})
+		await c.updatePrice(lowPrice, futureTimestamp(), {from: oracle})
 		// ensure we are liquidating
 		assert(await c.isLiquidating() === true, 'the contract should be in liquidation')
 		// push the date forward, past the liquidationPeriod
-		const future = timestamp().plus(days(90)).plus(1)
+		const future = timestamp().plus(days(90)).plus(50)
 		await helpers.setDate(future)
 		// check to see we past the liquidationPeriod
 		const liquidationTimestamp = await c.liquidationTimestamp.call()
@@ -367,7 +379,8 @@ contract('EtherNomin basic functionality', function(accounts) {
 		// check to ensure all tokens have not yet been returned
 		const totalSupply = await c.totalSupply.call()
 		const nominPool = await c.nominPool.call()
-		assert(nominPool.lt(totalSupply), 'there should be more tokens in existance than there is in the pool')
+		assert(nominPool.lt(new BigNumber(toUnit(2))), 'nominPool should be less than the amount initially replenished')
+		assert(totalSupply.equals(((new BigNumber(toUnit(2))) - nominPool)), 'the totalSupply should be equal to the total minus the pool')
 
 		assert(await c.canSelfDestruct() === true, 'the contract should be able to self destruct')
   });
@@ -393,13 +406,14 @@ contract('EtherNomin basic functionality', function(accounts) {
 			oracle,
 			accounts[3],
 			highPrice,
-			owner
+			owner,
+			'0x0'
 		)
 
 		// issue two nomins
-		await c.issue(toUnit(2), {from: owner, value: issueValue})
+		await c.replenishPool(toUnit(2), {from: owner, value: issueValue})
 		// drop the price so the collat ration is < 1 and we start liquidating
-		await c.updatePrice(lowPrice, {from: oracle})
+		await c.updatePrice(lowPrice, futureTimestamp(), {from: oracle})
 		// ensure we are liquidating
 		assert(await c.isLiquidating() === true, 'the contract should be in liquidation')
 		// ensure we haven't exceeded the liquidation period
@@ -409,7 +423,8 @@ contract('EtherNomin basic functionality', function(accounts) {
 		// check to ensure all tokens have been returned (or, in this case, never bought)
 		const totalSupply = await c.totalSupply.call()
 		const nominPool = await c.nominPool.call()
-		assert(nominPool.equals(totalSupply), 'all nomins should be in the pool')
+		assert(totalSupply.equals(0), 'all nomins should be in the pool')
+		assert(nominPool.equals(new BigNumber(toUnit(2))), 'all nomins should be in the pool')
 		// push the date forward, just past 1 week since the liquidation timestamp
 		const future = timestamp().plus(days(7)).plus(1)
 		await helpers.setDate(future)
@@ -434,10 +449,11 @@ contract('EtherNomin basic functionality', function(accounts) {
 			oracle,
 			accounts[3],
 			price,
-			accounts[4]
+			accounts[4],
+			'0x0'
 		)
 
-		await assertRevert(c.updatePrice(toUnit(1001), {from: notOracle}))
+		await assertRevert(c.updatePrice(toUnit(1001), futureTimestamp(), {from: notOracle}))
   });
 	
 	
@@ -456,10 +472,11 @@ contract('EtherNomin basic functionality', function(accounts) {
 			oracle,
 			accounts[3],
 			oldPrice,
-			accounts[4]
+			accounts[4],
+			'0x0'
 		)
 
-		await c.updatePrice(newPrice, {from: oracle})
+		await c.updatePrice(newPrice, futureTimestamp(), {from: oracle})
 		assert(newPrice.equals(await c.etherPrice.call()), 'the new price should be in effect')
   });
 	
@@ -480,13 +497,14 @@ contract('EtherNomin basic functionality', function(accounts) {
 			oracle,
 			accounts[3],
 			highPrice,
-			owner
+			owner,
+			'0x0'
 		)
 
 		// issue two nomins
-		await c.issue(toUnit(2), {from: owner, value: issueValue})
+		await c.replenishPool(toUnit(2), {from: owner, value: issueValue})
 		const lowPrice = highPrice.dividedBy(2).minus(1)
-		await c.updatePrice(lowPrice, {from: oracle})
+		await c.updatePrice(lowPrice, futureTimestamp(), {from: oracle})
 		assert(lowPrice.equals(await c.etherPrice.call()), 'the new price should be in effect')
 
 		assert(await c.isLiquidating() === true, 'the contract should be in liquidation')
@@ -494,11 +512,11 @@ contract('EtherNomin basic functionality', function(accounts) {
 	
 
 	/*
-	 * issue()
+	 * replenishPool()
 	 *
 	 * Throws when not from owner
 	 */
-	it("should throw if issue() called from not owner", async function() {
+	it("should throw if replenishPool() called from not owner", async function() {
 		const price = toUnit(1000)
 		const issueValue = new BigNumber(web3.toWei(0.004, 'ether'))
 		const owner = accounts[4]
@@ -510,22 +528,23 @@ contract('EtherNomin basic functionality', function(accounts) {
 			accounts[2],
 			accounts[3],
 			price,
-			owner
+			owner,
+			'0x0'
 		)
 
 		// issue from the owner (to prove it works)
-		await c.issue(toUnit(2), {from: owner, value: issueValue})
+		await c.replenishPool(toUnit(2), {from: owner, value: issueValue})
 		// expect a throw when issuing from notOwner
-		await assertRevert(c.issue(toUnit(2), {from: notOwner, value: issueValue}))
+		await assertRevert(c.replenishPool(toUnit(2), {from: notOwner, value: issueValue}))
   });
 	
 
 	/*
-	 * issue()
+	 * replenishPool()
 	 *
 	 * Throws when contract is liquidating
 	 */
-	it("should throw if issue() called when contract is liquidating", async function() {
+	it("should throw if replenishPool() called when contract is liquidating", async function() {
 		const highPrice = toUnit(1000)
 		const lowPrice = toUnit(1)
 		const issueValue = new BigNumber(web3.toWei(0.004, 'ether'))
@@ -537,26 +556,27 @@ contract('EtherNomin basic functionality', function(accounts) {
 			oracle,
 			accounts[3],
 			highPrice,
-			owner
+			owner,
+			'0x0'
 		)
 
 		// issue two nomins
-		await c.issue(toUnit(2), {from: owner, value: issueValue})
+		await c.replenishPool(toUnit(2), {from: owner, value: issueValue})
 		// drop the price so the collat ration is < 1 and we start liquidating
-		await c.updatePrice(lowPrice, {from: oracle})
+		await c.updatePrice(lowPrice, futureTimestamp(), {from: oracle})
 		// ensure we are liquidating
 		assert(await c.isLiquidating() === true, 'the contract should be in liquidation')
 		// test an issue call
-		await assertRevert(c.issue(toUnit(2), {from: owner, value: issueValue}))
+		await assertRevert(c.replenishPool(toUnit(2), {from: owner, value: issueValue}))
   });
 	
 
 	/*
-	 * issue()
+	 * replenishPool()
 	 *
 	 * Throws when ETH is below collat. ratio
 	 */
-	it("should throw if issue() called without sufficient collateralisation", async function() {
+	it("should throw if replenishPool() called without sufficient collateralisation", async function() {
 		const price = toUnit(1)
 		const issueValue = new BigNumber(web3.toWei(1.99, 'ether'))
 		const owner = accounts[4]
@@ -566,19 +586,20 @@ contract('EtherNomin basic functionality', function(accounts) {
 			accounts[2],
 			accounts[3],
 			price,
-			owner
+			owner,
+			'0x0'
 		)
 
-		await assertRevert(c.issue(toUnit(1), {from: owner, value: issueValue}))
+		await assertRevert(c.replenishPool(toUnit(1), {from: owner, value: issueValue}))
   });
 	
 	
 	/*
-	 * issue()
+	 * replenishPool()
 	 *
 	 * Throws when ETH price is stale
 	 */
-	it("should throw if issue() called when ethPrice is stale", async function() {
+	it("should throw if replenishPool() called when ethPrice is stale", async function() {
 		const price = toUnit(1)
 		const issueValue = new BigNumber(web3.toWei(2, 'ether'))
 		const owner = accounts[4]
@@ -588,46 +609,23 @@ contract('EtherNomin basic functionality', function(accounts) {
 			accounts[2],
 			accounts[3],
 			price,
-			owner
+			owner,
+			'0x0'
 		)
 		
 		// push the date forward so the price goes stale
 		helpers.setDate(timestamp().plus(days(2)).plus(1))
 		assert(await c.priceIsStale() === true, 'the price should be stale')
-		await assertRevert(c.issue(toUnit(1), {from: owner, value: issueValue}))
+		await assertRevert(c.replenishPool(toUnit(1), {from: owner, value: issueValue}))
   });
 	
 
 	/*
-	 * issue()
-	 *
-	 * Updates totalSupply
-	 */
-	it("should update totalSupply after issue()", async function() {
-		const price = toUnit(1)
-		const issueValue = new BigNumber(web3.toWei(2, 'ether'))
-		const owner = accounts[4]
-		
-		const c = await EtherNomin.new(
-			accounts[1],
-			accounts[2],
-			accounts[3],
-			price,
-			owner
-		)
-		
-		assert(toUnit(0).equals(await c.totalSupply.call()), 'totalSupply should start at zero')
-		await c.issue(toUnit(1), {from: owner, value: issueValue})
-		assert(toUnit(1).equals(await c.totalSupply.call()), 'totalSupply should be 1')
-  });
-	
-
-	/*
-	 * issue()
+	 * replenishPool()
 	 *
 	 * Updates nominPool
 	 */
-	it("should update nominPool after issue()", async function() {
+	it("should update nominPool after replenishPool()", async function() {
 		const price = toUnit(1)
 		const issueValue = new BigNumber(web3.toWei(2, 'ether'))
 		const owner = accounts[4]
@@ -637,21 +635,22 @@ contract('EtherNomin basic functionality', function(accounts) {
 			accounts[2],
 			accounts[3],
 			price,
-			owner
+			owner,
+			'0x0'
 		)
 		
 		assert(toUnit(0).equals(await c.nominPool.call()), 'nominPool should start at zero')
-		await c.issue(toUnit(1), {from: owner, value: issueValue})
+		await c.replenishPool(toUnit(1), {from: owner, value: issueValue})
 		assert(toUnit(1).equals(await c.nominPool.call()), 'nominPool should be 1')
   });
 	
 
 	/*
-	 * burn()
+	 * diminishPool()
 	 *
 	 * When called from not-the-owner account
 	 */
-	it("should throw if burn() called from not owner", async function() {
+	it("should throw if diminishPool() called from not owner", async function() {
 		const price = toUnit(1000)
 		const issueValue = new BigNumber(web3.toWei(0.004, 'ether'))
 		const owner = accounts[4]
@@ -663,24 +662,25 @@ contract('EtherNomin basic functionality', function(accounts) {
 			accounts[2],
 			accounts[3],
 			price,
-			owner
+			owner,
+			'0x0'
 		)
 
-		// issue from the owner to get some nomins to burn
-		await c.issue(toUnit(2), {from: owner, value: issueValue})
-		// burn from owner to check it works
-		c.burn(toUnit(0.5), {from: owner})
+		// issue from the owner to get some nomins to diminish
+		await c.replenishPool(toUnit(2), {from: owner, value: issueValue})
+		// diminish from owner to check it works
+		c.diminishPool(toUnit(0.5), {from: owner})
 		// expect a throw when issuing from notOwner
-		await assertRevert(c.burn(toUnit(0.5), {from: notOwner}))
+		await assertRevert(c.diminishPool(toUnit(0.5), {from: notOwner}))
   });
 	
 
 	/*
-	 * burn()
+	 * diminishPool()
 	 *
-	 * When burning too many nomins
+	 * When diminishing too many nomins
 	 */
-	it("should throw if burning more tokens than in the pool", async function() {
+	it("should throw if diminishing more tokens than in the pool", async function() {
 		const price = toUnit(1000)
 		const issueValue = new BigNumber(web3.toWei(0.004, 'ether'))
 		const owner = accounts[4]
@@ -690,24 +690,25 @@ contract('EtherNomin basic functionality', function(accounts) {
 			accounts[2],
 			accounts[3],
 			price,
-			owner
+			owner,
+			'0x0'
 		)
 
-		// issue from the owner to get some nomins to burn
-		await c.issue(toUnit(2), {from: owner, value: issueValue})
+		// issue from the owner to get some nomins to diminish
+		await c.replenishPool(toUnit(2), {from: owner, value: issueValue})
 		// check there are two nomins in existance
 		assert(toUnit(2).equals(await c.nominPool.call()))
-		// test an excessive burn
-		await assertRevert(c.burn(toUnit(2.000001), {from: owner}))
+		// test an excessive diminish
+		await assertRevert(c.diminishPool(toUnit(2.000001), {from: owner}))
   });
 	
 
 	/*
-	 * burn()
+	 * diminishPool()
 	 *
-	 * A successful burn
+	 * A successful diminish
 	 */
-	it("should update totalSupply and nominPool after a burn()", async function() {
+	it("should update nominPool after a diminishPool()", async function() {
 		const price = toUnit(1000)
 		const issueValue = new BigNumber(web3.toWei(0.004, 'ether'))
 		const owner = accounts[4]
@@ -717,19 +718,18 @@ contract('EtherNomin basic functionality', function(accounts) {
 			accounts[2],
 			accounts[3],
 			price,
-			owner
+			owner,
+			'0x0'
 		)
 
-		// issue from the owner to get some nomins to burn
-		await c.issue(toUnit(2), {from: owner, value: issueValue})
+		// issue from the owner to get some nomins to diminish
+		await c.replenishPool(toUnit(2), {from: owner, value: issueValue})
 		// check nominPool and totalSupply
 		assert(toUnit(2).equals(await c.nominPool.call()))
-		assert(toUnit(2).equals(await c.totalSupply.call()))
-		// burn some tokens
-		await c.burn(toUnit(1.5), {from: owner})
+		// diminish some tokens
+		await c.diminishPool(toUnit(1.5), {from: owner})
 		// check nominPool and totalSupply
 		assert(toUnit(0.5).equals(await c.nominPool.call()))
-		assert(toUnit(0.5).equals(await c.totalSupply.call()))
   });
 	
 	
@@ -750,13 +750,14 @@ contract('EtherNomin basic functionality', function(accounts) {
 			oracle,
 			accounts[3],
 			highPrice,
-			owner
+			owner,
+			'0x0'
 		)
 
 		// issue two nomins
-		await c.issue(toUnit(2), {from: owner, value: issueValue})
+		await c.replenishPool(toUnit(2), {from: owner, value: issueValue})
 		// drop the price so the collat ration is < 1 and we start liquidating
-		await c.updatePrice(lowPrice, {from: oracle})
+		await c.updatePrice(lowPrice, futureTimestamp(), {from: oracle})
 		// ensure we are liquidating
 		assert(await c.isLiquidating() === true, 'the contract should be in liquidation')
 		// test a buy call
@@ -781,11 +782,12 @@ contract('EtherNomin basic functionality', function(accounts) {
 			accounts[2],
 			accounts[3],
 			price,
-			owner
+			owner,
+			'0x0'
 		)
 
 		// issue two nomins
-		await c.issue(toUnit(2), {from: owner, value: issueValue})
+		await c.replenishPool(toUnit(2), {from: owner, value: issueValue})
 		// test an issue call
 		const purchaseCost = await c.purchaseCostEther(cheapskate)
 		await assertRevert(c.buy(cheapskate, {value: purchaseCost}))
@@ -808,11 +810,12 @@ contract('EtherNomin basic functionality', function(accounts) {
 			accounts[2],
 			accounts[3],
 			price,
-			owner
+			owner,
+			'0x0'
 		)
 
 		// issue two nomins
-		await c.issue(toUnit(2), {from: owner, value: issueValue})
+		await c.replenishPool(toUnit(2), {from: owner, value: issueValue})
 		const purchaseCost = await c.purchaseCostEther(buyValue)
 		// push the date forward so the price goes stale
 		helpers.setDate(timestamp().plus(days(2)).plus(1))
@@ -837,11 +840,12 @@ contract('EtherNomin basic functionality', function(accounts) {
 			accounts[2],
 			accounts[3],
 			price,
-			owner
+			owner,
+			'0x0'
 		)
 
 		// issue two nomins
-		await c.issue(toUnit(2), {from: owner, value: issueValue})
+		await c.replenishPool(toUnit(2), {from: owner, value: issueValue})
 		// balanceOf and nominPool are at zero
 		assert(toUnit(0).equals(await c.balanceOf(accounts[0])), 'accounts[0] should have zero nomins')
 		assert(toUnit(2).equals(await c.nominPool.call()), 'nominPool should be at 2')
@@ -868,11 +872,12 @@ contract('EtherNomin basic functionality', function(accounts) {
 			accounts[2],
 			accounts[3],
 			price,
-			owner
+			owner,
+			'0x0'
 		)
 
 		// issue two nomins
-		await c.issue(toUnit(2), {from: owner, value: issueValue})
+		await c.replenishPool(toUnit(2), {from: owner, value: issueValue})
 		// buy one nomin, removing it from the pool 
 		const purchaseCost = await c.purchaseCostEther(toUnit(1))
 		await c.buy(toUnit(1), {value: purchaseCost})
@@ -904,17 +909,18 @@ contract('EtherNomin basic functionality', function(accounts) {
 			oracle,
 			accounts[3],
 			highPrice,
-			owner
+			owner,
+			'0x0'
 		)
 
 		// issue two nomins
-		await c.issue(toUnit(2), {from: owner, value: issueValue})
+		await c.replenishPool(toUnit(2), {from: owner, value: issueValue})
 		const purchaseCost = await c.purchaseCostEther(toUnit(1))
 		await c.buy(toUnit(1), {value: purchaseCost})
 		// drop the price so the collat ration is < 1 and we start liquidating
-		await c.updatePrice(lowPrice, {from: oracle})
+		await c.updatePrice(lowPrice, futureTimestamp(), {from: oracle})
 		// push the date forward so the price goes stale
-		helpers.setDate(timestamp().plus(days(2)).plus(1))
+		helpers.setDate(timestamp().plus(days(2)).plus(50))
 		// check to ensure we're stale and liquidating
 		assert(await c.isLiquidating() === true, 'the contract should be in liquidation')
 		assert(await c.priceIsStale() === true, 'the price should be stale')
@@ -941,15 +947,16 @@ contract('EtherNomin basic functionality', function(accounts) {
 			oracle,
 			accounts[3],
 			price,
-			owner
+			owner,
+			'0x0'
 		)
 
 		// issue two nomins
-		await c.issue(toUnit(2), {from: owner, value: issueValue})
+		await c.replenishPool(toUnit(2), {from: owner, value: issueValue})
 		const purchaseCost = await c.purchaseCostEther(toUnit(1))
 		await c.buy(toUnit(1), {value: purchaseCost})
 		// push the date forward so the price goes stale
-		helpers.setDate(timestamp().plus(days(2)).plus(1))
+		helpers.setDate(timestamp().plus(days(2)).plus(50))
 		// check to ensure we're stale and not liquidating
 		assert(await c.isLiquidating() === false, 'the contract should not be in liquidation')
 		assert(await c.priceIsStale() === true, 'the price should be stale')
@@ -973,11 +980,12 @@ contract('EtherNomin basic functionality', function(accounts) {
 			accounts[2],
 			accounts[3],
 			price,
-			owner
+			owner,
+			'0x0'
 		)
 
 		// issue two nomins
-		await c.issue(toUnit(2), {from: owner, value: issueValue})
+		await c.replenishPool(toUnit(2), {from: owner, value: issueValue})
 		// buy one nomin, removing it from the pool 
 		const purchaseCost = await c.purchaseCostEther(toUnit(1))
 		await c.buy(toUnit(1), {value: purchaseCost})
@@ -1002,11 +1010,12 @@ contract('EtherNomin basic functionality', function(accounts) {
 			accounts[2],
 			accounts[3],
 			price,
-			owner
+			owner,
+			'0x0'
 		)
 
 		// issue two nomins
-		await c.issue(toUnit(2), {from: owner, value: issueValue})
+		await c.replenishPool(toUnit(2), {from: owner, value: issueValue})
 		// buy one nomin, removing it from the pool 
 		const purchaseCost = await c.purchaseCostEther(toUnit(1))
 		await c.buy(toUnit(1), {value: purchaseCost})
@@ -1036,7 +1045,8 @@ contract('EtherNomin basic functionality', function(accounts) {
 			accounts[2],
 			accounts[3],
 			price,
-			owner
+			owner,
+			'0x0'
 		)
 
 		await assertRevert(c.forceLiquidation({ from: notOwner }))
@@ -1057,7 +1067,8 @@ contract('EtherNomin basic functionality', function(accounts) {
 			accounts[2],
 			accounts[3],
 			price,
-			owner
+			owner,
+			'0x0'
 		)
 
 		await c.forceLiquidation({ from: owner})
@@ -1081,7 +1092,8 @@ contract('EtherNomin basic functionality', function(accounts) {
 			accounts[2],
 			accounts[3],
 			price,
-			owner
+			owner,
+			'0x0'
 		)
 
 		await c.forceLiquidation({ from: owner})
@@ -1105,7 +1117,8 @@ contract('EtherNomin basic functionality', function(accounts) {
 			accounts[2],
 			accounts[3],
 			price,
-			owner
+			owner,
+			'0x0'
 		)
 
 		assert(await c.isLiquidating() === false, 'the contract should not be in liquidation')
@@ -1128,7 +1141,8 @@ contract('EtherNomin basic functionality', function(accounts) {
 			accounts[2],
 			accounts[3],
 			price,
-			owner
+			owner,
+			'0x0'
 		)
 
 		await c.forceLiquidation({ from: owner})
@@ -1156,7 +1170,8 @@ contract('EtherNomin basic functionality', function(accounts) {
 			accounts[2],
 			accounts[3],
 			price,
-			owner
+			owner,
+			'0x0'
 		)
 
 		await c.forceLiquidation({ from: owner})
@@ -1180,7 +1195,8 @@ contract('EtherNomin basic functionality', function(accounts) {
 			accounts[2],
 			accounts[3],
 			price,
-			owner
+			owner,
+			'0x0'
 		)
 
 		assert(await c.isLiquidating() === false, 'the contract should not be liquidating')
@@ -1207,7 +1223,8 @@ contract('EtherNomin basic functionality', function(accounts) {
 			accounts[2],
 			accounts[3],
 			price,
-			owner
+			owner,
+			'0x0'
 		)
 		
 		c.forceLiquidation({from: owner})
@@ -1237,21 +1254,23 @@ contract('EtherNomin basic functionality', function(accounts) {
 			oracle,
 			accounts[3],
 			highPrice,
-			owner
+			owner,
+			'0x0'
 		)
 
 		// issue two nomins
-		await c.issue(toUnit(2), {from: owner, value: issueValue})
+		await c.replenishPool(toUnit(2), {from: owner, value: issueValue})
 		// buy one nomin, removing it from the pool 
 		const purchaseCost = await c.purchaseCostEther(toUnit(1))
 		await c.buy(toUnit(1), {value: purchaseCost})
 		assert(toUnit(1).equals(await c.balanceOf(accounts[0])), 'accounts[0] should have a nomin')
 		// drop the price so the collat ration is < 1 and we start liquidating
-		await c.updatePrice(lowPrice, {from: oracle})
+		await c.updatePrice(lowPrice, futureTimestamp(), {from: oracle})
 		// ensure the contract state is as desired
 		assert(await c.isLiquidating() === true, 'the contract should be in liquidation')
 		assert(toUnit(1).greaterThan(await c.collateralisationRatio()), 'the collateralisation ratio should be < 1')
-		assert(toUnit(2).equals(await c.totalSupply.call()), 'totalSupply should be 2')
+		assert(toUnit(1).equals(await c.totalSupply.call()), 'totalSupply should be 1')
+		assert(toUnit(1).equals(await c.nominPool.call()), 'nominPool should be 1')
 		// we should not be able to terminate liquidation
 		await assertRevert(c.terminateLiquidation({ from: owner }))	
   });
@@ -1274,15 +1293,16 @@ contract('EtherNomin basic functionality', function(accounts) {
 			oracle,
 			accounts[3],
 			highPrice,
-			owner
+			owner,
+			'0x0'
 		)
 
 		// issue two nomins
-		await c.issue(toUnit(2), {from: owner, value: issueValue})
+		await c.replenishPool(toUnit(2), {from: owner, value: issueValue})
 		// drop the price so the collat ration is < 1 and we start liquidating
-		await c.updatePrice(lowPrice, {from: oracle})
-		// burn the tokens
-		await c.burn(toUnit(2), {from: owner})
+		await c.updatePrice(lowPrice, futureTimestamp(), {from: oracle})
+		// diminish the tokens
+		await c.diminishPool(toUnit(2), {from: owner})
 		// ensure the contract state is as desired
 		assert(await c.isLiquidating() === true, 'the contract should be in liquidation')
 		assert(toUnit(0).equals(await c.totalSupply.call()), 'totalSupply should be 0')
@@ -1310,11 +1330,12 @@ contract('EtherNomin basic functionality', function(accounts) {
 			oracle,
 			accounts[3],
 			highPrice,
-			owner
+			owner,
+			'0x0'
 		)
 
 		// issue two nomins
-		await c.issue(toUnit(2), {from: owner, value: issueValue})
+		await c.replenishPool(toUnit(2), {from: owner, value: issueValue})
 		// buy one nomin, removing it from the pool 
 		const purchaseCost = await c.purchaseCostEther(toUnit(1))
 		await c.buy(toUnit(1), {value: purchaseCost})
@@ -1324,7 +1345,8 @@ contract('EtherNomin basic functionality', function(accounts) {
 		// ensure the contract state is as desired
 		assert(await c.isLiquidating() === true, 'the contract should be in liquidation')
 		assert(toUnit(1).lessThan(await c.collateralisationRatio()), 'the collateralisation ratio should be > 1')
-		assert(toUnit(2).equals(await c.totalSupply.call()), 'totalSupply should be 2')
+		assert(toUnit(1).equals(await c.totalSupply.call()), 'totalSupply should be 1')
+		assert(toUnit(1).equals(await c.nominPool.call()), 'nominPool should be 1')
 		// we should be able to terminate liquidation
 		await c.terminateLiquidation({ from: owner })
   });

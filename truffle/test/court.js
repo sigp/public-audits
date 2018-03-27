@@ -5,6 +5,7 @@ const Court = artifacts.require('./Court.sol')
 const Havven = artifacts.require('./Havven.sol')
 const EtherNomin = artifacts.require('./EtherNomin.sol')
 const HavvenEscrow = artifacts.require('./HavvenEscrow.sol')
+const TokenState = artifacts.require('./TokenState.sol')
 
 const helpers = require('../testHelpers.js')
 const assertRevert = helpers.assertRevert
@@ -59,13 +60,13 @@ const jumpToNextFeePeriod = async function(h) {
 /*
  * Push a court contract to the end of a vote
  */
-const jumpToVoteEnd = async function(c, addr) {
-	const voteStart = await c.voteStartTimes.call(addr)
+const jumpToVoteEnd = async function(c, motionId) {
+	const voteStart = await c.motionStartTime.call(motionId)
 	assert(!toUnit(0).equals(voteStart), 'vote start is zero, wont jump')
 	const votingPeriod = await c.votingPeriod.call()
 	const target = voteStart.plus(votingPeriod)
 	helpers.setDate(target)
-	assert(await c.confirming(addr), 'vote is not in the confirmation period')
+	assert(await c.motionConfirming(motionId), 'vote is not in the confirmation period')
 }
 
 
@@ -78,7 +79,7 @@ contract('Court scenarios', function(accounts) {
 
 	it('should allow for a confiscation with 100% votes in favour and owner approval', async function() {
 		const rig = await deployer.setupTestRig(accounts)
-		
+
 		const owner = rig.accounts.owner
 		const n = rig.nomin
 		const h = rig.havven
@@ -105,44 +106,42 @@ contract('Court scenarios', function(accounts) {
 		await h.recomputeLastAverageBalance({ from: holderB })
 
 		// ensure trevor is not currently frozen or being voted upon
-		assert(await c.waiting(trevor), 'there should be no vote yet')
-		assert(await c.voting(trevor) === false, 'the vote should not have started')
-		assert(await c.confirming(trevor) === false, 'vote should not be in the confirmation period')
-		assert(await n.isFrozen(trevor) === false, 'trevor should not be frozen yet')
+		assert(await n.frozen(trevor) === false, 'trevor should not be frozen yet')
 
 		// start the confiscation
-		await c.beginConfiscationMotion(trevor, { from: holderA })
-		assert(await c.voting(trevor), 'the vote should have started')
-		
-		// have both holders vote against trevor
-		await c.voteFor(trevor, { from: holderA })
-		await c.voteFor(trevor, { from: holderB })
+		let motionId = await c.beginMotion(trevor, { from: holderA })
+		motionId = motionId.logs[0].args.motionID
+		assert(await c.motionVoting(motionId), 'the vote should have started')
 
-		// ensure the votes have been counted
-		assert(hundredMillion.equals(await c.votesFor.call(trevor)), 'votes for are wrong')
-		assert(toUnit(0).equals(await c.votesAgainst.call(trevor)), 'votes against are wrong')
+		// have both holders vote against trevor
+		await c.voteFor(motionId, { from: holderA })
+		await c.voteFor(motionId, { from: holderB })
+
+		// // ensure the votes have been counted
+		assert(hundredMillion.equals(await c.votesFor.call(motionId)), 'votes for are wrong')
+		assert(toUnit(0).equals(await c.votesAgainst.call(motionId)), 'votes against are wrong')
 
 		// jump to the end of the voting period
-		await jumpToVoteEnd(c, trevor)
-		
+		await jumpToVoteEnd(c, motionId)
+
 		// check that the vote should pass
-		assert(await c.votePasses(trevor), 'the vote should pass if approved')
+		assert(await c.motionPasses(motionId), 'the vote should pass if approved')
 
 		// have the owner approve the vote
-		await c.approve(trevor, { from: owner })	
+		await c.approveMotion(motionId, { from: owner })	
 
 		// ensure the vote worked
-		assert(await n.isFrozen(trevor) === true, 'trevor should be frozen')
+		assert(await n.frozen.call(trevor) === true, 'trevor should be frozen')
 
 		// close the vote
-		await c.closeVote(trevor)
-		assert(toUnit(0).equals(await c.voteStartTimes.call(trevor)))
+		await c.closeMotion(motionId)
+		assert(toUnit(0).equals(await c.motionStartTime.call(motionId)))
 	})
-	
-	
+
+
 	it('should not allow for a confiscation which has less than the required majority', async function() {
 		const rig = await deployer.setupTestRig(accounts)
-		
+
 		const owner = rig.accounts.owner
 		const n = rig.nomin
 		const h = rig.havven
@@ -170,44 +169,42 @@ contract('Court scenarios', function(accounts) {
 		await h.recomputeLastAverageBalance({ from: holderB })
 
 		// ensure trevor is not currently frozen or being vote upon
-		assert(await c.waiting(trevor), 'there should be no vote yet')
-		assert(await c.voting(trevor) === false, 'the vote should not have started')
-		assert(await c.confirming(trevor) === false, 'vote should not be in the confirmation period')
-		assert(await n.isFrozen(trevor) === false, 'trevor should not be frozen yet')
+		assert(await n.frozen(trevor) === false, 'trevor should not be frozen yet')
 
 		// start the confiscation
-		await c.beginConfiscationMotion(trevor, { from: holderA })
-		assert(await c.voting(trevor), 'the vote should have started')
-		
+		let motionId = await c.beginMotion(trevor, { from: holderA })
+		motionId = motionId.logs[0].args.motionID
+		assert(await c.motionVoting(motionId), 'the vote should have started')
+
 		// have both holders vote against trevor
-		await c.voteFor(trevor, { from: holderA })
-		await c.voteAgainst(trevor, { from: holderB })
+		await c.voteFor(motionId, { from: holderA })
+		await c.voteAgainst(motionId, { from: holderB })
 
 		// ensure the votes have been counted
-		assert(lessThanMajority.equals(await c.votesFor.call(trevor)), 'votes for are wrong')
-		assert(leftOverHavven.equals(await c.votesAgainst.call(trevor)), 'votes against are wrong')
+		assert(lessThanMajority.equals(await c.votesFor.call(motionId)), 'votes for are wrong')
+		assert(leftOverHavven.equals(await c.votesAgainst.call(motionId)), 'votes against are wrong')
 
 		// jump to the end of the voting period
-		await jumpToVoteEnd(c, trevor)
-		
+		await jumpToVoteEnd(c, motionId)
+
 		// check that the vote should pass
-		assert(await c.votePasses(trevor) === false, 'the vote should not pass if approved')
+		assert(await c.motionPasses(motionId) === false, 'the vote should not pass if approved')
 
 		// have the owner approve the vote
-		await assertRevert(c.approve(trevor, { from: owner }))
+		await assertRevert(c.approveMotion(motionId, { from: owner }))
 
 		// ensure the vote did not freeze the account
-		assert(await n.isFrozen(trevor) === false, 'trevor should not be frozen')
+		assert(await n.frozen(trevor) === false, 'trevor should not be frozen')
 
 		// close the vote
-		await c.closeVote(trevor)
-		assert(toUnit(0).equals(await c.voteStartTimes.call(trevor)))
+		await c.closeMotion(motionId)
+		assert(toUnit(0).equals(await c.motionStartTime.call(trevor)))
 	})
-	
-	
+
+
 	it('should not allow for a confiscation motion from an account with less than 100 havven', async function() {
 		const rig = await deployer.setupTestRig(accounts)
-		
+
 		const owner = rig.accounts.owner
 		const n = rig.nomin
 		const h = rig.havven
@@ -235,14 +232,11 @@ contract('Court scenarios', function(accounts) {
 		await h.recomputeLastAverageBalance({ from: holderB })
 
 		// ensure trevor is not currently frozen or being vote upon
-		assert(await c.waiting(trevor), 'there should be no vote yet')
-		assert(await c.voting(trevor) === false, 'the vote should not have started')
-		assert(await c.confirming(trevor) === false, 'vote should not be in the confirmation period')
-		assert(await n.isFrozen(trevor) === false, 'trevor should not be frozen yet')
+		assert(await n.frozen(trevor) === false, 'trevor should not be frozen yet')
 
 		// start the confiscation
-		await assertRevert(c.beginConfiscationMotion(trevor, { from: holderA }))
-		assert(await c.voting(trevor) === false, 'the vote should not have started')
+		await assertRevert(c.beginMotion(trevor, { from: holderA }))
+		assert(await c.motionVoting(trevor) === false, 'the vote should not have started')
 	})
 
 

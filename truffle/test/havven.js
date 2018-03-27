@@ -38,11 +38,11 @@ assert(bpFee(10000, 50).toString() === "50", 'bpFee() is wrong')
 /*
  * Determine that a is within a percentage of b
  */
-const withinMarginOfError = (a, b) => helpers.withinPercentageOf(a, b, 0.0001)
-assert(withinMarginOfError(10.00000999999, 10) === true, 'withinMarginOfError() broken')
-assert(withinMarginOfError(10.0000100001, 10) === false, 'withinMarginOfError() broken')
+const withinMarginOfError = (a, b) => helpers.withinPercentageOf(a, b, 0.001)
+assert(withinMarginOfError(10.0000999999, 10) === true, 'withinMarginOfError() broken')
+assert(withinMarginOfError(10.000100001, 10) === false, 'withinMarginOfError() broken')
 const assertWithinMargin = (a, b, msg) => assert(withinMarginOfError(a, b), msg)
-assertWithinMargin(10.00000999999, 10, 'assertWithinMargin() broken')
+assertWithinMargin(10.0000999999, 10, 'assertWithinMargin() broken')
 
 /*
  * Push a havven contract into its next fee period
@@ -64,12 +64,46 @@ const jumpToNextFeePeriod = async function(h) {
 contract('Havven scenarios', function(accounts) {
 
 
-	it('should distribute fees evenly if there are only two equal havven holders', async function() {
+	it('should allow vested tokens to be withdrawn', async function() {
 		const rig = await deployer.setupTestRig(accounts)
 
 		const owner = rig.accounts.owner
 		const n = rig.nomin
 		const h = rig.havven
+		const e = rig.escrow
+		const holderA = accounts[4]
+
+		// assign the havvens to the escrow contract
+		const hundredMillion = toUnit(Math.pow(10, 8))
+		await h.endow(e.address, hundredMillion, { from: owner })
+		assert(hundredMillion.equals(await h.balanceOf(e.address)), `escrow havven allocation is incorrect`)
+
+		// add the holders as escrowed users
+		const havvens = hundredMillion.dividedBy(2)
+		const intervals = 10
+		const intervalLength = days(1)
+		const startDate = timestamp()
+		const releaseDate = startDate.plus(intervalLength * intervals)
+		await e.addRegularVestingSchedule(holderA, releaseDate, havvens, intervals, { from: owner })
+		assert(havvens.equals(await e.totalVestedAccountBalance(holderA)), 'holderA should have vested tokens')
+		
+		for(var i = 1; i <= intervals; i++) {
+			const intervalDate = startDate.plus(intervalLength * i)
+			helpers.setDate(intervalDate)
+			await e.vest({ from: holderA})
+			const expectedBalance = havvens.dividedBy(intervals).times(i)
+			assert(expectedBalance.equals(await h.balanceOf(holderA)), 'holderA should receive tokens from vest()')
+		}
+	})
+
+
+	it('should distribute fees evenly if there are only two equal escrowed havven holders', async function() {
+		const rig = await deployer.setupTestRig(accounts)
+
+		const owner = rig.accounts.owner
+		const n = rig.nomin
+		const h = rig.havven
+		const e = rig.escrow
 		const holderA = accounts[4]
 		const holderB = accounts[5]
 
@@ -78,7 +112,7 @@ contract('Havven scenarios', function(accounts) {
 		const collateral = web3.toWei(nominIssuance.dividedBy(etherPrice).times(2), 'ether')
 		
 		// issue nomins and then have accounts[0] purchase them
-		await n.issue(nominIssuance, {from: owner, value: collateral})
+		await n.replenishPool(nominIssuance, {from: owner, value: collateral})
 		const purchaseCost = await n.purchaseCostEther(nominIssuance)
 		await n.buy(nominIssuance, {value: purchaseCost})
 		assert(nominIssuance.equals(await n.balanceOf(accounts[0])), 'accounts[0] should have all the nomins')
@@ -94,7 +128,69 @@ contract('Havven scenarios', function(accounts) {
 
 		// figure out how many fees should have been obtained from those transactions
 		const transferVolume = nominsSent.plus(nominsReturned).times(rounds)
-		const fees = bpFee(transferVolume, 20)
+		const fees = bpFee(transferVolume, 15)
+		// assert our expectation is reality
+		assert(fees.equals(await n.feePool.call()), `feePool was not as expected`)
+
+		// assign the havvens to the escrow contract
+		const hundredMillion = toUnit(Math.pow(10, 8))
+		await h.endow(e.address, hundredMillion, { from: owner })
+		assert(hundredMillion.equals(await h.balanceOf(e.address)), `escrow havven allocation is incorrect`)
+
+		// add the holders as escrowed users
+		const havvens = hundredMillion.dividedBy(2)
+		const releaseDate = timestamp().plus(days(100))
+		await e.addRegularVestingSchedule(holderA, releaseDate, havvens, 1, { from: owner })
+		await e.addRegularVestingSchedule(holderB, releaseDate, havvens, 1, { from: owner })
+		assert(havvens.equals(await e.totalVestedAccountBalance(holderA)), 'holderA should have vested tokens')
+
+		// push havven into the next fee period
+		await jumpToNextFeePeriod(h)
+
+		// check the fees can be withdrawn
+		assert(toUnit(0).equals(await n.balanceOf(holderA)), 'holderA should not have nomins yet')
+		assert(toUnit(0).equals(await n.balanceOf(holderB)), 'holderB should not have nomins yet')
+		await h.withdrawFeeEntitlement({ from: holderA })
+		await h.withdrawFeeEntitlement({ from: holderB })
+
+		// assert the fees are as expected
+		const halfOfFees = fees.dividedBy(2)
+		assertWithinMargin(await n.balanceOf(holderA), halfOfFees, 'holderA should have half the fees collected')
+		assertWithinMargin(await n.balanceOf(holderB), halfOfFees, 'holderB should have half the fees collected')
+	})
+
+	
+	it('should distribute fees evenly if there are only two equal havven holders', async function() {
+		const rig = await deployer.setupTestRig(accounts)
+
+		const owner = rig.accounts.owner
+		const n = rig.nomin
+		const h = rig.havven
+		const holderA = accounts[4]
+		const holderB = accounts[5]
+
+		const etherPrice = await n.etherPrice.call()
+		const nominIssuance = toUnit(10)
+		const collateral = web3.toWei(nominIssuance.dividedBy(etherPrice).times(2), 'ether')
+		
+		// issue nomins and then have accounts[0] purchase them
+		await n.replenishPool(nominIssuance, {from: owner, value: collateral})
+		const purchaseCost = await n.purchaseCostEther(nominIssuance)
+		await n.buy(nominIssuance, {value: purchaseCost})
+		assert(nominIssuance.equals(await n.balanceOf(accounts[0])), 'accounts[0] should have all the nomins')
+
+		// do a bunch of transactions between accounts[0] and accounts[6]
+		const rounds = 10
+		const nominsSent = toUnit(1)
+		const nominsReturned = toUnit(0.5)
+		for(var i = 0; i < rounds; i++){
+			await n.transfer(accounts[6], nominsSent, { from: accounts[0] })
+			await n.transfer(accounts[0], nominsReturned, { from: accounts[6] })
+		}
+
+		// figure out how many fees should have been obtained from those transactions
+		const transferVolume = nominsSent.plus(nominsReturned).times(rounds)
+		const fees = bpFee(transferVolume, 15)
 		// assert our expectation is reality
 		assert(fees.equals(await n.feePool.call()), `feePool was not as expected`)
 
@@ -135,7 +231,7 @@ contract('Havven scenarios', function(accounts) {
 		const collateral = web3.toWei(nominIssuance.dividedBy(etherPrice).times(2), 'ether')
 		
 		// issue nomins and then have accounts[0] purchase them
-		await n.issue(nominIssuance, {from: owner, value: collateral})
+		await n.replenishPool(nominIssuance, {from: owner, value: collateral})
 		const purchaseCost = await n.purchaseCostEther(nominIssuance)
 		await n.buy(nominIssuance, {value: purchaseCost})
 		assert(nominIssuance.equals(await n.balanceOf(accounts[0])), 'accounts[0] should have all the nomins')
@@ -151,7 +247,7 @@ contract('Havven scenarios', function(accounts) {
 
 		// figure out how many fees should have been obtained from those transactions
 		const transferVolume = nominsSent.plus(nominsReturned).times(rounds)
-		const fees = bpFee(transferVolume, 20)
+		const fees = bpFee(transferVolume, 15)
 		// assert our expectation is reality
 		assert(fees.equals(await n.feePool.call()), `feePool was not as expected`)
 
@@ -185,7 +281,7 @@ contract('Havven scenarios', function(accounts) {
 		const collateral = web3.toWei(nominIssuance.dividedBy(etherPrice).times(2), 'ether')
 		
 		// issue nomins and then have accounts[0] purchase them
-		await n.issue(nominIssuance, {from: owner, value: collateral})
+		await n.replenishPool(nominIssuance, {from: owner, value: collateral})
 		const purchaseCost = await n.purchaseCostEther(nominIssuance)
 		await n.buy(nominIssuance, {value: purchaseCost})
 		assert(nominIssuance.equals(await n.balanceOf(accounts[0])), 'accounts[0] should have all the nomins')
@@ -201,7 +297,7 @@ contract('Havven scenarios', function(accounts) {
 
 		// figure out how many fees should have been obtained from those transactions
 		const transferVolume = nominsSent.plus(nominsReturned).times(rounds)
-		const fees = bpFee(transferVolume, 20)
+		const fees = bpFee(transferVolume, 15)
 		const halfOfFees = fees.dividedBy(2)
 		const quarterOfFees = fees.dividedBy(4)
 		const threeQuartersOfFees = fees.times(0.75)
@@ -253,7 +349,7 @@ contract('Havven scenarios', function(accounts) {
 		const collateral = web3.toWei(nominIssuance.dividedBy(etherPrice).times(2), 'ether')
 		
 		// issue nomins and then have accounts[0] purchase them
-		await n.issue(nominIssuance, {from: owner, value: collateral})
+		await n.replenishPool(nominIssuance, {from: owner, value: collateral})
 		const purchaseCost = await n.purchaseCostEther(nominIssuance)
 		await n.buy(nominIssuance, {value: purchaseCost})
 		assert(nominIssuance.equals(await n.balanceOf(accounts[0])), 'accounts[0] should have all the nomins')
@@ -269,7 +365,7 @@ contract('Havven scenarios', function(accounts) {
 
 		// figure out how many fees should have been obtained from those transactions
 		const transferVolume = nominsSent.plus(nominsReturned).times(rounds)
-		const fees = bpFee(transferVolume, 20)
+		const fees = bpFee(transferVolume, 15)
 		const halfOfFees = fees.dividedBy(2)
 		const quarterOfFees = fees.dividedBy(4)
 		const threeQuartersOfFees = fees.times(0.75)
@@ -321,7 +417,7 @@ contract('Havven scenarios', function(accounts) {
 		const collateral = web3.toWei(nominIssuance.dividedBy(etherPrice).times(2), 'ether')
 		
 		// issue nomins and then have accounts[0] purchase them
-		await n.issue(nominIssuance, {from: owner, value: collateral})
+		await n.replenishPool(nominIssuance, {from: owner, value: collateral})
 		const purchaseCost = await n.purchaseCostEther(nominIssuance)
 		await n.buy(nominIssuance, {value: purchaseCost})
 		assert(nominIssuance.equals(await n.balanceOf(accounts[0])), 'accounts[0] should have all the nomins')
@@ -337,7 +433,7 @@ contract('Havven scenarios', function(accounts) {
 
 		// figure out how many fees should have been obtained from those transactions
 		const transferVolume = nominsSent.plus(nominsReturned).times(rounds)
-		const fees = bpFee(transferVolume, 20)
+		const fees = bpFee(transferVolume, 15)
 		const halfOfFees = fees.dividedBy(2)
 		// assert our expectation is reality
 		assert(fees.equals(await n.feePool.call()), `feePool was not as expected`)
@@ -387,7 +483,7 @@ contract('Havven scenarios', function(accounts) {
 		const collateral = web3.toWei(nominIssuance.dividedBy(etherPrice).times(2), 'ether')
 		
 		// issue nomins and then have accounts[0] purchase them
-		await n.issue(nominIssuance, {from: owner, value: collateral})
+		await n.replenishPool(nominIssuance, {from: owner, value: collateral})
 		const purchaseCost = await n.purchaseCostEther(nominIssuance)
 		await n.buy(nominIssuance, {value: purchaseCost})
 		assert(nominIssuance.equals(await n.balanceOf(accounts[0])), 'accounts[0] should have all the nomins')
@@ -403,7 +499,7 @@ contract('Havven scenarios', function(accounts) {
 
 		// figure out how many fees should have been obtained from those transactions
 		const transferVolume = nominsSent.plus(nominsReturned).times(rounds)
-		const fees = bpFee(transferVolume, 20)
+		const fees = bpFee(transferVolume, 15)
 		const quarterOfFees = fees.dividedBy(4)
 		// assert our expectation is reality
 		assert(fees.equals(await n.feePool.call()), `feePool was not as expected`)
@@ -448,6 +544,6 @@ contract('Havven scenarios', function(accounts) {
 		assertWithinMargin(await n.balanceOf(holderA), quarterOfFees, 'holderA should have 1/4 the fees collected')
 		assertWithinMargin(await n.balanceOf(holderB), quarterOfFees, 'holderB should have 1/4 the fees collected')
 	})
-
+	
 
 })

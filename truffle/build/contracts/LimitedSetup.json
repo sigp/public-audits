@@ -1,0 +1,20 @@
+{
+  "contractName": "LimitedSetup",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "name": "_setupDuration",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    }
+  ],
+  "bytecode": "0x60606040523415600e57600080fd5b604051602080606b8339810160405280805142600055600155505060358060366000396000f3006060604052600080fd00a165627a7a723058200674be87f6a1c09fd2063766b00f2c94850b426e7307059640824c880e8737770029",
+  "networks": {},
+  "schemaVersion": "1.0.1",
+  "updatedAt": "2018-03-08T08:04:03.203Z"
+}

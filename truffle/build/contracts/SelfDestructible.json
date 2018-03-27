@@ -1,0 +1,201 @@
+{
+  "contractName": "SelfDestructible",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "initiationTime",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_beneficiary",
+          "type": "address"
+        }
+      ],
+      "name": "setBeneficiary",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "terminateSelfDestruct",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "beneficiary",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_owner",
+          "type": "address"
+        }
+      ],
+      "name": "nominateOwner",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "acceptOwnership",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "selfDestruct",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "initiateSelfDestruct",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "name": "_owner",
+          "type": "address"
+        },
+        {
+          "name": "_beneficiary",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "newBeneficiary",
+          "type": "address"
+        }
+      ],
+      "name": "SelfDestructBeneficiaryUpdated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "duration",
+          "type": "uint256"
+        }
+      ],
+      "name": "SelfDestructInitiated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [],
+      "name": "SelfDestructTerminated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "beneficiary",
+          "type": "address"
+        }
+      ],
+      "name": "SelfDestructed",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "NewOwnerNominated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldOwner",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnerChanged",
+      "type": "event"
+    }
+  ],
+  "bytecode": "0x6060604052600019600255341561001557600080fd5b604051604080610534833981016040528080519190602001805160008054600160a060020a03958616600160a060020a031991821617909155600380549590921694169390931790925550506104c4806100706000396000f3006060604052600436106100985763ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166317c70de4811461009d5780631c31f710146100c25780633278c960146100e357806338af3eed146100f65780635b94db271461012557806379ba5097146101445780638da5cb5b146101575780639cb8a26a1461016a578063bd32aa441461017d575b600080fd5b34156100a857600080fd5b6100b0610190565b60405190815260200160405180910390f35b34156100cd57600080fd5b6100e1600160a060020a0360043516610196565b005b34156100ee57600080fd5b6100e1610219565b341561010157600080fd5b610109610268565b604051600160a060020a03909116815260200160405180910390f35b341561013057600080fd5b6100e1600160a060020a0360043516610277565b341561014f57600080fd5b6100e16102fa565b341561016257600080fd5b61010961031f565b341561017557600080fd5b6100e161032e565b341561018857600080fd5b6100e16103b5565b60025481565b60005433600160a060020a039081169116146101b157600080fd5b6003805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a0383161790557fd5da63a0b864b315bc04128dedbc93888c8529ee6cf47ce664dc204339228c5381604051600160a060020a03909116815260200160405180910390a150565b60005433600160a060020a0390811691161461023457600080fd5b6000196002557f6adcc7125002935e0aa31697538ebbd65cfddf20431eb6ecdcfc3e238bfd082c60405160405180910390a1565b600354600160a060020a031681565b60005433600160a060020a0390811691161461029257600080fd5b6001805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a0383161790557f4b8d098f259d8e813c68a57f09712ee062e342e1c2bc9063f1827c45b4900a9981604051600160a060020a03909116815260200160405180910390a150565b60015433600160a060020a0390811691161461031557600080fd5b61031d61040c565b565b600054600160a060020a031681565b60005433600160a060020a0390811691161461034957600080fd5b426203f4806002540110151561035e57600080fd5b6003547f8a09e1677ced846cb537dc2b172043bd05a1a81ad7e0033a7ef8ba762df990b790600160a060020a0316604051600160a060020a03909116815260200160405180910390a1600354600160a060020a0316ff5b60005433600160a060020a039081169116146103d057600080fd5b426002557fcbd94ca75b8dc45c9d80c77e851670e78843c0d75180cb81db3e2158228fa9a66203f48060405190815260200160405180910390a1565b6000546001547fb532073b38c83145e3e5135377a08bf9aab55bc0fd7c1179cd4fb995d2a5159c91600160a060020a039081169116604051600160a060020a039283168152911660208201526040908101905180910390a1600180546000805473ffffffffffffffffffffffffffffffffffffffff19908116600160a060020a038416179091551690555600a165627a7a723058203cf4fc926389d5381c6db9aeb9621732a5ef7db23a22a0920ce013a2d08d0d800029",
+  "networks": {},
+  "schemaVersion": "1.0.1",
+  "updatedAt": "2018-03-08T08:04:03.204Z"
+}

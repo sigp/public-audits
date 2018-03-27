@@ -18,13 +18,17 @@ const artifactor = new Artifactor(OUTPUT_BUILD_DIR);
 
 let solFiles = [
 	'Court.sol',
-	'ERC20FeeToken.sol',
-	'ERC20Token.sol',
 	'EtherNomin.sol',
+	'ExternStateProxyFeeToken.sol',
+	'ExternStateProxyToken.sol',
 	'Havven.sol',
 	'HavvenEscrow.sol',
+	'LimitedSetup.sol',
 	'Owned.sol',
+	'Proxy.sol',
 	'SafeDecimalMath.sol',
+	'SelfDestructible.sol',
+	'TokenState.sol',
 ]
 
 /*
@@ -45,7 +49,7 @@ console.log('Starting compile...')
  */
 var output = solc.compile({ sources: input }, 1)
 
-console.log('Finished compile.')
+console.log(`Finished compile.`)
 
 /*
  * Loop through the compiled data and create the truffle
