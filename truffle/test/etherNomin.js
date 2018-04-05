@@ -21,6 +21,12 @@ assert(toUnit(3).toString() === "3000000000000000000", 'toUnit() is wrong')
 const days = (x) => x * 60 * 60 * 24
 assert(days(2) === 172800, 'days() is wrong')
 /*
+ * Return the amount of seconds in x minutes
+ */
+const minutes = (x) => x * 60
+assert(minutes(30) === 1800, 'minutes() is wrong')
+
+/*
  * Return the timestamp of the current block
  */
 const timestamp = () => new BigNumber(web3.eth.getBlock(web3.eth.blockNumber).timestamp)
@@ -139,7 +145,7 @@ contract('EtherNomin basic functionality', function(accounts) {
 		)
 
 		const time = await web3.eth.getBlock(web3.eth.blockNumber).timestamp;
-		assert(await c.lastPriceUpdate.call() <= time + days(2), 'it has been too long since a price update')
+		assert(await c.lastPriceUpdateTime.call() <= time + minutes(30), 'it has been too long since a price update')
 		assert(await c.priceIsStale.call() !== true, 'priceIsStale() returned true when it should be false')
 	});
 	
@@ -149,7 +155,7 @@ contract('EtherNomin basic functionality', function(accounts) {
 	 *
 	 * When the price should be stale
 	 */
-	it("should return true from priceIsStale() if the price was update more than 2 days ago", async function() {
+	it("should return true from priceIsStale() if the price was update more than 30 mins ago", async function() {
 		const price = toUnit(1000)
 		
 		const c = await EtherNomin.new(
@@ -162,12 +168,12 @@ contract('EtherNomin basic functionality', function(accounts) {
 		)
 
 		const before =  web3.eth.getBlock(web3.eth.blockNumber).timestamp;
-		const after = before + days(2) + 1
+		const after = before + minutes(30) + 1
 		// set testrpc to be in the future
 		await helpers.setDate(after)
 		// mine a block so we have a new timestamp
 		const now =  web3.eth.getBlock(web3.eth.blockNumber).timestamp;
-		assert(await c.lastPriceUpdate.call() < now - days(2), 'the price update was too recent for this test')
+		assert(await c.lastPriceUpdateTime.call() < now - minutes(30), 'the price update was too recent for this test')
 		assert(await c.priceIsStale.call() === true, 'priceIsStale() did not return true')
   });
 	

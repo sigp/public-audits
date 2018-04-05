@@ -13,7 +13,7 @@ This public document is the deliverable of the audit engagement.
 
 ## Project History
 
-This is the second round of the review process:
+This is the third and final round of the review process:
 
  - *Round 1*: A review was conducted on commit
    `f0c5f040336e97e5e71dc90f2d51ba8eeb04276e`.
@@ -21,10 +21,8 @@ This is the second round of the review process:
    `540006e0e2e5ef729482ad8bebcf7eafcd5198c2`. The code changes in this commit
 address vulnerabilities found in Round 1 and also introduce new features to
 the smart contract.
-
-This document is the result of the Round 2 audit. The purpose of this document
-is to provide comment on the issues raised in Round 1 (e.g., fixed, acknowledged without modification)
-and also to highlight vulnerabilities which may have been introduced in the addition of new features.
+ - *Round 3*: Each open vulnerability raised in Round 2 was assessed
+as of commit `fa705dd2feabc9def03bce135f6a153a4b70b111`. 
 
 ## Project Overview
 
@@ -59,16 +57,17 @@ static).
 
 It is our understanding that the discrepancies between the whitepaper and the
 current smart contract functionality have been clearly communicated by Havven
-to the wider community. Instead, the current implementation is a step towards a final implementation that is detailed in the whitepaper.
+to the wider community. Instead, the current implementation is a step towards a
+final implementation that is detailed in the whitepaper.
 
 ## Contract Overview
 
 There are four main Solidity files, named `Court.sol`, `EtherNomin.sol`,
 `HavvenEscrow.sol` and `Havven.sol`, each of which possesses its own distinct
-logic. These four files define four primary Solidity `contracts`:
+logic. These four files define four primary Solidity contracts:
 
 - The `Court` contract, which dictates a voting mechanism whereby participants
-  of the system may vote to confiscate `havvens` from bad-actors. We understand
+  of the system may vote to confiscate `nomins` from bad-actors. We understand
 this is primarily intended to prevent token wrapping contracts, as discussed in
 the whitepaper.  
 - The `EtherNomin` contract, which specifies the `nomin` tokens, their creation
@@ -111,10 +110,11 @@ summarised in the **Overall Vulnerability List**, the testing team has
 identified that the contracts, as they stand are designed in a highly
 centralised fashion. The contracts specify an `owner` account whose privileges
 are paramount. As with most centralised systems, the greatest attack vector is
-to claim ownership of the contracts or to steal the private key(s) of the
-`owner` account. Should an attacker be successful, the entire system would be
-compromised; all tokens could be arbitrarily destroyed or stolen along with any
-`ether` contributed to the system.
+to claim ownership of the contracts or to gain control of the `owner` account
+(or contract) by stealing private keys (or attacking multisigs). Should an
+attacker be successful, the entire system would be compromised; all tokens
+could be arbitrarily destroyed or stolen along with any `ether` contributed to
+the system.
 
 In this audit, we dedicate a section to list the direct and indirect privileges
 the `owner` account has to demonstrate the extent of centralisation and
@@ -125,7 +125,11 @@ the attack surface to not just the contracts audited here, but to all contracts
 in the Ethereum ecosystem (this is detailed further in the **Potential
 Attacks** section).
 
-*The authors have acknowledged the issues outlined above and are aware of the potential risks.*
+*The authors have acknowledged the issues outlined above and are aware of the
+potential risks. The authors note that upon completion of the deployment,
+ownership of the contracts will reside with a multsig wallet, so assuming a
+majority of the foundation is not malicious, the job of seizing the ownership
+is more difficult than obtaining one private key.*
 
 ### Overall Vulnerability List
 
@@ -135,65 +139,68 @@ exploitable).
 
 |Vulnerability|File|Severity|Status|
 |-------------|----|:------:|------|
-| Token Wrapping Prevention Bypass|Court.sol|High|No fix implemented.
+| Token Wrapping Prevention Bypass|Court.sol|High|Authors intend the Court contract to be an element of dissuasion and are comfortable with it only preventing "casual attackers" at this point in time.
 | Arbitrary Dependent Contract Address Modification|EtherNomin.sol, Havven.sol, Court.sol, HavvenEscrow.sol, Proxy.sol, TokenState.sol|High|Is only exploitable by `owner` and authors are comfortable with the privileges granted to `owner`.
-| Insufficient Notice of Token State Owner Change|TokenState.sol| Low | *New vulnerability, awaiting comment...*
-| Insufficient Transfer Fee Rate Validation|ExternStateProxyFeeToken.sol|Low|Is only exploitable during deployment and authors are comfortable with the presence of this vulnerability.
 
 
 ### Per-Contract Vulnerability Summary
 
 #### Nomin Contract (`EtherNomin.sol` & `ExternStateProxyFeeToken.sol`)
 
-Besides the attacks by the `owner` outlined in **Owner Account Privileges** we
-found no vulnerabilities with these contracts.
+Besides the attacks by the `owner` outlined in **Owner Account Privileges** no
+known vulnerabilities have been identified.
 
 #### Havven Contract (`Havven.sol` & `ExternStateProxyToken.sol`)
 
-Besides the attacks by the `owner` outlined in **Owner Account Privileges** we
-found no vulnerabilities with these contracts.
+Besides the attacks by the `owner` outlined in **Owner Account Privileges** no
+known vulnerabilities have been identified.
 
-#### Voting Mechanism (`Court.sol`)
+#### Confiscation Mechanism (`Court.sol`)
 
-There exists vector which allows a specially-designed fee-avoidance token
+There exists a vector which allows a specially-designed fee-avoidance token
 wrapper contract to skirt the actions of the court in a decentralised manner
-(with respect to the participants in the wrapper contract). If one accepts that
-the primary purpose of the court is to avoid fee-avoiding token wrappers, the
-existence of such a contract significantly detracts from the `Court` .
+(with respect to the participants in the wrapper contract). The authors
+acknowledge and accept this vector with the following note:
+
+*"In line with the outline in the whitepaper, the court contract is a statement
+of intent as much as anything else. Ideally, it will never be used, and in this
+capacity it must act as an instrument of dissuasion. To this end, building the
+impression that the foundation is serious is as important as building the
+capacity itself. The court contract can defeat casual attackers, but it can be
+updated at a later stage if it becomes necessary. The foundation is prepared
+take further steps to protect nomins being wrapped whenever it is needful."*
+
+Apart from this vector, no known vulnerabilities have been identified.
 
 #### Havven Escrow (`HavvenEscrow.sol`)
 
-No vulnerabilities were found.
+No known vulnerabilities have been identified.
 
 #### Token State (`TokenState.sol`)
 
-Besides the attacks by the `owner` outlined in **Owner Account Privileges** we
-found no vulnerabilities with this contract.
+Besides the attacks by the `owner` outlined in **Owner Account Privileges** no
+known vulnerabilities have been identified.
 
 #### Proxy (`Proxy.sol`)
 
-Besides the attacks by the `owner` outlined in **Owner Account Privileges**,
-only one low severity vulnerability was identified in this contract (see
-*Insufficient Notice of Token State Owner Change*).
-A general recommendation to remove a potentially dangerous modifier is given, however this modifier is never used and not considered a vulnerability in the current contracts.
+Besides the attacks by the `owner` outlined in **Owner Account Privileges** no
+known vulnerabilities have been identified.
 
 #### Owned (`Owned.sol`)
 
-A general recommendation was made to remove a potentially dangerous function,
-however this function is not used dangerously in the implementation of these
-contracts and therefore is not considered a vulnerability.
+No known vulnerabilities have been identified.
 
 #### Safe Decimal Math (`SafeDecimalMath.sol`)
 
-No vulnerabilities were found.
+No known vulnerabilities have been identified.
 
 #### Self Destructible (`SelfDestructible.sol`)
 
-No vulnerabilities were found.
+No known vulnerabilities have been identified.
 
 #### Limited Setup (`LimitedSetup.sol`)
 
-No vulnerabilities were found.
+No known vulnerabilities have been identified.
 
 ## Detailed Audit
 
@@ -316,8 +323,8 @@ further logic (potentially slashing conditions) in setting up motions to
 prevent attackers from maliciously freezing `havvens`. Further discussion can
 be found in the **Potential Attacks** section.
 
-* [ ] Comment from authors: *"Not implemented: The suggested fix (immediate
-  freezing of havvens) has not been implemented at this stage."*
+* [ ] Acknowledged by authors (see *Per-Contract Vulnerability Summary* section
+  for author's comment).
 
 ##### Arbitrary Dependent Contract Address Modification
 
@@ -355,13 +362,16 @@ adjusted to not require an active owner.
 
 #### Low
 
-##### [NEW] Insufficient Notice of Token State Owner Change
+##### Insufficient Notice of Token State Owner Change
 
 **TokenState.sol [67]** - `associatedContract` can be changed without causing
 an event. This makes it difficult for the public to detect a scenario where a
 malicious owner changes the `associatedContract` address to one of their
 choosing, freely manipulates token balances and then sets `associatedOwner`
 back to the previous address.
+ 
+* [x] Addressed in `fa705dd`: the `TokenState` contract now emits a
+  `AssociatedContractUpdated` event whenever `associatedContract` is changed.
 
 ##### [NEW] Unused ContractFeesWithdrawn Event
 **HavvenEscrow.sol** - There is an event `ContractFeesWithdrawn` defined,
@@ -395,8 +405,9 @@ respected in the constructor. We suggest adding the validation to ensure the
 `feeTransferRate` isn't artificially set higher than the maximum rate during
 deployment.
 
-* [ ] Comment from authors: *"Not Implemented: There are other occurrences such
-  as in Court - we have decided to remain consistent."* .
+* [x] Addressed in `fa705dd`: the `ExternStateProxyFeeToken` contract (which
+  replaced `ERC20FeeToken`) now ensures that the initial transfer fee rate is
+less than `MAX_TRANSFER_FEE_RATE`.
 
 ##### Duplicate Event Call
 
@@ -425,34 +436,43 @@ contract is at least as large as the new `totalVestedBalance` variable.
 
 #### General Suggestions
 
-**[NEW] Proxy.sol[107]** - The modifier `onlyOwner_Proxy` is misleading and
+**Proxy.sol[107]** - The modifier `onlyOwner_Proxy` is misleading and
 dangerous as it can be easily bypassed. Anyone can use the proxy contract to
 call `setMessageSender()` of a `proxyable` contract. Thus, anyone can set `messageSender`
 to any address, including the `owner`, in effect allowing any user to call any
 function that uses the `onlyOwner_Proxy`. This modifier is not used in any contracts,
 but we suggest removing the modifier in case it ever gets used in future versions.  
 
-**[NEW] ExternStateProxyToken.sol[120]** - There is check to ensure that the
+* [x] Addressed in `fa705dd`: the `onlyOwner_Proxy` function has been removed.
+
+**ExternStateProxyToken.sol[120]** - There is check to ensure that the
 `from` address is not `0x0`. Such a check seems unnecessary. Furthermore, the
 same check is not present in `ExternStatProxyFeeToken`.
 
-**[NEW] Owner.sol** - Having the `_setOwner()` function seems unnecessarily
+* [x] Addressed in `fa705dd`: the check that to ensure `from != 0x0` was
+  removed.
+
+**Owner.sol** - Having the `_setOwner()` function seems unnecessarily
 dangerous. In the very unusual case it were called erroneously the result might
 be the owner being set to `0x0` (or whatever `nominatedOwner` is). It may be
 prudent to either include this logic in the `acceptOwnership` function, make
 the function `private`, or check for the `0x0` address.
 
-**[NEW] Havven.sol** - The Havven contract store its token balances in an
+* [x] Addressed in `fa705dd`: `_setOwner()` was removed and it is no longer
+  possible to set the `owner` to an account without first having control over
+that account.
+
+**Havven.sol** - The Havven contract store its token balances in an
 external state contract (`TokenState.sol`) to simplify a process where the
 Havven contract may be replaced with a newer version. The average Havven
 balances (used in determining an accounts share of Nomin fees) are not stored
 in this external state and would need to be either discarded or migrated
 manually.
 
-**[NEW] LimitedSetup.sol[43]** - `constructionTime + setupDuration` is calculated
-each time the modifier is run, even though it will never change after the
-contract is deployed. Long-term gas savings could be achieved by doing this
-addition in the constructor.
+* [x] Addressed by a note from the owners: *"We are aware of this, and are
+  willing to perform such manual migration steps necessary, but we are also
+considering further abstractions of the contract state to pull this information
+into its own auxiliary contract(s)."*
 
 **SafeDecimalMath.sol** - The typical convention to check over/underflows is to
 use the `assert()` function rather than `require()`. The `assert()` will
@@ -491,34 +511,33 @@ therefore which code is being run to estimate their weights.
 **Havven.sol** - The `lastAverageBalance` and `penultimateAverageBalance` are
 public but would quite frequently be out-of-date, potentially misleading users.
 
-* [ ] Comment from authors: *Not implemented: Added warning in comments that
+* [x] Comment from authors: *Not implemented: Added warning in comments that
   these values may be out-of-date.*
 
 **ERC20FeeToken [36]** - Use of `uint256` in contrast to otherwise consistent
 `unit` usage.
 
-* [x] Addressed in `540006e`: This is no longer present in `ERC20FeeToken.sol`.
-  However, it is now present in `TokenState.sol` (this is noted earlier in this
-section).
+* [x] Addressed in `540006e`: This is no longer present in `TokenState` (the
+  contract which replaced `ERC20FeeToken`).
 
 **EtherNomin.sol [193]** - The variable naming in the parameter could be
 changed to `wei` from `eth` to accurately represent the units being passed to
 the function.
 
-* [ ] Comment from authors: *Not Implemented: We have not renamed this variable.*
+* [x] Addressed in `fa705dd`: variable now has been renamed to `etherWei`
+  (`wei` cannot be used as it is a reserved keyword).
 
 **EtherNomin.sol [125]** - There is inconsistent naming in the parameters.
 `initialEtherPrice` should be changed to `_initialEtherPrice` for consistent
 naming.
 
-* [ ] Comment from authors: *Not Implemented: _ only used when parameter name
-  is the same as variable name.*
+* [x] Addressed in `fa705dd`: variable now has a `_` prefix.
 
 **EtherNomin.sol [87,90,94]** - We suggest making these variables public as
 they are important for users and applications to interact with the contract and
 understand its dynamics.
 
-* [ ] Comment from authors: *Not Implemented: We don't need to access these.
+* [x] Comment from authors: *Not Implemented: We don't need to access these.
   Those who wish to verify the values can do so through the source code.*
 
 **EtherNomin.sol** - It may be prudent to allow any address to call `terminateLiquidation()`.
@@ -535,6 +554,8 @@ understand its dynamics.
 **All Contracts** - We recommend setting a fixed Solidity compiler version
 rather than allowing all future versions, in the very low chance there is
 backwards compatibility issues with future versions.
+
+* [x] Addressed in `fa705dd`: compiler versions are now fixed.
 
 #### Remarks
 
@@ -636,8 +657,12 @@ of control of `owner` has been reduced.
 
 **The following are `Nomin` specific direct privileges:**
 
+**Proxy.sol [43] - _setTarget()** - The owner can set the
+`target` to any address of their choosing and disrupt the
+Havven system.
+
 **TokenState.sol [63] - setAssociatedContract()** - The owner can set the
-`associatedContract` to any address of their choosing an manipulate token
+`associatedContract` to any address of their choosing and manipulate token
 balances arbitrarily.
 
 * [x] The author is comfortable with the level of control granted to `owner`
@@ -698,12 +723,6 @@ contract addresses to any arbitrary address at any time.
 **HavvenEscrow.sol [230] - purgeAccount()** - The owner can delete any vesting
 account balance and remove them from the contract at any time without
 restriction.
-
-* [x] The author is comfortable with the level of control granted to `owner`
-
-**HavvenEscrow.sol [254] - appendVestingEntry()** - The owner can add any
-account to the escrow contract with any balance (irrespective of `havvens` in
-existence or currently in the contract).
 
 * [x] The author is comfortable with the level of control granted to `owner`
 
@@ -818,10 +837,13 @@ value arbitrarily.
 
 #### Gas Reduction Changes
 
-**[NEW] LimitedSetup.sol** - `constructionTime + setupDuration` is calculated
+**LimitedSetup.sol** - `constructionTime + setupDuration` is calculated
 each time the modifier is run, even though it will never change after the
 contract is deployed. Long-term gas savings could be achieved by doing this
 addition in the constructor.
+
+* [x] Addressed in `fa705dd`: the computation is performed once in the
+  constructor and stored in `setupExpiryTime`.
 
 Initialising variables costs gas. Variables that are initialised to their
 default values cost unnecessary gas. Removing these initialisation will reduce
@@ -860,81 +882,81 @@ To run the tests, navigate to the `truffle` directory and run `$ truffle test`.
 
 ```
 Contract: Court scenarios
-    ✓ should allow for a confiscation with 100% votes in favour and owner approval (3405ms)
-    ✓ should not allow for a confiscation which has less than the required majority (3422ms)
-    ✓ should not allow for a confiscation motion from an account with less than 100 havven (2673ms)
-
-  Contract: EtherNomin basic functionality
-    ✓ should use the values supplied in the constructor (171ms)
-    ✓ should return 4500 from a fiatValue(4.5) call if etherPrice is 1000 (117ms)
-    ✓ should return a fiatBalance of 2000 if etherPrice is 1000 and the contract holds 2 ETH (233ms)
-    ✓ should return 4.5 from a etherValue(4500) call if etherPrice is 1000 (106ms)
-    ✓ should return false from priceIsStale() if the price was recently updated (353ms)
-    ✓ should return true from priceIsStale() if the price was update more than 2 days ago (1024ms)
-    ✓ should return a ratio 3000 if there is 3 ETH in the contract, 1 nomin issued and an ETH price of $1500 (380ms)
-    ✓ should determine a pool fee of 0.01 nomins on a transfer of 2 nomin (106ms)
-    ✓ should return a purchase cost of $4.02 to purchase 4 nomins (111ms)
-    ✓ should return a purchase cost of 0.15075 ETH to purchase 300 nomins at an ethPrice of $2000 (171ms)
-    ✓ should return proceeds of $348.25 when selling 350 nomins (97ms)
-    ✓ should return proceeds of 70.39625 ETH when selling 283 nomins at an ETH price of $4 (114ms)
-    ✓ should return false to canSelfDestruct() if the liquidationTimestamp is in the future (331ms)
-    ✓ should return true to canSelfDestruct() if the liquidationPeriod has passed (1519ms)
-    ✓ should return true to canSelfDestruct() if all nomin have been returned to pool and its been 1 week since liquidation (1558ms)
-    ✓ should revert if the caller of updatePrice is not the oracle (325ms)
-    ✓ should set etherPrice to the supplied variable if updatePrice() is called by oracle (342ms)
-    ✓ should go into auto liquidation if the price is set so low the contract becomes under-collateralised (539ms)
-    ✓ should throw if replenishPool() called from not owner (158ms)
-    ✓ should throw if replenishPool() called when contract is liquidating (505ms)
-    ✓ should throw if replenishPool() called without sufficient collateralisation (144ms)
-    ✓ should throw if replenishPool() called when ethPrice is stale (806ms)
-    ✓ should update nominPool after replenishPool() (156ms)
-    ✓ should throw if diminishPool() called from not owner (171ms)
-    ✓ should throw if diminishing more tokens than in the pool (168ms)
-    ✓ should update nominPool after a diminishPool() (241ms)
-    ✓ should throw if buy() called when contract is liquidating (453ms)
-    ✓ should throw if buy() is less than 1/100th of a nomin (205ms)
-    ✓ should throw on buy() if price is stale (919ms)
-    ✓ should update nominPool and balanceOf on successful buy (266ms)
-    ✓ should update balanceOf and nominPool after sell() (267ms)
-    ✓ should allow sell() when the ethPrice is stale and contract is liquidating (1371ms)
-    ✓ should not allow sell() when the ethPrice is stale and contract is not liquidating (992ms)
-    ✓ should throw if selling more nomins than owned (286ms)
-    ✓ should transfer eth to seller (640ms)
-    ✓ should not allow a non-owner to call forceLiquidation() (191ms)
-    ✓ should allow a owner to call forceLiquidation() (465ms)
-    ✓ should not allow an owner to call forceLiquidation a second time (213ms)
-    ✓ should not allow extendLiquidationPeriod() when not in liquidation (140ms)
-    ✓ should extend liquidation period by 30 days (292ms)
-    ✓ should not allow the liquidationPeriod to be extended to 180.1 days (287ms)
-    ✓ should not allow a terminateLiquidation() call when not liquidating (253ms)
-    ✓ should not allow a terminateLiquidation() call when not liquidating (246ms)
-    ✓ should not allow liquidation termination when the collat ratio is too low and totalSupply > 0 (781ms)
-    ✓ should allow liquidation termination when the collat ratio is too low but totalSupply is 0 (660ms)
-    ✓ should allow liquidation termination when totalSupply > 0 but collatRatio is > 1 (429ms)
+    ✓ should allow for a confiscation with 100% votes in favour and owner approval (3316ms)
+    ✓ should not allow for a confiscation which has less than the required majority (3310ms)
+    ✓ should not allow for a confiscation motion from an account with less than 100 havven (2269ms)
 
   Contract: Havven scenarios
-    ✓ should allow vested tokens to be withdrawn (6765ms)
-    ✓ should distribute fees evenly if there are only two equal escrowed havven holders (3383ms)
-    ✓ should distribute fees evenly if there are only two equal havven holders (2998ms)
-    ✓ should not allow double fee withdrawal (1639ms)
-    ✓ should roll over uncollected fees into the next fee period (3573ms)
-    ✓ should not give any fees to someone who dumped all havvens in the penultimate fee period (4449ms)
-    ✓ should store an accurate penultimate avg. balance (4164ms)
-    ✓ should show an average balance of half if tokens are moved halfway though the fee period (4579ms)
+    ✓ should allow vested tokens to be withdrawn (6239ms)
+    ✓ should distribute fees evenly if there are only two equal escrowed havven holders (2804ms)
+    ✓ should distribute fees evenly if there are only two equal havven holders (2313ms)
+    ✓ should not allow double fee withdrawal (1403ms)
+    ✓ should roll over uncollected fees into the next fee period (2962ms)
+    ✓ should not give any fees to someone who dumped all havvens in the penultimate fee period (3444ms)
+    ✓ should store an accurate penultimate avg. balance (3427ms)
+    ✓ should show an average balance of half if tokens are moved halfway though the fee period (3536ms)
 
   Contract: Ownable
-    ✓ should set the owner to 0x0 if _setOwner() is called (106ms)
+    ✓ should set the owner to 0x0 if _setOwner() is called (109ms)
+
+  Contract: EtherNomin basic functionality
+    ✓ should use the values supplied in the constructor (133ms)
+    ✓ should return 4500 from a fiatValue(4.5) call if etherPrice is 1000 (141ms)
+    ✓ should return a fiatBalance of 2000 if etherPrice is 1000 and the contract holds 2 ETH (232ms)
+    ✓ should return 4.5 from a etherValue(4500) call if etherPrice is 1000 (86ms)
+    ✓ should return false from priceIsStale() if the price was recently updated (343ms)
+    ✓ should return true from priceIsStale() if the price was update more than 30 mins ago (1322ms)
+    ✓ should return a ratio 3000 if there is 3 ETH in the contract, 1 nomin issued and an ETH price of $1500 (357ms)
+    ✓ should determine a pool fee of 0.01 nomins on a transfer of 2 nomin (99ms)
+    ✓ should return a purchase cost of $4.02 to purchase 4 nomins (108ms)
+    ✓ should return a purchase cost of 0.15075 ETH to purchase 300 nomins at an ethPrice of $2000 (104ms)
+    ✓ should return proceeds of $348.25 when selling 350 nomins (92ms)
+    ✓ should return proceeds of 70.39625 ETH when selling 283 nomins at an ETH price of $4 (102ms)
+    ✓ should return false to canSelfDestruct() if the liquidationTimestamp is in the future (330ms)
+    ✓ should return true to canSelfDestruct() if the liquidationPeriod has passed (1380ms)
+    ✓ should return true to canSelfDestruct() if all nomin have been returned to pool and its been 1 week since liquidation (1330ms)
+    ✓ should revert if the caller of updatePrice is not the oracle (335ms)
+    ✓ should set etherPrice to the supplied variable if updatePrice() is called by oracle (336ms)
+    ✓ should go into auto liquidation if the price is set so low the contract becomes under-collateralised (405ms)
+    ✓ should throw if replenishPool() called from not owner (194ms)
+    ✓ should throw if replenishPool() called when contract is liquidating (413ms)
+    ✓ should throw if replenishPool() called without sufficient collateralisation (101ms)
+    ✓ should throw if replenishPool() called when ethPrice is stale (787ms)
+    ✓ should update nominPool after replenishPool() (129ms)
+    ✓ should throw if diminishPool() called from not owner (138ms)
+    ✓ should throw if diminishing more tokens than in the pool (138ms)
+    ✓ should update nominPool after a diminishPool() (190ms)
+    ✓ should throw if buy() called when contract is liquidating (515ms)
+    ✓ should throw if buy() is less than 1/100th of a nomin (161ms)
+    ✓ should throw on buy() if price is stale (822ms)
+    ✓ should update nominPool and balanceOf on successful buy (349ms)
+    ✓ should update balanceOf and nominPool after sell() (321ms)
+    ✓ should allow sell() when the ethPrice is stale and contract is liquidating (1240ms)
+    ✓ should not allow sell() when the ethPrice is stale and contract is not liquidating (1002ms)
+    ✓ should throw if selling more nomins than owned (221ms)
+    ✓ should transfer eth to seller (545ms)
+    ✓ should not allow a non-owner to call forceLiquidation() (101ms)
+    ✓ should allow a owner to call forceLiquidation() (340ms)
+    ✓ should not allow an owner to call forceLiquidation a second time (127ms)
+    ✓ should not allow extendLiquidationPeriod() when not in liquidation (124ms)
+    ✓ should extend liquidation period by 30 days (223ms)
+    ✓ should not allow the liquidationPeriod to be extended to 180.1 days (170ms)
+    ✓ should not allow a terminateLiquidation() call when not liquidating (137ms)
+    ✓ should not allow a terminateLiquidation() call when not liquidating (148ms)
+    ✓ should not allow liquidation termination when the collat ratio is too low and totalSupply > 0 (507ms)
+    ✓ should allow liquidation termination when the collat ratio is too low but totalSupply is 0 (454ms)
+    ✓ should allow liquidation termination when totalSupply > 0 but collatRatio is > 1 (429ms)
 
   Contract: Test Rig
-    ✓ should build a test rig without throwing (618ms)
-    ✓ should allow for the reading of nomin etherPrice after deployment (664ms)
+    ✓ should build a test rig without throwing (425ms)
+    ✓ should allow for the reading of nomin etherPrice after deployment (532ms)
 
   Contract: Variable Return Data
-    ✓ should allow for variable return data (402ms)
-    ✓ should allow a call directly to the proxy using the .at() method (239ms)
+    ✓ should allow for variable return data (194ms)
+    ✓ should allow a call directly to the proxy using the .at() method (140ms)
 
 
-  62 passing (1m)
+  62 passing (55s)
 ```
 
 _These tests are a by-product of the audit do not represent comprehensive unit
@@ -949,3 +971,4 @@ this audit. Sigma Prime does not provide any guarantees relating to the
 function of the smart contract. Sigma Prime makes no judgements on, or provides
 audit on, the viability of the token sale, the underlying business model or the
 individuals involved in the token sale.
+

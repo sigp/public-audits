@@ -82,18 +82,26 @@ contract('Havven scenarios', function(accounts) {
 		const havvens = hundredMillion.dividedBy(2)
 		const intervals = 10
 		const intervalLength = days(1)
-		const startDate = timestamp()
-		const releaseDate = startDate.plus(intervalLength * intervals)
-		await e.addRegularVestingSchedule(holderA, releaseDate, havvens, intervals, { from: owner })
+		const startDate = timestamp().plus(100)
+		// create an array of times
+		const times = new Array(intervals)
+			.fill(0)
+			.map((v, i) => startDate.plus(i * intervalLength))
+		// create an array of quantities to be release at each time
+		const quantities = new Array(intervals)
+			.fill(0)
+			.map((v, i) => havvens.dividedBy(intervals));
+		await e.addVestingSchedule(holderA, times, quantities, { from: owner })
 		assert(havvens.equals(await e.totalVestedAccountBalance(holderA)), 'holderA should have vested tokens')
-		
-		for(var i = 1; i <= intervals; i++) {
-			const intervalDate = startDate.plus(intervalLength * i)
-			helpers.setDate(intervalDate)
+
+		for(i = 0; i < times.length; i++) {
+			helpers.setDate(times[i].plus(100));
 			await e.vest({ from: holderA})
-			const expectedBalance = havvens.dividedBy(intervals).times(i)
-			assert(expectedBalance.equals(await h.balanceOf(holderA)), 'holderA should receive tokens from vest()')
+			const expectedBalance = quantities[i].times(i + 1)
+			const balance = await h.balanceOf(holderA)
+			assert(balance.equals(expectedBalance), 'holderA should receive tokens from vest()')
 		}
+		assert(havvens.equals(await h.balanceOf(holderA)), 'holderA should have all tokens after vesting')
 	})
 
 
@@ -139,9 +147,14 @@ contract('Havven scenarios', function(accounts) {
 
 		// add the holders as escrowed users
 		const havvens = hundredMillion.dividedBy(2)
-		const releaseDate = timestamp().plus(days(100))
-		await e.addRegularVestingSchedule(holderA, releaseDate, havvens, 1, { from: owner })
-		await e.addRegularVestingSchedule(holderB, releaseDate, havvens, 1, { from: owner })
+		const times = [
+			timestamp().plus(days(100))
+		]
+		const quantities = [
+			havvens
+		]
+		await e.addVestingSchedule(holderA, times, quantities, { from: owner })
+		await e.addVestingSchedule(holderB, times, quantities, { from: owner })
 		assert(havvens.equals(await e.totalVestedAccountBalance(holderA)), 'holderA should have vested tokens')
 
 		// push havven into the next fee period

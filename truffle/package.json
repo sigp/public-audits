@@ -7,7 +7,9 @@
     "test": "test"
   },
   "dependencies": {
-    "bignumber.js": "5.0.0"
+    "bignumber.js": "5.0.0",
+    "solc": "^0.4.21",
+    "truffle-artifactor": "^3.0.4"
   },
   "devDependencies": {},
   "scripts": {
