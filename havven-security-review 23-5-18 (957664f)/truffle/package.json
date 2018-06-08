@@ -1,0 +1,21 @@
+{
+  "name": "truffle",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "bignumber.js": "5.0.0",
+    "solc": "^0.4.24",
+    "solc-js": "^0.4.20-browser.1",
+    "truffle-artifactor": "^3.0.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
