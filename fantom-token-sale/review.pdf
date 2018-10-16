@@ -1,0 +1,97 @@
+
+\documentclass[10pt]{article}
+
+% Preamble
+\usepackage[a4paper,width=170mm,top=18mm,bottom=17mm,includeheadfoot]{geometry}
+\usepackage{SigmaPrimeReport} % Include Sigma Prime's sty file
+\usepackage[colorlinks=true,linkcolor={blue!50!black},citecolor={blue!50!black},urlcolor={blue!50!black}]{hyperref}
+\usepackage{listings}
+\usepackage[utf8]{inputenc}
+\usepackage{pmboxdraw}
+\usepackage{multicol}
+\usepackage{pifont}
+\usepackage{graphicx}% Include figure files
+\usepackage{dcolumn}% Align table columns on decimal point
+\usepackage{bm}% bold math
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{url}
+\usepackage{tocloft}
+\usepackage{fancyhdr}
+\usepackage{verbatim}
+% Testing framework unicode chars
+\usepackage{newunicodechar}
+\newunicodechar{✓}{\ding{51}}
+\newunicodechar{✗}{\ding{55}}
+% Paragraph formatting
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{\baselineskip}
+\usepackage[title]{appendix}
+\lstset{
+  basicstyle=\ttfamily,
+  backgroundcolor=\color{black!05},
+  breaklines=true,
+  escapeinside={*!}{*!},
+  breakatwhitespace=false,
+  keepspaces=true,
+  tabsize=2
+}
+
+
+\begin{document}
+% Set up report variables
+\client{Fantom}
+\clientLogo{imgs/fantom.png}
+\clientLogoWidth{10cm}
+\project{Fantom Contract Review}
+\version{1.0}
+% Set the prefix for vulnerabilities.
+\vulnprefix{FTM}
+
+
+\maketitle
+\tableofcontents
+\newpage
+\pagestyle{fancy}
+\renewcommand{\sectionmark}[1]{\markright{#1}}
+% Begin the actual audit here
+\input{sections/introduction.tex}
+\newpage
+\input{sections/audit-summary.tex}
+% Add Summary of Findings
+\newpage
+\input{sections/detailed-findings.tex}
+\newpage
+\vspace{-1.5cm}
+\input{sections/vuln-lockdown.tex}
+\pagebreak
+\input{sections/vuln-unlimited-tokens.tex}
+\pagebreak
+\input{sections/vuln-totalSupply.tex}
+\pagebreak
+\input{sections/vuln-burning.tex}
+\pagebreak
+\input{sections/vuln-erc20.tex}
+\pagebreak
+\input{sections/vuln-gas.tex}
+\pagebreak
+\input{sections/vuln-misc.tex}
+\pagebreak
+
+%% Appendices 
+\begin{appendices}
+
+%% Tests
+\input{sections/tests.tex}
+\pagebreak
+
+%% Severity Matrix
+\section{Vulnerability Severity Classification}
+\label{app:classification}
+\severityMatrix
+\end{appendices}
+\bibliographystyle{./references/unsrt-age.bst}
+\bibliography{./references/references}
+\end{document}
+
+
