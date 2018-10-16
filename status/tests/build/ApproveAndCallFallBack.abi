@@ -1,0 +1,1 @@
+[{"constant":false,"inputs":[{"name":"from","type":"address"},{"name":"_amount","type":"uint256"},{"name":"_token","type":"address"},{"name":"_data","type":"bytes"}],"name":"receiveApproval","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"}]

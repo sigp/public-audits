@@ -1,0 +1,1 @@
+[{"constant":false,"inputs":[{"name":"_nothing","type":"bytes32"}],"name":"dropUsername","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"payable":false,"stateMutability":"nonpayable","type":"fallback"}]
