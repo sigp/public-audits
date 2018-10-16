@@ -70,7 +70,7 @@ def registrar_deploy(
                 '_ensRegistry': ens_c.address,
                 '_resolver': resolver_c.address,
                 '_ensNode': ens_node,
-                '_usernameMinLenght': int(username_min_length),
+                '_usernameMinLength': int(username_min_length),
                 '_reservedUsernamesMerkleRoot': reserved_merkle_root,
                 '_parentRegistry': parent_registry
             }

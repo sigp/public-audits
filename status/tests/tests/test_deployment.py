@@ -18,7 +18,7 @@ def test_params_instantiated(registrar_deploy, variables):
     assert c.ensNode().call() == variables["ens_node"], "Wrong ENS node"
     assert c.ensRegistry().call() == ens_c.address, "Wrong ENS Registry "
     assert c.resolver().call() == resolver_c.address, "Wrong Resolver"
-    assert c.usernameMinLenght().call() == 10, "Wrong Minimum username length"
+    assert c.usernameMinLength().call() == 10, "Wrong Minimum username length"
     assert c.reservedUsernamesMerkleRoot().call().hex() == "00"*32 , "Merkle root not initialised correctly"
     assert c.parentRegistry().call() == variables["zero_address"], "Wrong parent registry"
 

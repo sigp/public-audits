@@ -183,7 +183,7 @@ def test_no_early_release(accounts, registrar_deploy, w3, assert_tx_failed, vari
     ).transact({'from': accounts[0]})
 
     # Ensure release in the future
-    assert c.functions.getExpirationTime(label).call() > block_timestamp(), "ExpirationTime Returned Correct"
+    assert c.functions.getReleaseTime(label).call() > block_timestamp(), "ExpirationTime Returned Correct"
 
     # Try to release early - should revert
     assert_tx_failed(c.functions.release(label), {'from': accounts[0]})
@@ -210,9 +210,9 @@ def test_no_other_release(accounts, registrar_deploy, w3, assert_tx_failed, vari
     ).transact({'from': accounts[0]})
 
     # Ensure release in the future
-    assert c.functions.getExpirationTime(label).call() > block_timestamp(), "ExpirationTime Returned Correct"
+    assert c.functions.getReleaseTime(label).call() > block_timestamp(), "ExpirationTime Returned Correct"
 
-    ganache_set_time(c.functions.getExpirationTime(label).call())
+    ganache_set_time(c.functions.getReleaseTime(label).call())
 
     # Try to release early - should revert
     assert_tx_failed(c.functions.release(label), {'from': accounts[2]})
@@ -224,6 +224,7 @@ def test_release_allowed(accounts, registrar_deploy, w3, get_logs_for_event, var
 
     # Label
     label = w3.soliditySha3(['string'], ['hello'])
+    namehash = w3.soliditySha3(['bytes32','bytes32'], [ens_node, label])
 
     # Activate and Transfer
     new_price = 1e2
@@ -239,9 +240,9 @@ def test_release_allowed(accounts, registrar_deploy, w3, get_logs_for_event, var
     ).transact({'from': accounts[0]})
 
     # Ensure release in the future
-    assert c.functions.getExpirationTime(label).call() > block_timestamp(), "ExpirationTime Returned Correct"
+    assert c.functions.getReleaseTime(label).call() > block_timestamp(), "ExpirationTime Returned Correct"
 
-    ganache_set_time(c.functions.getExpirationTime(label).call() + days(2))
+    ganache_set_time(c.functions.getReleaseTime(label).call() + days(2))
 
     # Release
     tx_event = get_logs_for_event(c.events.UsernameOwner, c.functions.release(label).transact({'from': accounts[0]}))
@@ -250,7 +251,7 @@ def test_release_allowed(accounts, registrar_deploy, w3, get_logs_for_event, var
     assert tx_event[0]['args']['owner'] == variables['zero_address']
 
     # UsernaameOwner(label, 0) => namehash == label!!
-    assert '0x' + tx_event[0]['args']['nameHash'].hex() == label.hex()
+    assert '0x' + tx_event[0]['args']['nameHash'].hex() == namehash.hex()
 
 
 def test_no_double_release(accounts, registrar_deploy, w3, get_logs_for_event, variables, block_timestamp, ganache_set_time, days, assert_tx_failed):
@@ -278,9 +279,9 @@ def test_no_double_release(accounts, registrar_deploy, w3, get_logs_for_event, v
     ).transact({'from': accounts[0]})
 
     # Ensure release in the future
-    assert c.functions.getExpirationTime(label).call() > block_timestamp(), "ExpirationTime Returned Correct"
+    assert c.functions.getReleaseTime(label).call() > block_timestamp(), "ExpirationTime Returned Correct"
 
-    ganache_set_time(c.functions.getExpirationTime(label).call() + days(2))
+    ganache_set_time(c.functions.getReleaseTime(label).call() + days(2))
 
     # Release
     c.functions.release(label).transact({'from': accounts[0]})

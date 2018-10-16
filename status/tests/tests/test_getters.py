@@ -297,7 +297,7 @@ def test_get_expiration_time_incorrect(accounts, registrar_deploy, w3, days):
     ).transact({'from': chosen_account})
 
     # Check the correct creation time
-    assert c.functions.getExpirationTime(w3.sha3(text='helloworld')).call() == 0, "Non-existing label returned unexpected behaviour for expiration time"
+    assert c.functions.getReleaseTime(w3.sha3(text='helloworld')).call() == 0, "Non-existing label returned unexpected behaviour for expiration time"
 
 
 def test_get_expiration_time_correct(accounts, registrar_deploy, w3, days, block_timestamp, get_receipt):
@@ -329,4 +329,4 @@ def test_get_expiration_time_correct(accounts, registrar_deploy, w3, days, block
     expected = block_timestamp(get_receipt(tx)['blockNumber']) + days(365)
 
     # Check the correct account balance is returned
-    assert c.functions.getExpirationTime(label).call() == expected, "Correct expiration time returned"
+    assert c.functions.getReleaseTime(label).call() == expected, "Correct expiration time returned"

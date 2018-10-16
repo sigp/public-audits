@@ -59,7 +59,7 @@ def test_user_migration_after_registrar_transfer(accounts, registrar_deploy, w3,
     for i in range(1,10):
         label = sha3(['string'], ["name" + str(i)])
         if i % 2 == 0:
-            c.functions.moveAccount(label).transact({'from': accounts[i]})
+            c.functions.moveAccount(label, c2.address).transact({'from': accounts[i]})
             assert token_c.functions.balanceOf(accounts[i]).call() == 0, "Incorrect price returned"
             assert c2.functions.getAccountOwner(label).call() == accounts[i], "Incorrect migrated owner returned"
         else:
