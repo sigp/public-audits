@@ -26,7 +26,7 @@ contract('StandardToken', function (accounts) {
 		this.token = contract.fantom;
 		assert(owner === contract.owner);
 		await assignTokens(this.token, owner, 100);
-		await th.setDate(ICOEndTime + 1);
+		await th.setDate(contract.ICOEndTime + 1);
 		await this.token.makeTradeable();
   });
 

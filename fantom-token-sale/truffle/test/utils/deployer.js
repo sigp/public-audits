@@ -9,7 +9,7 @@ module.exports.setupContract = async function(accounts) {
 
 		await th.mineOne();	
 		let owner = accounts[0]
-    ICOStartTime = parseInt(timestamp()) + 100; 
+    ICOStartTime = parseInt(timestamp()) + 1000; 
     ICOEndTime = ICOStartTime  + 5 *days
     let fantom = await Fantom.new(ICOStartTime, ICOEndTime, {from: owner})
 

@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "bignumber.js": "5.0.0",
+    "ganache-cli": "^6.1.2",
     "solc": "^0.4.24",
     "solc-js": "^0.4.20-browser.1",
     "truffle-artifactor": "^3.0.4"

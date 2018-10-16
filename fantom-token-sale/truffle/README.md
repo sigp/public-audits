@@ -1,4 +1,4 @@
-# Fantom Token Review 
+# Fantom Token Review
 
 This directory contains the testing suite used in the security review. In order
 to run the tests the requisite node modules need to be installed. This can be
