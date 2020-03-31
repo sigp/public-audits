@@ -31,7 +31,7 @@ pycryptodome==3.7.2
 pyethash==0.1.27
 pysha3==1.0.2
 pytest==4.0.2
-PyYAML==3.13
+PyYAML==5.1
 repoze.lru==0.7
 requests==2.21.0
 rlp==0.6.0
