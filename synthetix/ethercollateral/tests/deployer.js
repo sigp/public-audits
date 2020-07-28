@@ -24,6 +24,11 @@ const EtherCollateral = artifacts.require('./EtherCollateral.sol')
 const Issuer = artifacts.require('./Issuer.sol')
 const ExchangeState = artifacts.require('./ExchangeState.sol')
 const Exchanger = artifacts.require('./Exchanger.sol')
+const SystemStatus = artifacts.require('./SystemStatus.sol')
+const Liquidations = artifacts.require('./Liquidations.sol')
+const IssuanceEternalStorage = artifacts.require('./IssuanceEternalStorage.sol')
+const EternalStorage = artifacts.require('./EternalStorage.sol')
+
 
 const zeroAddress = '0x0000000000000000000000000000000000000000'
 
@@ -117,7 +122,7 @@ const deployTestRig = async function (accounts) {
   EtherCollateral.link('SafeDecimalMath', safeMath.address)
   Issuer.link('SafeDecimalMath', safeMath.address)
   Exchanger.link('SafeDecimalMath', safeMath.address)
-
+  Liquidations.link('SafeDecimalMath', safeMath.address)
 
   const lastMintEvent = 0;
   const currentWeek = 0;
@@ -132,6 +137,17 @@ const deployTestRig = async function (accounts) {
   const exchanger = await Exchanger.new(owner, resolver.address, { from: owner});
   const exchangeState = await ExchangeState.new(owner, exchanger.address, { from: owner});
 
+  // Deploy SystemStatus contract
+  const status = await SystemStatus.new(owner, { from: owner});
+
+  // Deploy Liquidations
+  const liquidations = await Liquidations.new(owner, resolver.address, { from: owner});
+
+  // Deploy IssuanceEternalStorage
+  const issuanceEternalStorage = await IssuanceEternalStorage.new(owner, issuer.address, { from: owner});
+
+  // Deploy EternalStorage for Liquidations
+  const eternalStorageLiquidations = await EternalStorage.new(owner, liquidations.address, { from: owner});
 
 
   /*
@@ -154,12 +170,11 @@ const deployTestRig = async function (accounts) {
   const SYNTHETIX_TOTAL_SUPPLY = web3.utils.toWei('100000000');
   /*
    * Deploy the FeePool contract
-   */
+   */issuanceEternalStorage
   const proxyForFeePool = await Proxy.new(owner)
   const feePool = await FeePool.new(
     proxyForFeePool.address,
     owner,
-    exchangeFeeRate,
     resolver.address
   )
   await feePoolState.setFeePool(feePool.address, { from: owner });
@@ -234,7 +249,7 @@ const deployTestRig = async function (accounts) {
       [synth, proxy, state] = await deploySynth(owner, currencyKey, resolver)
     }
     // Add this Synth to the Synthetix contract.
-    await synthetix.addSynth(synth.address, { from: owner })
+    await issuer.addSynth(synth.address, { from: owner })
     // Store the synth, proxy and state for later.
     synths[currencyKey] = synth
     synthStates[currencyKey] = state
@@ -266,10 +281,13 @@ const deployTestRig = async function (accounts) {
     'Exchanger',
     'ExchangeRates',
     'ExchangeState',
+    'EternalStorageLiquidations',
     'FeePool',
     'FeePoolEternalStorage',
     'FeePoolState',
+    'IssuanceEternalStorage',
     'Issuer',
+    'Liquidations',
     'MultiCollateral',
     'RewardEscrow',
     'RewardsDistribution',
@@ -279,6 +297,7 @@ const deployTestRig = async function (accounts) {
     'SynthetixState',
     'SynthsETH',
     'SynthsUSD',
+    'SystemStatus',
   ].map(toBytes32),
   [
     delegateApprovals.address,
@@ -287,10 +306,13 @@ const deployTestRig = async function (accounts) {
     exchanger.address,
     exchangeRates.address,
     exchangeState.address,
+    eternalStorageLiquidations.address,
     feePool.address,
     feePoolEternalStorage.address,
     feePoolState.address,
+    issuanceEternalStorage.address,
     issuer.address,
+    liquidations.address,
     ethcol.address, // MultiCollateral for Synth uses EtherCollateral
     rewardEscrow.address,
     rewardsDistribution.address,
@@ -300,9 +322,20 @@ const deployTestRig = async function (accounts) {
     synthetixStateForSynthetix.address,
     synths[toBytes32('sETH')].address,
     synths[toBytes32('sUSD')].address,
+    status.address,
   ],
   { from: owner }
 );
+
+  await ethcol.setResolverAndSyncCache(resolver.address, { from: owner });
+  await feePool.setResolverAndSyncCache(resolver.address, { from: owner });
+  await exchanger.setResolverAndSyncCache(resolver.address, { from: owner });
+  await issuer.setResolverAndSyncCache(resolver.address, { from: owner });
+  await synths[toBytes32('sETH')].setResolverAndSyncCache(resolver.address, { from: owner });
+  await synths[toBytes32('sUSD')].setResolverAndSyncCache(resolver.address, { from: owner });
+  await liquidations.setResolverAndSyncCache(resolver.address, { from: owner });
+  await synthetix.setResolverAndSyncCache(resolver.address, { from: owner });
+  await depot.setResolverAndSyncCache(resolver.address, { from: owner });
 
 
   /*

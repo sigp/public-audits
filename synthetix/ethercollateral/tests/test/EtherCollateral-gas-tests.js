@@ -42,7 +42,7 @@ const YEAR = 31536000;
 
 const ONE_ETH = toUnit('1');
 const TWO_ETH = toUnit('2');
-const ISSUANCE_RATIO = toUnit('0.666666666666666667');
+const ISSUANCE_RATIO = toUnit('0.8');
 
 // Open some number of loans of value, as a single account, one after the other
 // if logEveryX is nonZero, we log progress every X

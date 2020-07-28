@@ -42,7 +42,7 @@ const YEAR = 31536000;
 
 const ONE_ETH = toUnit('1');
 const TWO_ETH = toUnit('2');
-const ISSUANCE_RATIO = toUnit('0.666666666666666667');
+const ISSUANCE_RATIO = toUnit('0.8');
 
 const openNLoansConcurrent = async function(ethcol, n, fromAccount, value, XConcurrent) {
   if (XConcurrent > 0) {
@@ -139,6 +139,8 @@ contract("EtherCollateral", async function(accounts) {
     it("should have a minLoanSize of 1", async function() {
       assertBNEqual((await this.ethcol.minLoanSize()), ONE_ETH, "Incorrect minLoanSize");
     });
+
+
     it("should have no issued synths or loans", async function() {
       assertBNEqual((await this.ethcol.totalIssuedSynths()), toBN("0"));
       assertBNEqual((await this.ethcol.totalLoansCreated()), toBN("0"));
@@ -147,13 +149,13 @@ contract("EtherCollateral", async function(accounts) {
       assertBNEqual((await this.ethcol.loanLiquidationOpen()), false);
     });
 
-    it('should have a collateralizationRatio of 150%', async function() {
-     const defaultRatio = toUnit(150);
+    it('should have a collateralizationRatio of 125%', async function() {
+     const defaultRatio = toUnit(125);
      const actualRatio = await this.ethcol.collateralizationRatio();
      assertBNEqual(actualRatio, defaultRatio);
     });
 
-    it('should have an issuanceRatio of 66.6666666666666667%', async function() {
+    it('should have an issuanceRatio of 80%', async function() {
      assertBNEqual(await this.ethcol.issuanceRatio(), ISSUANCE_RATIO);
     });
 
@@ -196,7 +198,7 @@ contract("EtherCollateral", async function(accounts) {
 
     it("should not be able to set up an invalid collateralisation ratio", async function() {
       await assertRevert(this.ethcol.setCollateralizationRatio(toUnit("1500"), {from: this.owner}));
-      assertBNEqual((await this.ethcol.collateralizationRatio()), toUnit("150"), "property should be unchanged");
+      assertBNEqual((await this.ethcol.collateralizationRatio()), toUnit("125"), "property should be unchanged");
     });
 
     it("should be able to change the interest rate", async function() {
@@ -235,12 +237,12 @@ contract("EtherCollateral", async function(accounts) {
 
     it("should not be able to set a valid collateralisation ratio", async function() {
       await assertRevert(this.ethcol.setCollateralizationRatio(toUnit("200"), {from: this.someoneElse}));
-      assertBNEqual((await this.ethcol.collateralizationRatio()), toUnit("150"), "property should be unchanged");
+      assertBNEqual((await this.ethcol.collateralizationRatio()), toUnit("125"), "property should be unchanged");
     });
 
     it("should not not be able to set up an invalid collateralisation ratio", async function() {
       await assertRevert(this.ethcol.setCollateralizationRatio(toUnit("1500"), {from: this.someoneElse}));
-      assertBNEqual((await this.ethcol.collateralizationRatio()), toUnit("150"), "property should be unchanged");
+      assertBNEqual((await this.ethcol.collateralizationRatio()), toUnit("125"), "property should be unchanged");
     });
 
     it("should not be able to change the interest rate", async function() {
@@ -276,6 +278,8 @@ contract("EtherCollateral", async function(accounts) {
         this.borrower = borrower;
         this.depositor = accounts[5];
         this.alice = accounts[3];
+        this.bob = accounts[4];
+        this.carol = accounts[5];
       });
 
       it("should be able to open a loan with a value > minLoanSize", async function() {
@@ -396,7 +400,7 @@ contract("EtherCollateral", async function(accounts) {
       it("should return valid loan details", async function() {
 
         await (this.ethcol.openLoan({from: this.borrower, value: toUnit("100")}));
-        // make sure the owner has SNX:
+
         const loan = await this.ethcol.getLoan(this.borrower, 1)
         assert(loan[0] == this.borrower);
         assertBNEqual(loan[1], toUnit("100"));
@@ -407,9 +411,8 @@ contract("EtherCollateral", async function(accounts) {
 
       it("should compute collateral from loan correctly", async function() {
 
-        await (this.ethcol.openLoan({from: this.borrower, value: toUnit("750")}))
         const collateral = await this.ethcol.collateralAmountForLoan(toUnit("500"))
-        assertBNEqual(collateral, toUnit("750"))
+        assertBNEqual(collateral, toUnit("625"))
 
       });
 
@@ -426,9 +429,156 @@ contract("EtherCollateral", async function(accounts) {
           await this.ethcol.openLoan({from: this.borrower, value: TWO_ETH});
         });
       });
+
+      context("when the liquidation period is triggered", async function() {
+        before("set minLoanSize to 2 ETH", async function() {
+          await this.ethcol.setMinLoanSize(TWO_ETH, {from: this.owner});
+
+
+
+        });
+
+        before("get Alice and Bob to open loans", async function() {
+          // Ensure the depot is setup properly
+          await this.synthetix.issueSynths(toUnit('10000'), { from: this.owner });
+          await this.sUSD.transfer(this.depositor, toUnit('1000'), {from: this.owner});
+          assertBNEqual(await this.sUSD.balanceOf(this.depositor), toUnit('1000'));
+          await this.sUSD.approve(this.depot.address, toUnit('1000'), {from: this.depositor });
+          assertBNEqual(await this.sUSD.allowance(this.depositor, this.depot.address), toUnit('1000'))
+          await this.depot.depositSynths(toUnit('1000'), {from: this.depositor});
+
+
+          await (this.ethcol.openLoan({from: this.alice, value: toUnit("100")}));
+          await (this.ethcol.openLoan({from: this.bob, value: toUnit("100")}));
+
+          // verify that Alice opened a loan:
+          const loanA = await this.ethcol.getLoan(this.alice, 1)
+          assertBNEqual(loanA[1], toUnit("100"));
+          assertBNEqual(loanA[2], await this.sETH.balanceOf(this.alice));
+
+          // Verify that Bob opened a loan:
+          const loanB = await this.ethcol.getLoan(this.bob, 2)
+          assertBNEqual(loanB[1], toUnit("100"));
+          assertBNEqual(loanB[2], await this.sETH.balanceOf(this.bob));
+
+          // The owner issues sUSD and transfers some to the depot
+          await this.synthetix.issueSynths(toUnit('10000'), { from: this.owner });
+          await this.sUSD.transfer(this.depot.address, toUnit('1000'), {from: this.owner});
+
+
+        });
+
+        it("should make sure that the loans were opened correctly", async function() {
+          // Alice
+          const loanA = await this.ethcol.getLoan(this.alice, 1)
+          assertBNEqual(loanA[1], toUnit("100"));
+          assertBNEqual(loanA[2], await this.sETH.balanceOf(this.alice));
+
+          // Bob
+          const loanB = await this.ethcol.getLoan(this.bob, 2)
+          assertBNEqual(loanB[1], toUnit("100"));
+          assertBNEqual(loanB[2], await this.sETH.balanceOf(this.bob));
+
+        });
+
+        it("it should make sure that anyone with enough sETH can close a loan", async function() {
+          // advance time to 93 days
+          await helpers.increaseTime(days(93));
+
+          // open the liquidation period
+          await this.ethcol.setLoanLiquidationOpen(true, {from: this.owner});
+
+          // Make sure that the liquidation period is open
+          assertBNEqual((await this.ethcol.loanLiquidationOpen()), true, "property should be changed");
+          // Record Bob's ETH balance before loan closure:
+          balanceA = await web3.eth.getBalance(this.bob);
+
+          // Get Bob to close Alice's loan
+          await this.ethcol.liquidateUnclosedLoan(this.alice, 1, {from: this.bob});
+
+          // Record Bob's ETH balance after loan closure:
+          balanceB = await web3.eth.getBalance(this.bob);
+
+          // Ensure that bob's sETH balance is 0
+          assert(await this.sETH.balanceOf(this.bob) == 0);
+
+          // Ensure Bob's ETH balance increased
+          assert(balanceB > balanceA);
+
+        });
+
+        it.only("it shouldn't allow for a loan to be closed twice", async function() {
+          // advance time to 93 days
+          await helpers.increaseTime(days(93));
+
+          // open the liquidation period
+          await this.ethcol.setLoanLiquidationOpen(true, {from: this.owner});
+
+          // Make sure that the liquidation period is open
+          assertBNEqual((await this.ethcol.loanLiquidationOpen()), true, "property should be changed");
+
+          // Get Bob to close Alice's loan
+          await this.ethcol.liquidateUnclosedLoan(this.alice, 1, {from: this.bob});
+
+          // Make sure carol can't close the same loan
+          await assertRevert(this.ethcol.liquidateUnclosedLoan(this.alice, 1, {from: this.carol}));
+
+        });
+
+        it.only("it should make sure the liquidated account still keeps their sETH", async function() {
+          // advance time to 93 days
+          await helpers.increaseTime(days(93));
+
+          // open the liquidation period
+          await this.ethcol.setLoanLiquidationOpen(true, {from: this.owner});
+
+          // Make sure that the liquidation period is open
+          assertBNEqual((await this.ethcol.loanLiquidationOpen()), true, "property should be changed");
+
+          // Record Alice's sETH balance before loan closure
+          balanceA = await this.sETH.balanceOf(this.alice);
+
+          // Get Bob to close Alice's loan
+          await this.ethcol.liquidateUnclosedLoan(this.alice, 1, {from: this.bob});
+
+          // Record Alice's sETH after loan closure
+          balanceB = await this.sETH.balanceOf(this.alice);
+
+          // Assert Alice's sETH balance is unchanged
+          assertBNEqual(balanceA, balanceB);
+        });
+
+        it.only("it should make sure the loan count decreases when a loan is liquidated", async function() {
+          // Record loan count
+          loanCountA = await this.ethcol.totalOpenLoanCount();
+
+          // advance time to 93 days
+          await helpers.increaseTime(days(93));
+
+          // open the liquidation period
+          await this.ethcol.setLoanLiquidationOpen(true, {from: this.owner});
+
+          // Make sure that the liquidation period is open
+          assertBNEqual((await this.ethcol.loanLiquidationOpen()), true, "property should be changed");
+
+          // Record Alice's sETH balance before loan closure
+          balanceA = await this.sETH.balanceOf(this.alice);
+
+          // Get Bob to close Alice's loan
+          await this.ethcol.liquidateUnclosedLoan(this.alice, 1, {from: this.bob});
+
+          // Record loan count after liquidation
+          loanCountB = await this.ethcol.totalOpenLoanCount();
+
+          // Assert the loan count has decreased
+          assertBNEqual(loanCountB, loanCountA - 1);
+
+        });
+
     });
 
   });
 
+});
 
 });
