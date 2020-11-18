@@ -1,5 +1,6 @@
 .PHONY: test
 
+SOLC_BIN=./solc4
 SOLC_FLAGS=--bin --abi
 OPT=--optimize --optimize-runs 10000
 BUILD_DIR=build
@@ -22,5 +23,5 @@ clean:
 compile: $(SOLIDITY_CONTRACTS)
 
 $(SOLIDITY_CONTRACTS):
-	solc -o ${BUILD_DIR} --overwrite ${OPT} --allow-paths ${ALLOWED_PATHS} ${SOLC_FLAGS} ${SOURCE_DIR}$@
-	solc -o ${BUILD_DIR} --overwrite ${OPT} --allow-paths ${ALLOWED_PATHS} ${SOLC_FLAGS} ${TEST_SOURCE_DIR}$@
+	${SOLC_BIN} -o ${BUILD_DIR} --overwrite ${OPT} --allow-paths ${ALLOWED_PATHS} ${SOLC_FLAGS} ${SOURCE_DIR}$@
+	${SOLC_BIN} -o ${BUILD_DIR} --overwrite ${OPT} --allow-paths ${ALLOWED_PATHS} ${SOLC_FLAGS} ${TEST_SOURCE_DIR}$@
