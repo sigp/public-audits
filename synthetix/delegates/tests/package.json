@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "bignumber.js": "^5.0.0",
-    "chainlink": "^0.7.10",
+    "chainlink": "^0.8.2",
     "openzeppelin-solidity": "2.0.0",
     "solc": "^0.4.26",
     "solc-js": "^0.4.20",
