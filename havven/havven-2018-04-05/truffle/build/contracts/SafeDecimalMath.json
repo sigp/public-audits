@@ -1,0 +1,37 @@
+{
+  "contractName": "SafeDecimalMath",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "decimals",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "UNIT",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x6060604052341561000f57600080fd5b60d28061001d6000396000f30060606040526004361060485763ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041663313ce5678114604d5780639d8e2177146073575b600080fd5b3415605757600080fd5b605d6095565b60405160ff909116815260200160405180910390f35b3415607d57600080fd5b6083609a565b60405190815260200160405180910390f35b601281565b670de0b6b3a7640000815600a165627a7a72305820fb7cb71ada640281d21b86f65152c35c97afd9176fb3be152674f0601f746af60029",
+  "networks": {},
+  "schemaVersion": "2.0.0",
+  "updatedAt": "2018-04-04T07:37:11.397Z"
+}

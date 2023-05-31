@@ -1,0 +1,154 @@
+{
+  "contractName": "Proxyable",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "nominatedOwner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_owner",
+          "type": "address"
+        }
+      ],
+      "name": "nominateOwner",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "acceptOwnership",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_proxy",
+          "type": "address"
+        }
+      ],
+      "name": "setProxy",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "sender",
+          "type": "address"
+        }
+      ],
+      "name": "setMessageSender",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "proxy",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "name": "_owner",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "proxyAddress",
+          "type": "address"
+        }
+      ],
+      "name": "ProxyChanged",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnerNominated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "oldOwner",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnerChanged",
+      "type": "event"
+    }
+  ],
+  "bytecode": "0x6060604052341561000f57600080fd5b6040516020806103f28339810160405280805160008054600160a060020a03909216600160a060020a0319909216919091179055505061039e806100546000396000f3006060604052600436106100825763ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166353a47bb781146100875780635b94db27146100b657806379ba5097146100d75780638da5cb5b146100ea57806397107d6d146100fd578063bc67f8321461011c578063ec5568891461013b575b600080fd5b341561009257600080fd5b61009a61014e565b604051600160a060020a03909116815260200160405180910390f35b34156100c157600080fd5b6100d5600160a060020a036004351661015d565b005b34156100e257600080fd5b6100d56101e0565b34156100f557600080fd5b61009a610287565b341561010857600080fd5b6100d5600160a060020a0360043516610296565b341561012757600080fd5b6100d5600160a060020a0360043516610319565b341561014657600080fd5b61009a610363565b600154600160a060020a031681565b60005433600160a060020a0390811691161461017857600080fd5b6001805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a0383161790557f906a1c6bd7e3091ea86693dd029a831c19049ce77f1dce2ce0bab1cacbabce2281604051600160a060020a03909116815260200160405180910390a150565b60015433600160a060020a039081169116146101fb57600080fd5b6000546001547fb532073b38c83145e3e5135377a08bf9aab55bc0fd7c1179cd4fb995d2a5159c91600160a060020a039081169116604051600160a060020a039283168152911660208201526040908101905180910390a1600180546000805473ffffffffffffffffffffffffffffffffffffffff19908116600160a060020a03841617909155169055565b600054600160a060020a031681565b60005433600160a060020a039081169116146102b157600080fd5b6002805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a0383161790557ff0cd76016a4ee33fe62814f8afd5492f47062ea7615bcc094f2f6fe71b62d1c481604051600160a060020a03909116815260200160405180910390a150565b60025433600160a060020a0390811691161461033457600080fd5b6003805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a0392909216919091179055565b600254600160a060020a0316815600a165627a7a72305820877bc6957bb7cf65fd0286437b38d79e638030657f54dbebfc39af41879b480d0029",
+  "networks": {},
+  "schemaVersion": "2.0.0",
+  "updatedAt": "2018-04-04T07:37:11.397Z"
+}

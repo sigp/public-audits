@@ -1,1 +1,0 @@
-[{"constant":true,"inputs":[{"name":"_proof","type":"bytes32[]"},{"name":"_root","type":"bytes32"},{"name":"_leaf","type":"bytes32"}],"name":"verifyProof","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"pure","type":"function"}]

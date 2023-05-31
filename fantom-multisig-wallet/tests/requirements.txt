@@ -1,4 +1,0 @@
-pytest
-eth-testrpc
-eth-tester
-web3>=4.4.1
