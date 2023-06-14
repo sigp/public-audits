@@ -1,7 +1,6 @@
 # Public Security Reviews
 
 Our clients are given the option to publish our report or for it to be kept confidential.
-
 Below is a collection of security reviews Sigma Prime have been able to publish.
 
 
@@ -42,8 +41,20 @@ Below is a collection of security reviews Sigma Prime have been able to publish.
 |  [Optimism](https://www.optimism.io/) | October 2022 | [b708721](https://github.com/ethereum-optimism/optimism/tree/b70872149d98f9b14e2b15f74f9d08de75bb8b6e) and [70b0248](https://github.com/ethereum-optimism/reference-optimistic-geth/tree/70b02481016d091626187d61764c2b3e07c80dc3) | Review of Bedrock | [Report](./optimism/optimism-bedrock/review.pdf)  |
 |  [Lido](https://lido.fi/) | March 2023 | [7a391fa](https://github.com/lidofinance/dc4bc/commit/7a391fa6f109b85830da5d50bbce9ab68cf4a171) | Review of DC4BC Batch BLSToExecutionChange Signing | [Report](./lido/lido-dc4bc/review.pdf)  |
 |  [Lido](https://lido.fi/) | September 2021 | [bc0904c](https://github.com/lidofinance/easy-track/commit/bc0904c57c27ddadef058a641eb6fbe311a2f3e2) | Review of EasyTrack | [Report](./lido/lido-easy-track/review.pdf)  |
+|  [Interest Protocol](https://gfx.xyz/) | November 2022 | [7a2d613](https://github.com/gfx-labs/ip-contracts/commit/7a2d613dacf8321dbc77dd07c0a946c4b2b3b7ab) | Review of Interest Protocol contracts | [Report](./interest-protocol/review.pdf)  |
+|  [Gearbox](https://gearbox.fi) | April 2022 | [432a213](https://github.com/Gearbox-protocol/contracts-v2/commit/432a21315d70b41b5c638174d8afd6c365167e6a) (private repo) | Review of Gearbox contracts | [Report](./gearbox/review.pdf)  |
+|  [Filecoin](https://filecoin.io/) | July 2020 | [7d166fd](https://github.com/filecoin-project/lotus/commit/7d166fd730da8d771b86c37314c162e2a9829eef), [0df536f](https://github.com/filecoin-project/specs-actors/commit/0df536f7e461599c818231aa0effcdaccbb74900) and [19255be](https://github.com/filecoin-project/go-fil-markets/commit/19255befc60526a1e42939ae8b7c95c6213e6100) | Review of  Lotus the official Golang Filecoin implementation | [Report](./filecoin/filecoin-lotus/review.pdf)  |
+|  [Filecoin](https://filecoin.io/) | July 2020 | [e8d4475](https://github.com/filecoin-project/rust-fil-proofs/commit/e8d44754c1dc867dcbda3352645a5da9203ef694) and [870251c](https://github.com/filecoin-project/filecoin-ffi/commit/870251cd04c54e7a3a08b714f3e71a9edec28445) | Review of Filecoin Proving Subsystem | [Report](./filecoin/filecoin-proofs/review.pdf) |
+|  [Ethereum Foundation](https://ethereum.org/) | May 2023 | [fd24cf8](https://github.com/ethereum/c-kzg-4844/commit/fd24cf8e1e2f09a96b4e62a595b4e49f046ce6cf) and [a201da1](https://github.com/crate-crypto/go-kzg-4844/tree/a201da1a03ff17ba4361705604e1bce6abce5581) | Review of C-KZG and Go-KZG | [Report](./ethereum-foundation/c-kzg/review.pdf)  |
+|  [Ethereum Foundation](https://ethereum.org/)  | December 2022 | [6da76be](https://github.com/ethereum/kzg-ceremony-sequencer/tree/6da76be4cbf2444bcd7e6acd3344c3f6c2eabf46) | Review of the KZG ceremony | [Report](./ethereum-foundation/ef-kzg/review.pdf)  |
+|  [Eth Docker](https://eth-docker.net/) | April 2023 | [1af5c11](https://github.com/eth-educators/eth-docker/commit/1af5c119547983f187f9fee91833951ff34613ae) | Review of the eth-docker wrapper | [Report](./eth-docker/review.pdf)  |
 |  [TBC](https://TBC.com/) | Month 2023 | 0000000 | Review of TBC | [Report](./TBC/review.pdf)  |
 |  [TBC](https://TBC.com/) | Month 2023 | 0000000 | Review of TBC | [Report](./TBC/review.pdf)  |
 |  [TBC](https://TBC.com/) | Month 2023 | 0000000 | Review of TBC | [Report](./TBC/review.pdf)  |
 |  [TBC](https://TBC.com/) | Month 2023 | 0000000 | Review of TBC | [Report](./TBC/review.pdf)  |
 |  [TBC](https://TBC.com/) | Month 2023 | 0000000 | Review of TBC | [Report](./TBC/review.pdf)  |
+|  [TBC](https://TBC.com/) | Month 2023 | 0000000 | Review of TBC | [Report](./TBC/review.pdf)  |
+|  [TBC](https://TBC.com/) | Month 2023 | 0000000 | Review of TBC | [Report](./TBC/review.pdf)  |
+|  [TBC](https://TBC.com/) | Month 2023 | 0000000 | Review of TBC | [Report](./TBC/review.pdf)  |
+|  [TBC](https://TBC.com/) | Month 2023 | 0000000 | Review of TBC | [Report](./TBC/review.pdf)  |
+
