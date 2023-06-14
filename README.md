@@ -48,13 +48,9 @@ Below is a collection of security reviews Sigma Prime have been able to publish.
 |  [Ethereum Foundation](https://ethereum.org/) | May 2023 | [fd24cf8](https://github.com/ethereum/c-kzg-4844/commit/fd24cf8e1e2f09a96b4e62a595b4e49f046ce6cf) and [a201da1](https://github.com/crate-crypto/go-kzg-4844/tree/a201da1a03ff17ba4361705604e1bce6abce5581) | Review of C-KZG and Go-KZG | [Report](./ethereum-foundation/c-kzg/review.pdf)  |
 |  [Ethereum Foundation](https://ethereum.org/)  | December 2022 | [6da76be](https://github.com/ethereum/kzg-ceremony-sequencer/tree/6da76be4cbf2444bcd7e6acd3344c3f6c2eabf46) | Review of the KZG ceremony | [Report](./ethereum-foundation/ef-kzg/review.pdf)  |
 |  [Eth Docker](https://eth-docker.net/) | April 2023 | [1af5c11](https://github.com/eth-educators/eth-docker/commit/1af5c119547983f187f9fee91833951ff34613ae) | Review of the eth-docker wrapper | [Report](./eth-docker/review.pdf)  |
-|  [TBC](https://TBC.com/) | Month 2023 | 0000000 | Review of TBC | [Report](./TBC/review.pdf)  |
-|  [TBC](https://TBC.com/) | Month 2023 | 0000000 | Review of TBC | [Report](./TBC/review.pdf)  |
-|  [TBC](https://TBC.com/) | Month 2023 | 0000000 | Review of TBC | [Report](./TBC/review.pdf)  |
-|  [TBC](https://TBC.com/) | Month 2023 | 0000000 | Review of TBC | [Report](./TBC/review.pdf)  |
-|  [TBC](https://TBC.com/) | Month 2023 | 0000000 | Review of TBC | [Report](./TBC/review.pdf)  |
-|  [TBC](https://TBC.com/) | Month 2023 | 0000000 | Review of TBC | [Report](./TBC/review.pdf)  |
-|  [TBC](https://TBC.com/) | Month 2023 | 0000000 | Review of TBC | [Report](./TBC/review.pdf)  |
-|  [TBC](https://TBC.com/) | Month 2023 | 0000000 | Review of TBC | [Report](./TBC/review.pdf)  |
-|  [TBC](https://TBC.com/) | Month 2023 | 0000000 | Review of TBC | [Report](./TBC/review.pdf)  |
-
+|  [Dimo](https://dimo.zone) | October 2022 | [ea6729e](https://github.com/DIMO-Network/dimo-token/commit/ea6729ec14ea13146242b6165c6d5eaf9fb95e0d), [3b5dbb1](https://github.com/DIMO-Network/dimo-web3-identity/commit/3b5dbb199f447c7b4bd4d438c1083ebf552cc455) and [3510f41](https://github.com/DIMO-Network/DIMO-vesting/commit/3510f41521be35f4c7f786f85fdaac52fd411fc5) | Review of Token, Vesting and Identity contracts | [Report](./dimo/review.pdf)  |
+|  [API3](https://api3.org/) | December 2021 | [c6263e9](https://github.com/api3dao/airnode/tree/c6263e92d740578793bf563fe638dff0146e7ff3/packages/airnode-protocol/contracts) | Review of Airnode | [Report](./api3-airnode/review.pdf)  |
+|  [Angle](https://www.angle.money/) | October 2021 | [a257927](https://github.com/AngleProtocol/angle-solidity/tree/a2579277117fe58dcfa375090ae1f67b59bd804a) | Review of Angle | [Report](./angle/review.pdf)  |
+|  [Alongside](https://alongside.xyz/) | September 2022 | [81f73cb](https://github.com/Alongside-Finance/index-contracts/commit/81f73cbad4b5fb0d548bf710a62be13dfd3381cc) | Review of Alongside | [Report](./alongside/review.pdf)  |
+|  [DXdao](https://dxdao.eth.link/) | September 2022 | [54410e2](https://github.com/DXgovernance/dxdao-contracts/commit/54410e27dc25bb580d5fb99b60509b0d38889098) | Review of ERC20Guild | [Report](./dxdao/dxdao/review.pdf)  |
+|  [DXdao](https://dxdao.eth.link/) | September 2022 | [3bdba21](https://github.com/carrot-kpi/contracts-v1/tree/3bdba21b5b9d3d9515c4137d066859fd696b48bb) | Review of Carrot KPI | [Report](./dxdao/dxdao-2/review.pdf)  |
