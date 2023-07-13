@@ -1,7 +1,7 @@
 # Public Security Reviews
 
-Our clients are given the option to publish our report or for it to be kept confidential.
-Below is a collection of security reviews Sigma Prime have been able to publish.
+Our clients have the opportunity to publish our reports publicly or have them kept confidential.
+Below is a collection of security reviews Sigma Prime have been allowed to publish publicly.
 
 
 ## Table Of Reviews
@@ -11,7 +11,7 @@ Below is a collection of security reviews Sigma Prime have been able to publish.
 |  [Horizon State](https://horizonstate.com/) | October 2017 | [178033f](https://github.com/HorizonState/token-sale/commit/178033f05ee5e72d9dfa464dccac4abc767dca6b) (private repo) | Review of HST Tokensale contracts | [Report](./horizon-state/README.md)  |
 |  [Skrilla](https://skrilla.com/) | October 2017 | 1932e8b (private repo) | Review of SKR Tokensale contracts | [Report](./skrilla/README.md)  |
 |  [Havven](https://havven.io/) | April 2018 | [fa705dd](https://github.com/Havven/havven/commit/fa705dd2feabc9def03bce135f6a153a4b70b111) | Review conducted prior to the first deployment of the Havven platform. | [Report](./havven/havven/README.md)  |
-|  [Havven](https://havven.io/) | June 2018 | [fa705dd](https://github.com/Havven/havven/commit/fa705dd2feabc9def03bce135f6a153a4b70b111) | Review conducted prior to an incremental upgrade the Havven platform. | [Report](./havven/havven-2/havven-review.pdf)  |
+|  [Havven](https://havven.io/) | June 2018 | [fa705dd](https://github.com/Havven/havven/commit/fa705dd2feabc9def03bce135f6a153a4b70b111) | Review conducted prior to an incremental upgrade the Havven platform. | [Report](./havven/havven-2/review.pdf)  |
 |  [Havven](https://havven.io/) | June 2018 | [584eeec](https://github.com/Havven/havven/blob/1e97f05299be48f32bad55404c42b58155d1feb0/contracts/IssuanceController.sol) | Review of a new IssuanceController contract to be used in the Havven system. | [Report](./havven/havven-issuancecontroller/review.pdf)  |
 |  [Fantom](https://fantom.foundation/) | June 2018 | [1a7313c](https://github.com/Fantom-foundation/tokensale/commit/1a7313c7d5da489db2e72a1aa20b2cf38c8fe363) | Tokensale contract review. | [Report](./fantom/fantom-token-sale/review.pdf)  |
 |  [Fantom](https://fantom.foundation/) | June 2018 | [48c51ba](https://github.com/Fantom-foundation/MultiSigWallet/commit/48c51ba1c4f27019ab5a57b35ba8c896658e791f) | Multi-signature wallet review. | [Report](./fantom/fantom-multisig-wallet/review.pdf)  |
@@ -32,7 +32,7 @@ Below is a collection of security reviews Sigma Prime have been able to publish.
 |  [Swell](https://www.swellnetwork.io/) | September 2022 | 9c595ed (private repo) | Review of Swell	| [Report](./swell/swell/review.pdf)  |
 |  [Swell](https://www.swellnetwork.io/) | April 2023 | ab2f6af and 7ba12d7 (private repo) | Review of Swell V2	| [Report](./swell/swell-2/review.pdf)  |
 |  [1inch](https://1inch.io/) | February 2022 | [879448d](https://github.com/1inch/farming/commit/879448d1a934f767ee2b0c5a26ee1458db5f9986) | Review of 1inch Farming | [Report](./1inch/review.pdf)  |
-|  [Tracer](https://tracer.finance) | May 2022 | [05dee8f](https://github.com/tracer-protocol/perpetual-pools-contracts/tree/05dee8f6b0ac216e4f7bdc47ea91d5a5a2903e29) | Review of Perpetual Pools Updates | [Report](./tracer/tracer-3/review.pdf)  |
+|  [Tracer](https://tracer.finance) | May 2022 | [05dee8f](https://github.com/tracer-protocol/perpetual-pools-contracts/tree/05dee8f6b0ac216e4f7bdc47ea91d5a5a2903e29) | Review of Perpetual Pools updates | [Report](./tracer/tracer-3/review.pdf)  |
 |  [Tracer](https://tracer.finance) | September 2021 | [2ee499a](https://github.com/mycelium-ethereum/perpetual-pools-contracts/tree/2ee499a5c304422f9e3ac3c3e20f675996ee42af) | Review of Perpetual Pools | [Report](./tracer/tracer-2/review.pdf)  |
 |  [Tracer](https://tracer.finance) | April 2021 | [cb003be](https://github.com/tracer-protocol/perpetual-contracts/commit/cb003befaa8f5ce45794ca5ec274e63d60dcb101) | Review of Tracer Protocol | [Report](./tracer/tracer-3/review.pdf)  |
 |  [Sushi](https://sushi.com) | July 2022 | [4888a49](https://github.com/sushiswap/sushiXswap/tree/4888a495fe59a82582cb8c1dffeac6f4736b08be) (private repo) and [d4346bb](https://github.com/sushiswap/trident/commit/d4346bbf91ecae2c7a197e574ec98c4525435cd3) | Review of SushiXSwap and StablePool | [Report](./sushi/sushi-swap-stable-pool/review.pdf)  |
@@ -60,17 +60,23 @@ Below is a collection of security reviews Sigma Prime have been able to publish.
 |  [Dimo](https://dimo.zone) | October 2022 | [ea6729e](https://github.com/DIMO-Network/dimo-token/commit/ea6729ec14ea13146242b6165c6d5eaf9fb95e0d), [3b5dbb1](https://github.com/DIMO-Network/dimo-web3-identity/commit/3b5dbb199f447c7b4bd4d438c1083ebf552cc455) and [3510f41](https://github.com/DIMO-Network/DIMO-vesting/commit/3510f41521be35f4c7f786f85fdaac52fd411fc5) | Review of Token, Vesting and Identity contracts | [Report](./dimo/review.pdf)  |
 |  [API3](https://api3.org/) | December 2021 | [c6263e9](https://github.com/api3dao/airnode/tree/c6263e92d740578793bf563fe638dff0146e7ff3/packages/airnode-protocol/contracts) | Review of API3 Airnode | [Report](./api3-airnode/review.pdf)  |
 |  [Angle](https://www.angle.money/) | October 2021 | [a257927](https://github.com/AngleProtocol/angle-solidity/tree/a2579277117fe58dcfa375090ae1f67b59bd804a) (private repo) | Review of Angle | [Report](./angle/review.pdf)  |
-|  [Alongside](https://alongside.xyz/) | June 2022 | [81f73cb](https://github.com/Alongside-Finance/index-contracts/commit/81f73cbad4b5fb0d548bf710a62be13dfd3381cc) (private repo) | Review of Alongside Index Contracts | [Report](./alongside/review.pdf)  |
+|  [Alongside](https://alongside.xyz/) | June 2022 | [81f73cb](https://github.com/Alongside-Finance/index-contracts/commit/81f73cbad4b5fb0d548bf710a62be13dfd3381cc) (private repo) | Review of Alongside Index contracts | [Report](./alongside/review.pdf)  |
 |  [DXdao](https://dxdao.eth.link/) | September 2022 | [54410e2](https://github.com/DXgovernance/dxdao-contracts/commit/54410e27dc25bb580d5fb99b60509b0d38889098) | Review of ERC20Guild | [Report](./dxdao/erc20-guild/review.pdf)  |
 |  [DXdao](https://dxdao.eth.link/) | September 2022 | [3bdba21](https://github.com/carrot-kpi/contracts-v1/tree/3bdba21b5b9d3d9515c4137d066859fd696b48bb) | Review of Carrot KPI | [Report](./dxdao/carrot-kpi/review.pdf)  |
 |  [ChainSafe](https://chainsafe.io/) | June 2021 | [84ab31b](https://github.com/ChainSafe/forest/commit/84ab31b00c5f0bc588b04608ac514431c41b6a21) | Review of Forest | [Report](./chainsafe/forest/review.pdf)  |
 |  [ChainSafe](https://chainsafe.io/) | March 2022 | [tag v0.6.0](https://github.com/ChainSafe/gossamer/releases/tag/v0.6.0), [4c3166c](https://github.com/paritytech/polkadot/tree/4c3166ccdf0c80be592752c78e5210287ddbec6d) and [fb08d15](https://github.com/paritytech/substrate/commit/fb08d15bcbea68415dd4ee90d11556b653096f10) | Review of Gossamer | [Report](./chainsafe/gossamer/review.pdf)  |
 |  [BLS Wallet](https://github.com/getwax/bls-wallet) | July 2022 | [ce7f958](hhttps://github.com/getwax/bls-wallet/tree/ce7f958fb74b10e2b83bb886638b4ec0f64d9fac) | Review of BLS wallet smart contracts | [Report](./bls-wallet/review.pdf)  
 |  Store Labs | October 2020 | store.sol | Review of STORE token smart contract | [Report](./store/review.pdf)  |
-|  Open Grants | November 2020 | [dab1878](https://github.com/raid-guild/open-grants/commit/dab187835ef494a1f65259277a9d239054e463d2) | Review of Open Grants Smart
-Contracts | [Report](./open-grants/review.pdf)  |
+|  Open Grants | November 2020 | [dab1878](https://github.com/raid-guild/open-grants/commit/dab187835ef494a1f65259277a9d239054e463d2) | Review of Open Grants smart contracts | [Report](./open-grants/review.pdf)  |
 |  [Bartercard](bartercard.com.au) | November 2019 | [04f3f64](04f3f64be531b0a1c2c29b638b2ae26b79acfeb9) (private repo) | Review of Qoin Token Smart Contract. | [Report](./bartercard/review.pdf)  |
-
-
-
+|  [Aave](https://aave.com/) | January 2022 | [e76882a](https://github.com/aave/aave-v3-core/commit/e76882a37b461962f36c1ce415759f909b1b0f66) | Review of Aave Protocol v3. | [Report](./aave/aave-v3/review.pdf)  |
+|  [Aave](https://aave.com/) | December 2022 | [428e258](https://github.com/aave/aave-v3-core/pull/701/commits/428e2582a3b78624204d02ec2934bad77176c57d) | Review of Aave v3.0.1 & v3.0.2 Contract. | [Report](./aave/aave-v3-0-1/review.pdf)  |
+|  [Aave](https://aave.com/) | February 2022 | [e40e4d9]() (private repo) | Review of Aave Safety Module. | [Report](./aave/aave-safetymodule/review.pdf)  |
+|  [Aave](https://aave.com/) | May 2023 | [a72fa0e](https://github.com/bgd-labs/aave-governance-v3/tree/a72fa0e412fef7953dfbe9a630f1d28971d426b3) (private repo) | Review of Aave Governance v3 Contract Review. | [Report](./aave/aave-gov-v3/review.pdf)  |
+|  [Aave](https://aave.com/) | November 2022 | [23a1340](https://github.com/bgd-labs/aave-proof-of-reserve/tree/23a13401162a259495deacd46ee743510c382ca6) | Review of Aave Proof of Reserve smart contracts. | [Report](./aave/aave-por/aave-por/review.md)  |
+|  [Aave](https://aave.com/) | December 2022 | [fd3163c](https://github.com/bgd-labs/aave-proof-of-reserve/commit/fd3163c9053cb2b5aebfdff51fe4157e1133f234) | Review of Aave Proof of Reserve smart contracts update. | [Report](./aave/aave-por/aave-por-2/review.md)  |
+|  [Aave](https://aave.com/) | October 2022 | [9f37ecb](https://github.com/bgd-labs/aave-proposal-stablecoins-priceadapter/commit/9f37ecb4f512a264146ba7141d1a7de99c11990a) | Review of Aave Chainlink Synchronicity Price Adapter smart contract. | [Report](./aave/aave-proposal-stablecoins/aave-stablecoins/review.md)  |
+|  [Aave](https://aave.com/) | January 2021 | [16e67c0](https://github.com/aave/protocol-v2/commit/16e67c00c377cad71770cc74cf2c0364e042b712) | Review of Aave Protocol v2.0. | [Report](./aave/aave-protocol/review.pdf)  |
+|  [Aave](https://aave.com/) | November 2022 | [ee6b6d0](https://github.com/aave/gho-aip/commit/ee6b6d0d3a39200d5d365328e373e2833f4650c3) | Review of Aave GHO Stablecoin AIP. | [Report](./aave/aave-gho-aip/review.pdf)  |
+|  [Aave](https://aave.com/) | November 2022 | [9328367](https://github.com/aave/gho-core/tree/9328367bc45991ba4114be3a0fa05b682add5e99) | Review of Aave GHO Stablecoin smart contracts. | [Report](./aave/aave-gho-core/review.pdf)  |
 
