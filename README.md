@@ -84,3 +84,5 @@ Below is a collection of security reviews Sigma Prime have been allowed to relea
 |  [Aave](https://aave.com/) | May 2023 | [a72fa0e](https://github.com/bgd-labs/aave-governance-v3/tree/a72fa0e412fef7953dfbe9a630f1d28971d426b3) (private repo) | Review of Aave Governance v3 smart contracts | [Report](./aave/aave-gov-v3/review.pdf)  |
 |  [Aurora](https://aurora.dev/) | June 2023 | [50427ed](https://github.com/aurora-is-near/rainbow-bridge/commit/50427ed9cda317afe4be50adf9416b620c1503e5) | Review of Aurora Rainbow bridge | [Report](./aurora/review.pdf)  |
 |  [Stader Labs](https://www.staderlabs.com/) | June 2023 | [eb9140b](https://github.com/stader-labs/ethx/tree/eb9140b5b7779be3942e5bbcc8f52ebb33bf0df9) | Review of ETHx smart contracts (Phase 2) | [Report](./stader/review.pdf)  |
+|  [Mantle Network](https://www.mantle.xyz/) | July 2023 | [3e2b6db](https://github.com/mantlenetworkio/mantle/commit/3e2b6dbcac7df08353d81d53ee41405211305432) | Review of Mantle Layer 2 Rollup | [Report](./mantle/review.pdf)  |
+
