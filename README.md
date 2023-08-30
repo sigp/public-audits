@@ -85,4 +85,6 @@ Below is a collection of security reviews Sigma Prime have been allowed to relea
 |  [Aurora](https://aurora.dev/) | June 2023 | [50427ed](https://github.com/aurora-is-near/rainbow-bridge/commit/50427ed9cda317afe4be50adf9416b620c1503e5) | Review of Aurora Rainbow bridge | [Report](./aurora/review.pdf)  |
 |  [Stader Labs](https://www.staderlabs.com/) | June 2023 | [eb9140b](https://github.com/stader-labs/ethx/tree/eb9140b5b7779be3942e5bbcc8f52ebb33bf0df9) | Review of ETHx smart contracts (Phase 2) | [Report](./stader/review.pdf)  |
 |  [Mantle Network](https://www.mantle.xyz/) | July 2023 | [3e2b6db](https://github.com/mantlenetworkio/mantle/commit/3e2b6dbcac7df08353d81d53ee41405211305432) | Review of Mantle Layer 2 Rollup | [Report](./mantle/review.pdf)  |
+|  [Term Finance](https://term.finance/) | April 2023 | [e883f0e](https://github.com/term-finance/term-finance/commit/e883f0e3673355fcfa365d8c3802e8977813b22e) | Review of Term Finance Smart Contracts | [Report](./term-finance/term1/review.pdf)  |
+|  [Term Finance](https://term.finance/) | May 2023 | [ba9550e](https://github.com/term-finance/term-finance/commit/ba9550eec5a6aebb5c7fcf3733b5cc20ac9bc4da) | Review of Term Finance Smart Contract Changes | [Report](./term-finance/term2/review.pdf)  |
 
