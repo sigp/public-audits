@@ -8,6 +8,7 @@ Below is a collection of security reviews Sigma Prime have been allowed to relea
 
 |  Project | Date  | Target Commit	  |  Description |  Report |
 |---|---|---|---|---|
+|  [SOFA.org](https://www.sofa.org/) | June 2024 | [65bb4c3](https://github.com/sofa-org/sofa-protocol/commit/65bb4c3a741cd615eaf1f22fdbb0c58eaf9eef80) | Review of SOFA Protocol | [Report](./reports/sofa/review.pdf) |
 |  [Omni Network](https://omni.network/) | April 2024 | [48d4724](https://github.com/omni-network/token/tree/48d4724d6bbab08c022a81cdda5f97f131c4e02a) & [49cba7b](https://github.com/omni-network/omni/tree/49cba7bae265b0ebb0d148885667a33f1bfa720c) | Review of Omni Token & AVS | [Report](./reports/omni-network/review.pdf) |
 |  [Stader Labs](https://www.staderlabs.com) | March 2024 | [PR \#212](https://github.com/stader-labs/ethx/pull/212) | Review of SD Utility Pool | [Report](./reports/stader/sd-pool/review.pdf) |
 |  [Swell](https://www.swellnetwork.io/) | February 2024 | a95ea79 (private repo) | Review of Swell Barracuda Updates | [Report](./reports/swell/barracuda/review.pdf) |
