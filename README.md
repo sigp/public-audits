@@ -8,6 +8,7 @@ Below is a collection of security reviews Sigma Prime have been allowed to relea
 
 |  Project | Date  | Target Commit	  |  Description |  Report |
 |---|---|---|---|---|
+|  [Renzo](https://www.renzoprotocol.com/) | June 2024 | [bb1dc9e](https://github.com/Renzo-Protocol/Contracts/tree/bb1dc9e972ffec55e978d254e93124a3007bdf28) | Review of Renzo Protocol | [Report](./reports/renzo/review.pdf)  |
 |  [Rocketpool](https://www.rocketpool.net/) | June 2024 | [f26996f](https://github.com/rocket-pool/rocketpool/commit/f26996f0afc1f276254da8104471b64643a8b671) | Review of Houston Upgrade | [Report](./reports/rocket-pool/rocket-pool-8-houston-pdao/review.pdf)  |
 |  [SOFA.org](https://www.sofa.org/) | June 2024 | [65bb4c3](https://github.com/sofa-org/sofa-protocol/commit/65bb4c3a741cd615eaf1f22fdbb0c58eaf9eef80) | Review of SOFA Protocol | [Report](./reports/sofa/review.pdf) |
 |  [Omni Network](https://omni.network/) | April 2024 | [48d4724](https://github.com/omni-network/token/tree/48d4724d6bbab08c022a81cdda5f97f131c4e02a) & [49cba7b](https://github.com/omni-network/omni/tree/49cba7bae265b0ebb0d148885667a33f1bfa720c) | Review of Omni Token & AVS | [Report](./reports/omni-network/review.pdf) |
