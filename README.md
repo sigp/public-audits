@@ -8,6 +8,7 @@ Below is a collection of security reviews Sigma Prime have been allowed to relea
 
 |  Project | Date  | Target Commit	  |  Description |  Report |
 |---|---|---|---|---|
+|  [Lyra Finance](https://lyra.finance/) | July 2024 | [e5be950](https://github.com/lyra-finance/v2-matching/tree/e5be950) | Review of Lyra Finance V2-Matching Contracts | [Report](./reports/lyra-finance/v2-matching/review.pdf)  |
 |  [Reth](https://reth.rs/) | June 2024 | [66c9403](https://github.com/paradigmxyz/reth/commit/66c9403ea1d3d03938eafc099e64e789aadc3616) | Review of Reth Execution Client | [Report](./reports/reth/review.pdf)  |
 |  [Renzo](https://www.renzoprotocol.com/) | June 2024 | [bb1dc9e](https://github.com/Renzo-Protocol/Contracts/tree/bb1dc9e972ffec55e978d254e93124a3007bdf28) | Review of Renzo Protocol | [Report](./reports/renzo/review.pdf)  |
 |  [Rocketpool](https://www.rocketpool.net/) | June 2024 | [f26996f](https://github.com/rocket-pool/rocketpool/commit/f26996f0afc1f276254da8104471b64643a8b671) | Review of Houston Upgrade | [Report](./reports/rocket-pool/rocket-pool-8-houston-pdao/review.pdf)  |
