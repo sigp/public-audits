@@ -8,6 +8,7 @@ Below is a collection of security reviews Sigma Prime have been allowed to relea
 
 |  Project | Date  | Target Commit	  |  Description |  Report |
 |---|---|---|---|---|
+|  [Lyra Finance](https://lyra.finance/) | August 2024 | [1c78b99](https://github.com/lyra-finance/v2-matching/tree/1c78b996103a392bebd6dc1a8f52c2c5bb0fa9bf) | Review of Lyra Finance PPTSA Contracts | [Report](./reports/lyra-finance/pptsa/review.pdf)  |
 |  [Omni Network](https://omni.network/) | July 2024 | [8adbb1c](https://github.com/omni-network/omni/commit/8adbb1c0f5138fa303dc4295377ad8d349b3a8e1) | Review of Omni Portal | [Report](./reports/omni-network/Sigma%20Prime%20-%20Omni%20Network%20-%20Omni%20Portal%20-%20Security%20Assessment%20Report%20-%20v2.1.pdf)  |
 |  [Lyra Finance](https://lyra.finance/) | July 2024 | [e5be950](https://github.com/lyra-finance/v2-matching/tree/e5be950) | Review of Lyra Finance V2-Matching Contracts | [Report](./reports/lyra-finance/v2-matching/review.pdf)  |
 |  [Reth](https://reth.rs/) | June 2024 | [66c9403](https://github.com/paradigmxyz/reth/commit/66c9403ea1d3d03938eafc099e64e789aadc3616) | Review of Reth Execution Client | [Report](./reports/reth/review.pdf)  |
