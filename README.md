@@ -8,6 +8,7 @@ Below is a collection of security reviews Sigma Prime have been allowed to relea
 
 |  Project | Date  | Target Commit	  |  Description |  Report |
 |---|---|---|---|---|
+|  [August](https://www.augustdigital.io/) | August 2024 | [4923890](https://github.com/fractal-protocol/august-contracts-upgradeable/tree/492389005a2146d649ca835c6b5f649848a8b86a) | Review of August Vault | [Report](./reports/august/review.pdf)  |
 |  [Lyra Finance](https://lyra.finance/) | August 2024 | [1c78b99](https://github.com/lyra-finance/v2-matching/tree/1c78b996103a392bebd6dc1a8f52c2c5bb0fa9bf) | Review of Lyra Finance PPTSA Contracts | [Report](./reports/lyra-finance/pptsa/review.pdf)  |
 |  [Omni Network](https://omni.network/) | July 2024 | [8adbb1c](https://github.com/omni-network/omni/commit/8adbb1c0f5138fa303dc4295377ad8d349b3a8e1) | Review of Omni Portal | [Report](./reports/omni-network/Sigma%20Prime%20-%20Omni%20Network%20-%20Omni%20Portal%20-%20Security%20Assessment%20Report%20-%20v2.1.pdf)  |
 |  [Lyra Finance](https://lyra.finance/) | July 2024 | [e5be950](https://github.com/lyra-finance/v2-matching/tree/e5be950) | Review of Lyra Finance V2-Matching Contracts | [Report](./reports/lyra-finance/v2-matching/review.pdf)  |
