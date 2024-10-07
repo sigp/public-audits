@@ -8,6 +8,7 @@ Below is a collection of security reviews Sigma Prime have been allowed to relea
 
 |  Project | Date  | Target Commit	  |  Description |  Report |
 |---|---|---|---|---|
+|  [Rocketpool](https://www.rocketpool.net/) | September 2024 | [6f07f2a](https://github.com/rocket-pool/rocketpool/commit/6f07f2a0bd31c6cf84196566e473d643a51cded6) | Review of Houston Upgrade Hotfixes | [Report](./reports/rocket-pool/rocket-pool-10-houston-hotfix/review.pdf)  |
 |  [Treehouse](https://treehouse.finance) | August 2024 | c00db74 & c6a6a11 (private repos) | Review of Treehouse tETH (Liquid Restaking Token) | [Report](./reports/treehouse/review.pdf) |
 |  [August](https://www.augustdigital.io/) | August 2024 | [4923890](https://github.com/fractal-protocol/august-contracts-upgradeable/tree/492389005a2146d649ca835c6b5f649848a8b86a) | Review of August Vault | [Report](./reports/august/review.pdf)  |
 |  [Derive](https://www.derive.xyz/) | August 2024 | [1c78b99](https://github.com/derivexyz/v2-matching/tree/1c78b996103a392bebd6dc1a8f52c2c5bb0fa9bf) | Review of Derive PPTSA Contracts | [Report](./reports/derive/pptsa/review.pdf)  |
