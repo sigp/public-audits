@@ -8,6 +8,7 @@ Below is a collection of security reviews Sigma Prime have been allowed to relea
 
 |  Project | Date  | Target Commit	  |  Description |  Report |
 |---|---|---|---|---|
+|  [Burrow Finance](https://burrow.finance/) | October 2024 | [c09a41b](https://github.com/burrowHQ/burrowland/commit/c09a41bc471d22b2985570e38b52c81eba043062) | Review of Burrowland Smart Contracts | [Report](./reports/near/Sigma_Prime_NEAR_Burrowland_Security_Assessment_Report_v2.0.pdf)  |
 |  [Eth Docker](https://eth-docker.net/) | October 2024 | [4656f88](https://github.com/eth-educators/eth-docker/commit/4656f884e4245d3d14f7db14c667a4c19e968de4) | Review of the eth-docker wrapper | [Report](./reports/eth-docker/Sigma_Prime_Eth_Docker_Update_2_v2_0.pdf)  |
 |  [Omni Network](https://omni.network/) | October 2024 | [99cbad6](https://github.com/omni-network/omni/commit/99cbad60ac3a368b20112cf788923d7b894f90b7) | Review of Omni Chain | [Report](./reports/omni-network/Sigma_Prime_Omni_Network_Omni_Chain_2_Security_Assessment_Report_v2_1.pdf)  |
 |  [Rocketpool](https://www.rocketpool.net/) | September 2024 | [6f07f2a](https://github.com/rocket-pool/rocketpool/commit/6f07f2a0bd31c6cf84196566e473d643a51cded6) | Review of Houston Upgrade Hotfixes | [Report](./reports/rocket-pool/rocket-pool-10-houston-hotfix/review.pdf)  |
