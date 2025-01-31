@@ -8,6 +8,7 @@ Below is a collection of security reviews Sigma Prime have been allowed to relea
 
 |  Project | Date  | Target Commit	  |  Description |  Report |
 |---|---|---|---|---|
+|  [Brava Labs](https://github.com/brava-labs/brava-contracts) | January 2025 | [6556134](https://github.com/brava-labs/brava-contracts/tree/655613454d3c6264096457adeb387b965fefc3c6) | Review of Brava Smart Contracts | [Report](./reports/brava/report.pdf)  |
 |  [CommitBoost](https://commit-boost.github.io/commit-boost-client/get_started/overview/) | December 2024 | [6af7e51](https://github.com/Commit-Boost/commit-boost-client/tree/6af7e514b72da3b973c3df0912480a9aaf3e8439) | Review of CommitBoost Protocol | [Report](./reports/commitboost/Sigma_Prime_Commit_Boost_Client_Security_Assessment_Report_v2_0.pdf)  |
 |  [Burrow Finance](https://burrow.finance/) | October 2024 | [c09a41b](https://github.com/burrowHQ/burrowland/commit/c09a41bc471d22b2985570e38b52c81eba043062) | Review of Burrowland Smart Contracts | [Report](./reports/near/Sigma_Prime_NEAR_Burrowland_Security_Assessment_Report_v2.0.pdf)  |
 |  [Eth Docker](https://eth-docker.net/) | October 2024 | [4656f88](https://github.com/eth-educators/eth-docker/commit/4656f884e4245d3d14f7db14c667a4c19e968de4) | Review of the eth-docker wrapper | [Report](./reports/eth-docker/Sigma_Prime_Eth_Docker_Update_2_v2_0.pdf)  |
