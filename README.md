@@ -8,6 +8,7 @@ Below is a collection of security reviews Sigma Prime have been allowed to relea
 
 |  Project | Date  | Target Commit	  |  Description |  Report |
 |---|---|---|---|---|
+|  [Ethereum Foundation](https://www.ethereum.org/) | January 2025 | [1d67916](https://github.com/lightclient/sys-asm/commit/1d679164e03d73dc7f9a5331b67fd51e7032b10) | Review of Pectra Systems Contracts | [Report](./reports/ethereum-foundation/pectra/review.pdf)  |
 |  [EigenDA](https://www.eigenda.xyz/) | January 2025 | [9e1b746](https://github.com/Layr-Labs/eigenda-proxy/commit/9e1b746397f0d0c8efff0f9f7cd7cef9f9603e9d) | Review of EigenDA Proxy | [Report](./reports/eigen-layer/Sigma_Prime_EigenLayer_EigenDA_Proxy_Security_Assessment_Report_v2_0.pdf)  |
 |  [Brava Labs](https://github.com/brava-labs/brava-contracts) | January 2025 | [6556134](https://github.com/brava-labs/brava-contracts/tree/655613454d3c6264096457adeb387b965fefc3c6) | Review of Brava Smart Contracts | [Report](./reports/brava/report.pdf)  |
 |  [CommitBoost](https://commit-boost.github.io/commit-boost-client/get_started/overview/) | December 2024 | [6af7e51](https://github.com/Commit-Boost/commit-boost-client/tree/6af7e514b72da3b973c3df0912480a9aaf3e8439) | Review of CommitBoost Protocol | [Report](./reports/commitboost/Sigma_Prime_Commit_Boost_Client_Security_Assessment_Report_v2_0.pdf)  |
