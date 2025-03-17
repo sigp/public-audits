@@ -8,6 +8,8 @@ Below is a collection of security reviews Sigma Prime have been allowed to relea
 
 |  Project | Date  | Target Commit	  |  Description |  Report |
 |---|---|---|---|---|
+|  [Omni Network](https://omni.network/) | March 2025 | [8855575](https://github.com/omni-network/omni/commit/88555759e23ee2fdbe60009447e4240daa998d5a) | Review of SolverNet Bridge Contracts | [Report](./reports/omni-network/Sigma_Prime_Omni_SolverNet_Security_Assessment_Report_v2_0.pdf)  |
+|  [Omni Network](https://omni.network/) | March 2025 | [3ef37ae](https://github.com/omni-network/omni/commit/3ef37ae2704db4e1dcb8fc3f7acbb8babb543e8c) | Review of rlUSD Contracts | [Report](./reports/omni-network/Sigma_Prime_Omni_rlUSD_Brdige_Security_Assessment_Report_v2_0.pdf)  |
 |  [Ethereum Foundation](https://www.ethereum.org/) | January 2025 | [1d67916](https://github.com/lightclient/sys-asm/commit/1d679164e03d73dc7f9a5331b67fd51e7032b10) | Review of Pectra Systems Contracts | [Report](./reports/ethereum-foundation/pectra/review.pdf)  |
 |  [EigenDA](https://www.eigenda.xyz/) | January 2025 | [9e1b746](https://github.com/Layr-Labs/eigenda-proxy/commit/9e1b746397f0d0c8efff0f9f7cd7cef9f9603e9d) | Review of EigenDA Proxy | [Report](./reports/eigen-layer/Sigma_Prime_EigenLayer_EigenDA_Proxy_Security_Assessment_Report_v2_0.pdf)  |
 |  [Brava Labs](https://github.com/brava-labs/brava-contracts) | January 2025 | [6556134](https://github.com/brava-labs/brava-contracts/tree/655613454d3c6264096457adeb387b965fefc3c6) | Review of Brava Smart Contracts | [Report](./reports/brava/report.pdf)  |
