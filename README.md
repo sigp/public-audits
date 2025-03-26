@@ -8,6 +8,7 @@ Below is a collection of security reviews Sigma Prime have been allowed to relea
 
 |  Project | Date  | Target Commit	  |  Description |  Report |
 |---|---|---|---|---|
+|  [Derive](https://www.derive.xyz/) | March 2025 | [PR \#358](https://github.com/derivexyz/v2-core/pull/358), [PR \#64](https://github.com/derivexyz/v2-matching/pull/64) | Review of Derive's Atomic Matching and Basis Vault Contracts | [Report](./reports/derive/atomic/review.pdf)  |
 |  [Omni Network](https://omni.network/) | March 2025 | [8855575](https://github.com/omni-network/omni/commit/88555759e23ee2fdbe60009447e4240daa998d5a) | Review of SolverNet Bridge Contracts | [Report](./reports/omni-network/Sigma_Prime_Omni_SolverNet_Security_Assessment_Report_v2_0.pdf)  |
 |  [Omni Network](https://omni.network/) | March 2025 | [3ef37ae](https://github.com/omni-network/omni/commit/3ef37ae2704db4e1dcb8fc3f7acbb8babb543e8c) | Review of rlUSD Contracts | [Report](./reports/omni-network/Sigma_Prime_Omni_rlUSD_Brdige_Security_Assessment_Report_v2_0.pdf)  |
 |  [EigenLayer](https://www.eigenlayer.xyz/) | February 2025 | [PR \#679](https://github.com/Layr-Labs/eigenlayer-contracts/pull/679) | Review of EigenLayer Slashing Release| [Report](./reports/eigenlayer/Sigma_Prime_Layr_Labs_EigenLayer_Slashing_Security_Assessment_Report_v2_0.pdf)  |
