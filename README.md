@@ -8,6 +8,7 @@ Below is a collection of security reviews Sigma Prime have been allowed to relea
 
 |  Project | Date  | Target Commit	  |  Description |  Report |
 |---|---|---|---|---|
+|  [Burrow Finance](https://burrow.finance/) | April 2025 | [44ea182](https://github.com/burrowHQ/burrowland/tree/44ea18236580cc3c6a0527b9ded53b03a8473a0b) | Review of Burrowland Updated Smart Contracts | [Report](./reports/near/Sigma_Prime_Burrow_Finance_Burrowland_Security_Assessment_Report_v2_0.pdf)  |
 |  [Derive](https://www.derive.xyz/) | March 2025 | [PR \#358](https://github.com/derivexyz/v2-core/pull/358), [PR \#64](https://github.com/derivexyz/v2-matching/pull/64) | Review of Derive's Atomic Matching and Basis Vault Contracts | [Report](./reports/derive/atomic/review.pdf)  |
 |  [Omni Network](https://omni.network/) | March 2025 | [8855575](https://github.com/omni-network/omni/commit/88555759e23ee2fdbe60009447e4240daa998d5a) | Review of SolverNet Bridge Contracts | [Report](./reports/omni-network/Sigma_Prime_Omni_SolverNet_Security_Assessment_Report_v2_0.pdf)  |
 |  [Omni Network](https://omni.network/) | March 2025 | [3ef37ae](https://github.com/omni-network/omni/commit/3ef37ae2704db4e1dcb8fc3f7acbb8babb543e8c) | Review of rlUSD Contracts | [Report](./reports/omni-network/Sigma_Prime_Omni_rlUSD_Brdige_Security_Assessment_Report_v2_0.pdf)  |
