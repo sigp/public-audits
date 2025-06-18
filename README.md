@@ -8,6 +8,7 @@ Below is a collection of security reviews Sigma Prime have been allowed to relea
 
 |  Project | Date  | Target Commit	  |  Description |  Report |
 |---|---|---|---|---|
+|  [Botanix Labs](https://botanixlabs.com/) | June 2025 | [3a5bb70](https://github.com/botanix-labs/Macbeth/commit/3a5bb70be9dc53df8433cf7964a147770dc79ef0) | Review of Macbeth, A Bitcoin Layer 2 | [Report](./reports/botanix/Sigma_Prime_Botanix_Macbeth_Security_Assessment_Report_v2_1.pdf)  |
 |  [Recall Network](https://recall.network/) | June 2025 | [5a67104](https://github.com/recall/contracts/tree/5a6710409a90944ceb3ff4d8ad9edea1b00557c3) \& [d08b279](https://github.com/recall/ipc/tree/d08b2794743a9013502950292934fb98b0341c79) | Review of Recall, A Filecoin Layer 2 | [Report](./reports/recall/Sigma_Prime_recall_labs_recall_Security_Assessment_Report_v2_2.pdf)  |
 |  [Burrow Finance](https://burrow.finance/) | April 2025 | [44ea182](https://github.com/burrowHQ/burrowland/tree/44ea18236580cc3c6a0527b9ded53b03a8473a0b) | Review of Burrowland Updated Smart Contracts | [Report](./reports/near/Sigma_Prime_Burrow_Finance_Burrowland_Security_Assessment_Report_v2_0.pdf)  |
 |  [Derive](https://www.derive.xyz/) | March 2025 | [PR \#358](https://github.com/derivexyz/v2-core/pull/358), [PR \#64](https://github.com/derivexyz/v2-matching/pull/64) | Review of Derive's Atomic Matching and Basis Vault Contracts | [Report](./reports/derive/atomic/review.pdf)  |
