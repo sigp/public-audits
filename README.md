@@ -8,6 +8,7 @@ Below is a collection of security reviews Sigma Prime have been allowed to relea
 
 |  Project | Date  | Target Commit	  |  Description |  Report |
 |---|---|---|---|---|
+|  [RISC Zero](https://risczero.com/) | July 2025 | [a0e54d5](https://github.com/boundless-xyz/Signal-Ethereum/tree/a0e54d5451eeb5ff02444f9c0a2a37edd54fdcec) | Review of The Signal: Ethereum Circuits | [Report](./reports/risc-zero/Sigma_Prime_Risc_Zero_The_Signal_Ethereum_Security_Assessment_Report_v2_0.pdf)  |
 |  [Recall Network](https://recall.network/) | July 2025 | [ae3fbed](https://github.com/recallnet/recall-staking-contracts/commit/ae3fbed449fedd89be07c3adcc2ba996243fbf79) | Review of Recall Staking Smart Contract | [Report](./reports/recall/Sigma_Prime_Recall_Staking_Security_Assessment_Report_v2_0.pdf)  |
 |  [Chainlink - Lockbox](https://chain.link/) | June 2025 | [28f2c74](https://github.com/Aphyla/token-migrator/commit/28f2c747aa1f8796b51133987e7bf10e7fa88e20) | Review of Chainlink Migration Lockbox | [Report](./reports/chainlink/lockbox/Sigma_Prime_CL_Lockbox_Security_Assessment_Report_v2_1.pdf)  |
 |  [Botanix Labs](https://botanixlabs.com/) | June 2025 | [3a5bb70](https://github.com/botanix-labs/Macbeth/commit/3a5bb70be9dc53df8433cf7964a147770dc79ef0) | Review of Macbeth, A Bitcoin Layer 2 | [Report](./reports/botanix/Sigma_Prime_Botanix_Macbeth_Security_Assessment_Report_v2_1.pdf)  |
