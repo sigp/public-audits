@@ -8,6 +8,7 @@ Below is a collection of security reviews Sigma Prime have been allowed to relea
 
 |  Project | Date  | Target Commit	  |  Description |  Report |
 |---|---|---|---|---|
+|  [Berachain](https://www.berachain.com/) | September 2025 | [53363e4](https://github.com/berachain/bera-reth/tree/53363e41920e1e4dd38cfb71e21635e82a12ef0d) & [688d070](https://github.com/berachain/bera-geth/tree/688d070666715af6068e8d699e9a635708514b8f) | Review of bera-reth & bera-geth | [Report](./reports/berachain/Sigma_Prime_Berachain_Reth_Geth_Security_Assessment_Report_v2_0.pdf)  |
 |  [Bullet](https://www.zeta.markets/) | July 2025 | [9ea6031](https://github.com/zetamarkets/sov-rollup/commit/9ea6031f2f5ca3ce09c1c1f3b7759ceff2daddb0) | Review of Bullet Exchange | [Report](./reports/bullet/review.pdf)  |
 |  [Chainway Labs](https://chainway.xyz/) | July 2025 | [937e9f4](https://github.com/chainwayxyz/clementine/tree/937e9f452f33ed88e07dd446d1db9a5d6079c101) | Review of Clemetine Bridge | [Report](./reports/chainway/Sigma_Prime_Chainway_Labs_Clementine_Security_Assessment_Report_v2_0.pdf)  |
 |  [Chainway Labs](https://chainway.xyz/) | July 2025 | [ee7505a](https://github.com/chainwayxyz/citrea/tree/ee7505a57ab2daefaded90f6148c3aa29d68fef2) | Review of Citrea Bitcoin L2 | [Report](./reports/chainway/Sigma_Prime_Chainway_Citrea_Security_Assessment_Report_v2_2.pdf)  |
