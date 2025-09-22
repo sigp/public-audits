@@ -3,11 +3,11 @@
 Our clients have the opportunity to publish our reports or have them kept confidential.
 Below is a collection of security reviews Sigma Prime have been allowed to release publicly.
 
-
 ## Table Of Reviews
 
 |  Project | Date  | Target Commit	  |  Description |  Report |
 |---|---|---|---|---|
+|  [Protocol Guild](https://www.protocolguild.org/) | September 2025 | [601147c](https://github.com/voteagora/pg-token/commit/cc4dc03dd0cb73931cdd256e61edf47230c884c6) | Review of Agora Token | [Report](./reports/protocol-guild/Sigma_Prime_Protocol_Guild_Agora_Token_Security_Assessment_Report_v2_1.pdf)  |
 |  [Omni Network](https://omni.network/) | September 2025 | [601147c](https://github.com/nomina-xyz/apps/tree/601147cc12f8f6e9836da0c73bbee8946f79e18b) | Review of Token Upgrade Front-end | [Report](./reports/omni-network/Sigma_Prime_Omni_Token_Upgrade_Frontend_Security_Assessment_Report_v2_0.pdf)  |
 |  [Omni Network](https://omni.network/) | September 2025 | [21652a7](https://github.com/omni-network/omni/commit/21652a797dab1b6192c2afc883653e34272a429c) | Review of EVM Redenom | [Report](./reports/omni-network/Sigma_Prime_Omni_EVM_Redenom_Security_Assessment_Report_v2_0.pdf)  |
 |  [Omni Network](https://omni.network/) | September 2025 | [5abe64e](https://github.com/omni-network/omni/tree/5abe64e95298ebfce723177207681f37a2f18749) | Review of Nomina Bridge Contracts | [Report](./reports/omni-network/Sigma_Prime_Omni_Nomina_Bridge_Contracts_Security_Assessment_Report_v2_1.pdf)  |
