@@ -8,6 +8,7 @@ Below is a collection of security reviews Sigma Prime have been allowed to relea
 
 |  Project | Date  | Target Commit	  |  Description |  Report |
 |---|---|---|---|---|
+|  [EigenLayer](https://www.eigenlayer.xyz/) | October 2025 | [066f8ef](https://github.com/Layr-Labs/eigenda/tree/066f8ef4f93bb8ce196555904e89adf7ef50e57f) | Review of EigenDA Secure Integration | [Report](./reports/eigenlayer/Sigma_Prime_EigenLayer_DA_Secure_Integration_Security_Assessment_Report_v2_0.pdf)  |
 |  [Protocol Guild](https://www.protocolguild.org/) | September 2025 | [601147c](https://github.com/voteagora/pg-token/commit/cc4dc03dd0cb73931cdd256e61edf47230c884c6) | Review of Agora Token | [Report](./reports/protocol-guild/Sigma_Prime_Protocol_Guild_Agora_Token_Security_Assessment_Report_v2_1.pdf)  |
 |  [Makina Finance](https://makina.finance/) | August 2025 | [922533f](https://github.com/MakinaHQ/makina-core/tree/922533f98c2191ce852f2ec7206b4d44ab498853) & [004374b](https://github.com/MakinaHQ/makina-periphery/tree/004374b8bf1e9a0f004fc6fa43920323b5b27952) | Review of Makina Core and Periphery Contracts | [Report](./reports/makina/review.pdf)  |
 |  [Omni Network](https://omni.network/) | September 2025 | [601147c](https://github.com/nomina-xyz/apps/tree/601147cc12f8f6e9836da0c73bbee8946f79e18b) | Review of Token Upgrade Front-end | [Report](./reports/omni-network/Sigma_Prime_Omni_Token_Upgrade_Frontend_Security_Assessment_Report_v2_0.pdf)  |
