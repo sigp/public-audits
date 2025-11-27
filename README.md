@@ -8,6 +8,7 @@ Below is a collection of security reviews Sigma Prime have been allowed to relea
 
 |  Project | Date  | Target Commit	  |  Description |  Report |
 |---|---|---|---|---|
+|  [Brava Labs](https://github.com/brava-labs/brava-contracts) | November 2025 | [b3243a5](https://github.com/brava-labs/brava-contracts/commit/b3243a50daa4dfc3eb0d4317021321b67b6c0990) | Review of Brava's CCTP, ZeroEx and EIP712TypedDataSafeModule Integrations | [Report](./reports/brava/module-integrations/report.pdf)  |
 |  [EigenLayer](https://www.eigenlayer.xyz/) | October 2025 | [066f8ef](https://github.com/Layr-Labs/eigenda/tree/066f8ef4f93bb8ce196555904e89adf7ef50e57f) | Review of EigenDA Secure Integration | [Report](./reports/eigenlayer/Sigma_Prime_EigenLayer_DA_Secure_Integration_Security_Assessment_Report_v2_0.pdf)  |
 |  [Protocol Guild](https://www.protocolguild.org/) | September 2025 | [601147c](https://github.com/voteagora/pg-token/commit/cc4dc03dd0cb73931cdd256e61edf47230c884c6) | Review of Agora Token | [Report](./reports/protocol-guild/Sigma_Prime_Protocol_Guild_Agora_Token_Security_Assessment_Report_v2_1.pdf)  |
 |  [Makina Finance](https://makina.finance/) | August 2025 | [922533f](https://github.com/MakinaHQ/makina-core/tree/922533f98c2191ce852f2ec7206b4d44ab498853) & [004374b](https://github.com/MakinaHQ/makina-periphery/tree/004374b8bf1e9a0f004fc6fa43920323b5b27952) | Review of Makina Core and Periphery Contracts | [Report](./reports/makina/review.pdf)  |
