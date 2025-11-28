@@ -8,6 +8,7 @@ Below is a collection of security reviews Sigma Prime have been allowed to relea
 
 |  Project | Date  | Target Commit	  |  Description |  Report |
 |---|---|---|---|---|
+|  [RISE](https://risechain.com/) | November 2025 | [1a871bc](https://github.com/risechain/rise/commit/1a871bc5e98ce13adfc4a35124488d7474606470) & [84ed5c3](https://github.com/risechain/rise-optimism/commit/84ed5c32f2632e2d71927418c6d366e0b30149fa) | Review of RISE Core Node | [Report](./reports/rise/Sigma_Prime_Rise_Core_Node_Security_Assessment_Report_v2_0.pdf)  |
 |  [Brava Labs](https://github.com/brava-labs/brava-contracts) | November 2025 | [b3243a5](https://github.com/brava-labs/brava-contracts/commit/b3243a50daa4dfc3eb0d4317021321b67b6c0990) | Review of Brava's CCTP, ZeroEx and EIP712TypedDataSafeModule Integrations | [Report](./reports/brava/module-integrations/report.pdf)  |
 |  [EigenLayer](https://www.eigenlayer.xyz/) | October 2025 | [066f8ef](https://github.com/Layr-Labs/eigenda/tree/066f8ef4f93bb8ce196555904e89adf7ef50e57f) | Review of EigenDA Secure Integration | [Report](./reports/eigenlayer/Sigma_Prime_EigenLayer_DA_Secure_Integration_Security_Assessment_Report_v2_0.pdf)  |
 |  [Protocol Guild](https://www.protocolguild.org/) | September 2025 | [601147c](https://github.com/voteagora/pg-token/commit/cc4dc03dd0cb73931cdd256e61edf47230c884c6) | Review of Agora Token | [Report](./reports/protocol-guild/Sigma_Prime_Protocol_Guild_Agora_Token_Security_Assessment_Report_v2_1.pdf)  |
