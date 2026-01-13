@@ -8,6 +8,7 @@ Below is a collection of security reviews Sigma Prime have been allowed to relea
 
 |  Project | Date  | Target Commit	  |  Description |  Report |
 |---|---|---|---|---|
+|  [Lido](https://lido.fi/) | January 2026 | [a70087d](https://github.com/lidofinance/core/tree/a70087d99ead7acc43bce1aaf9fb7ef108d01e3c) | Review of Onchain BLS Library | [Report](./reports/lido/Sigma_Prime_Lido_BLS_Library_Security_Assessment_Report_v2_0.pdf)  |
 |  [CommitBoost](https://commit-boost.github.io/commit-boost-client/) | January 2026 | [d3244bb](https://github.com/Commit-Boost/commit-boost-client/tree/d3244bbe96206034e0ced8af64614fe26ad2ac20) | Review of CommitBoost Multiplexer & Signer | [Report](./reports/commitboost/Sigma_Prime_CommitBoost_Multiplexer_Signer_Security_Assessment_Report_v2_1.pdf)  |
 |  [RISE](https://risechain.com/) | November 2025 | [1a871bc](https://github.com/risechain/rise/commit/1a871bc5e98ce13adfc4a35124488d7474606470) & [84ed5c3](https://github.com/risechain/rise-optimism/commit/84ed5c32f2632e2d71927418c6d366e0b30149fa) | Review of RISE Core Node | [Report](./reports/rise/Sigma_Prime_Rise_Core_Node_Security_Assessment_Report_v2_0.pdf)  |
 |  [Brava Labs](https://github.com/brava-labs/brava-contracts) | November 2025 | [b3243a5](https://github.com/brava-labs/brava-contracts/commit/b3243a50daa4dfc3eb0d4317021321b67b6c0990) | Review of Brava's CCTP, ZeroEx and EIP712TypedDataSafeModule Integrations | [Report](./reports/brava/module-integrations/report.pdf)  |
