@@ -8,6 +8,7 @@ Below is a collection of security reviews Sigma Prime have been allowed to relea
 
 |  Project | Date  | Target Commit	  |  Description |  Report |
 |---|---|---|---|---|
+|  [EigenLayer](https://www.eigenlayer.xyz/) | February 2026 | [PR \#500](https://github.com/Layr-Labs/sidecar/pull/500) | Review of Sidecar Rewards v2.2 (Round 2) | [Report](./reports/eigenlayer/Sigma_Prime_Layr_Labs_Sidecar_Rewards_v2_2_Round_2_Security_Assessment.pdf)  |
 |  [Opsek](https://www.opsek.io/) | February 2026 | [481bc29](https://github.com/Opsek/OSs-security/commit/481bc2946cf7eaedd35ba818495862e60c792e03) | Review of Opsek Hardening Scripts | [Report](./reports/opsek/review.pdf)  |
 |  [Igra](https://igralabs.com/) | February 2026 | [f24c22a](https://github.com/IgraLabs/igra-core-contracts/commit/f24c22a66965be600e02156ed8e30722b5811e98) & [08533a1](https://github.com/IgraLabs/igra-eip4788-modifications/commit/08533a1c382c6509e729f8b70cc4dc02637b1982) | Review of Igra Core Smart Contracts | [Report](./reports/igra/Sigma_Prime_Igra_Core_Smart_Contracts_Security_Assessment_Report_v2_1.pdf)  |
 |  [Lido](https://lido.fi/) | January 2026 | [a70087d](https://github.com/lidofinance/core/tree/a70087d99ead7acc43bce1aaf9fb7ef108d01e3c) | Review of Onchain BLS Library | [Report](./reports/lido/Sigma_Prime_Lido_BLS_Library_Security_Assessment_Report_v2_0.pdf)  |
