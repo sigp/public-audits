@@ -8,6 +8,7 @@ Below is a collection of security reviews Sigma Prime have been allowed to relea
 
 |  Project | Date  | Target Commit	  |  Description |  Report |
 |---|---|---|---|---|
+|  [Serenita](https://serenita.io/) | April 2026 | [ca20c0e](https://github.com/serenita-org/vero/tree/ca20c0e023c3b2e7134728588ca899c405ff6e87) | Review of Serenita Vero | [Report](./reports/serenita-vero/Sigma_Prime_Serenita_Vero_Security_Assessment_Report_v2_0.pdf)  |
 |  [Origin Protocol](https://www.originprotocol.com/) | March 2026 | [8b86144](https://github.com/OriginProtocol/origin-dollar/tree/8b86144c4cdfd0302355cffd2e740b5e9f2ffdbb) | Review of Validator Consolidations | [Report](./reports/origin/Sigma_Prime_Origin_Protocol_Validator_Consolidations_Security_Assessment_Report_v2_0.pdf)  |
 |  [EigenLayer](https://www.eigenlayer.xyz/) | February 2026 | [PR \#500](https://github.com/Layr-Labs/sidecar/pull/500) | Review of Sidecar Rewards v2.2 (Round 2) | [Report](./reports/eigenlayer/Sigma_Prime_Layr_Labs_Sidecar_Rewards_v2_2_Round_2_Security_Assessment.pdf)  |
 |  [Opsek](https://www.opsek.io/) | February 2026 | [481bc29](https://github.com/Opsek/OSs-security/commit/481bc2946cf7eaedd35ba818495862e60c792e03) | Review of Opsek Hardening Scripts | [Report](./reports/opsek/review.pdf)  |
