@@ -8,6 +8,7 @@ Below is a collection of security reviews Sigma Prime have been allowed to relea
 
 |  Project | Date  | Target Commit	  |  Description |  Report |
 |---|---|---|---|---|
+|  [Term Finance](https://term.finance/) | May 2026 | [306bb3a](https://github.com/term-finance/term-finance-contracts/commit/306bb3a9930ad0fdcc0c83c3a46866eedd33d056) | Review of Term Finance v2 Smart Contracts | [Report](./reports/term-finance/term-v2/review.pdf)  |
 |  [Catalysis](https://catalysis.network/) | May 2026 | [85e4165](https://github.com/0xcatalysis/core/tree/85e4165a19eabd8deec6c379879a229109618725) & [a3a2a7e](https://github.com/0xcatalysis/coverage/tree/a3a2a7ed9bc9a808856808b756396ec38ac84899) | Review of Catalysis Core and Coverage Contracts | [Report](./reports/catalysis/Sigma_Prime_Catalysis_Core_And_Coverage_Smart_Contracts_Security_Assessment_Report_v2_0.pdf)  |
 |  [Catalysis](https://catalysis.network/) | May 2026 | [d8d492a](https://github.com/0xcatalysis/coverage/tree/d8d492ab186e870986d332548ec2add7dc41458a) & [29f93ea](https://github.com/0xcatalysis/core/tree/29f93eafe7a735a1594921906c7d24d15108466a) | Review of Catalysis Coverage Contracts | [Report](./reports/catalysis/Sigma_Prime_Catalysis_Coverage_Contracts_Security_Assessment_Report_v2_0.pdf)  |
 |  [Catalysis](https://catalysis.network/) | May 2026 | [baf56f8](https://github.com/0xcatalysis/core/tree/baf56f8314912e15f3a9c0eeb9b3539f2d6437e5) | Review of Catalysis Core Contracts | [Report](./reports/catalysis/Sigma_Prime_Catalysis_Core_Smart_Contracts_Security_Assessment_Report_v2_0.pdf)  |
