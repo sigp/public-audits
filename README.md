@@ -8,6 +8,7 @@ Below is a collection of security reviews Sigma Prime have been allowed to relea
 
 |  Project | Date  | Target Commit	  |  Description |  Report |
 |---|---|---|---|---|
+|  [Dohrnii](https://dohrnii.io/) | September 2026 | cd26674 (private repo) | Review of Dohrnii's DHN token | [Report](./reports/dohrnii/Sigma_Prime_Dohrnii_Token_Project_Security_Assessment_Report_v2.pdf)  |
 |  [Term Finance](https://term.finance/) | August 2026 | [151426a...3aa99f9](https://github.com/term-finance/term-finance/compare/151426a252178cd3470086d267824e935533cbac...3aa99f995ad7274f553df8f4c9cb7de56e2ddad7) | Review of Term Finance latest updates | [Report](./reports/term-finance/term-v2/Sigma_Prime_Term_Finance_Updates_Security_Assessment_Report_v2_0.pdf)  |
 |  [Brava Labs](https://github.com/brava-labs/brava-contracts) | July 2026 | [01d8274](https://github.com/brava-labs/brava-contracts/commit/01d8274b37c98caca5c0cd73952a8d1ce2e3b5f9) | Review of core auth changes to the Brava's protocol | [Report](./reports/brava/core-auth/Sigma_Prime_Brava_Core_Auth_Changes_Security_Assessment_Report_v3_0.pdf)  |
 |  [Term Finance](https://term.finance/) | May 2026 | [306bb3a](https://github.com/term-finance/term-finance-contracts/commit/306bb3a9930ad0fdcc0c83c3a46866eedd33d056) | Review of Term Finance v2 Smart Contracts | [Report](./reports/term-finance/term-v2/review.pdf)  |
